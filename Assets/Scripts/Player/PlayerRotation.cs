@@ -14,7 +14,7 @@ public class PlayerRotation : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            _rigidBodyPlayer.AddTorque(_rotationSpeed,ForceMode2D.Force);
+            _rigidBodyPlayer.AddTorque(_rotationSpeed, ForceMode2D.Force);
         }
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {

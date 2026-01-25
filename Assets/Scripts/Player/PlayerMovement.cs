@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            _rigidBodyPlayer.AddForce(this.transform.up * _movementSpeed, ForceMode2D.Force);
+            _rigidBodyPlayer.AddForce((this.transform.up * _movementSpeed), ForceMode2D.Force);
         }
     }
 }
