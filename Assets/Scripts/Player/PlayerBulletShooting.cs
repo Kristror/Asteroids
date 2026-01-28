@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerBulletShooting : MonoBehaviour
 {
-    [SerializeField] private float _shootingSpeed;
+    [SerializeField, Min(0)] private float _shootingSpeed;
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _bulletStartPosition;
 
@@ -11,6 +11,7 @@ public class PlayerBulletShooting : MonoBehaviour
     void Update()
     {
         bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
+
         if (Input.GetMouseButtonDown(0) && isEnoughTimePassed)
         {
             GameObject bullet =GameObject.Instantiate(_bulletPrefab);

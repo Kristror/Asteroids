@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
 {
-    [SerializeField] private float _timeOfLive;
-    [SerializeField] private float _speedMovement;
+    [SerializeField, Min(1)] private float _timeOfLive;
+    [SerializeField, Min(0)] private float _speedMovement;
 
     void Start()
     {
