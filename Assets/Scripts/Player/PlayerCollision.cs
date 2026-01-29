@@ -9,7 +9,7 @@ public class PlayerCollision : MonoBehaviour
     {
         _colliderPlayer = GetComponent<Collider2D>();
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Enemy")
         {

@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 5276369566734885328}
   - component: {fileID: 9201828494764207307}
   - component: {fileID: 8440853715501187198}
-  - component: {fileID: 2236278631261383638}
   - component: {fileID: 6274937213200084589}
-  - component: {fileID: -3204176241603488637}
+  - component: {fileID: -1068020739520512202}
+  - component: {fileID: -4224571656375228767}
   m_Layer: 0
-  m_Name: Asteroid
+  m_Name: SmallAsteroid
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -127,21 +127,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &2236278631261383638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5434302770225157985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0731cfcee93ce7d4a92b2b3b3ac4bf85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _smallAsteroid: {fileID: 5434302770225157985, guid: ae4b0c508cb4b29488e068221f493fc0, type: 3}
-  _asteroidMovement: {fileID: 6274937213200084589}
-  _amountOfpieces: 2
 --- !u!114 &6274937213200084589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +139,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b5fa40199ed6543834a29093862104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!50 &-3204176241603488637
+--- !u!114 &-1068020739520512202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434302770225157985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e418907c5f323e147aa35ddee3ebb3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _asteroidMovement: {fileID: 6274937213200084589}
+  _asteroidSpeedMult: 1.25
+--- !u!50 &-4224571656375228767
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
