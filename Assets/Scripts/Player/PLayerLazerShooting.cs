@@ -17,10 +17,14 @@ public class PlayerLazerShooting : MonoBehaviour
     private bool _isReloading = false;
     private Lazer lazer;
 
+    private Mouse _mouse;
+
     private void Start()
     {
         _ammo = _maxAmmo;
         lazer = _lazerObject.GetComponent<Lazer>();
+
+        _mouse = Mouse.current;
     }
 
     void Update()
@@ -53,7 +57,7 @@ public class PlayerLazerShooting : MonoBehaviour
     {
         bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
 
-        if (Mouse.current.rightButton.wasPressedThisFrame && isEnoughTimePassed && (_ammo > 0))
+        if (_mouse.rightButton.isPressed && isEnoughTimePassed && (_ammo > 0))
         {
             lazer.Shoot();
             _ammo--;

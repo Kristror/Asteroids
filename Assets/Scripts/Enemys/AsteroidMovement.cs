@@ -18,6 +18,11 @@ public class AsteroidMovement : MonoBehaviour
 
     void Update()
     {
+        Move();
+    }
 
+    private void Move()
+    {
+        this.transform.Translate(Vector3.up * Time.deltaTime * _asteroidMovementSpeed);
     }
 }
