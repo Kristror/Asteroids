@@ -3,16 +3,41 @@
 
 public class UFOMovement : MonoBehaviour
 {
+    [SerializeField] private float _ufoMovementSpeed;
+    private Rigidbody2D _rigidbodyUFO;
 
-    // Use this for initialization
-    void Start()
+    private GameObject _plaeyrObject;
+
+    private void Start()
     {
-
+        _rigidbodyUFO = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+    public void SetPlayer(GameObject playerObject)
+    {
+        _plaeyrObject = playerObject;
+    }
+
+
     void Update()
     {
+        MoveToPlayer();
+        CheckBorder();
+    }
 
+    private void MoveToPlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position,_plaeyrObject.transform.position, _ufoMovementSpeed * Time.deltaTime);
+    }
+
+    private void CheckBorder()
+    {
+        Vector2 newPosition = BorderController.CheckIfObjectOnBorder(transform.position);
+
+        if (newPosition != Vector2.zero)
+        {
+
+            transform.position = newPosition;
+        }
     }
 }

@@ -25,7 +25,7 @@ public class PlayerBulletShooting : MonoBehaviour
     {
         bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
 
-        if (_mouse.leftButton.isPressed && isEnoughTimePassed)
+        if (_mouse.leftButton.wasPressedThisFrame && isEnoughTimePassed)
         {
             GameObject bullet = GameObject.Instantiate(_bulletPrefab);
 

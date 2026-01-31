@@ -57,7 +57,7 @@ public class PlayerLazerShooting : MonoBehaviour
     {
         bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
 
-        if (_mouse.rightButton.isPressed && isEnoughTimePassed && (_ammo > 0))
+        if (_mouse.rightButton.wasPressedThisFrame && isEnoughTimePassed && (_ammo > 0))
         {
             lazer.Shoot();
             _ammo--;

@@ -2,7 +2,7 @@
 
 public class AsteroidMovement : MonoBehaviour
 {
-    private float _asteroidMovementSpeed;
+    [SerializeField]private float _asteroidMovementSpeed;
 
     public float AsteroidSpeed => _asteroidMovementSpeed;
     
@@ -11,18 +11,24 @@ public class AsteroidMovement : MonoBehaviour
         _asteroidMovementSpeed = speed;
     }
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         Move();
+        CheckBorder();
     }
 
     private void Move()
     {
         this.transform.Translate(Vector3.up * Time.deltaTime * _asteroidMovementSpeed);
+    }
+    private void CheckBorder()
+    {
+        Vector2 newPosition = BorderController.CheckIfObjectOnBorder(transform.position);
+
+        if (newPosition != Vector2.zero)
+        {
+
+            transform.position = newPosition;
+        }
     }
 }
