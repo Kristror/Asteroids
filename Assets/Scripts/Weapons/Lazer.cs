@@ -4,7 +4,12 @@ using System.Collections;
 
 public class Lazer : MonoBehaviour
 {
-    [SerializeField] private float _lazerDuration;
+    private float _lazerDuration;
+
+    public void SetLazerDuration(float lazerDuration)
+    {
+        _lazerDuration = lazerDuration;
+    }
 
     public void Shoot()
     {

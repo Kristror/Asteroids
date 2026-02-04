@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 
 
-public class UFOController : EnemyControllerBase
+public class UFOSpawnController : EnemyControllerBase
 {
     private GameObject _playerObject;
 
     private void Start()
     {
         _playerObject = GameObject.FindGameObjectWithTag("Player");
-        Debug.Log(_playerObject.ToString());
     }
 
     private void Update()

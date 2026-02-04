@@ -13,7 +13,7 @@ public class Asteroid : BaseEnemy
         _asteroidSpeed = _asteroidMovement.AsteroidSpeed;
     }
 
-    public override void Collision(Collision2D collision)
+    public override void Collision(Collider2D collision)
     {
         CreateSmallAsteroids(_amountOfpieces);
     }
