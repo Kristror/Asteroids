@@ -10,9 +10,9 @@ public class BulletCollision : MonoBehaviour
         _colliderBullet = GetComponent<Collider2D>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collider.gameObject.tag.Equals("Enemy"))
         {
             Destroy(this.gameObject);
         }

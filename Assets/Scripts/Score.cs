@@ -3,7 +3,7 @@
 
 public static class Score
 {
-    private static int _pointsForEnemy;
+    private static int _pointsForEnemy = 2;
 
     private static int _playerScore = 0;
 

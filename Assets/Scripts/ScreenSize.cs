@@ -2,10 +2,9 @@
 
 public static class ScreenSize
 {
-    static Camera mainCamera = Camera.main;
-
     public static Vector2 GetScreenSizeInUnits()
     {
+        Camera mainCamera = Camera.main;
 
         float screenHeightInUnits = mainCamera.orthographicSize * 2;
 
