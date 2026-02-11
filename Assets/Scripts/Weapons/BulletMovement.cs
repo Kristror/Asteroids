@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
 {
-    [SerializeField, Min(1)] private float _timeOfLive;
+    [SerializeField, Min(1)] private float _timeToLive;
     [SerializeField, Min(0)] private float _speedMovement;
 
-    void Start()
+    private void Start()
     {
-        Destroy(this.gameObject, _timeOfLive);
+        Destroy(this.gameObject, _timeToLive);
     }
 
-    void Update()
+    private void Update()
     {
         Move();
     }

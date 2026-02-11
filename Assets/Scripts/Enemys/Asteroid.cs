@@ -4,7 +4,7 @@ public class Asteroid : BaseEnemy
 {
     [SerializeField] private GameObject _smallAsteroid;
     [SerializeField] private AsteroidMovement _asteroidMovement;
-    [SerializeField] private int _amountOfpieces;
+    [SerializeField, Min(1)] private int _amountOfpieces;
 
     private float _asteroidSpeed;
 

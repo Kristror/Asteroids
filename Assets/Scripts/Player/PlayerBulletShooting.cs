@@ -16,7 +16,7 @@ public class PlayerBulletShooting : MonoBehaviour
         _mouse = Mouse.current;
     }
 
-    void Update()
+    private void Update()
     {
         Shoot ();
     }

@@ -7,9 +7,9 @@ public class PlayerCollision : MonoBehaviour
 
     private bool _isDead;
 
-    public bool isPlayerDead => _isDead;
+    public bool IsPlayerDead => _isDead;
 
-    void Start()
+    private void Start()
     {
         _colliderPlayer = GetComponent<Collider2D>();
         _isDead  = false;

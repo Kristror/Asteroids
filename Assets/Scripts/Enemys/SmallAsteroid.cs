@@ -4,7 +4,7 @@ public class SmallAsteroid : BaseEnemy
 {
 
     [SerializeField] private AsteroidMovement _asteroidMovement;
-    [SerializeField] private float _asteroidSpeedMult;
+    [SerializeField, Min(1)] private float _asteroidSpeedMult;
 
     public override void Collision(Collider2D collision)
     {

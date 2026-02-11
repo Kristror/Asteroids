@@ -5,7 +5,7 @@ public class BulletCollision : MonoBehaviour
 {
     private Collider2D _colliderBullet;
 
-    void Start()
+    private void Start()
     {
         _colliderBullet = GetComponent<Collider2D>();
     }

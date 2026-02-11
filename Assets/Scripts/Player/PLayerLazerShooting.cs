@@ -18,7 +18,7 @@ public class PlayerLazerShooting : MonoBehaviour
     private float _timeOfReloadStart = 0;
 
     private bool _isReloading = false;
-    private Lazer lazer;
+    private Lazer _lazer;
 
     private Mouse _mouse;
 
@@ -35,13 +35,13 @@ public class PlayerLazerShooting : MonoBehaviour
     private void Start()
     {
         _ammo = _maxAmmo;
-        lazer = _lazerObject.GetComponent<Lazer>();
-        lazer.SetLazerDuration(_lazerDuration);
+        _lazer = _lazerObject.GetComponent<Lazer>();
+        _lazer.SetLazerDuration(_lazerDuration);
 
         _mouse = Mouse.current;
     }
 
-    void Update()
+    private void Update()
     {
         LazerShooting();
         Reload();
@@ -73,7 +73,7 @@ public class PlayerLazerShooting : MonoBehaviour
 
         if (_mouse.rightButton.wasPressedThisFrame && isEnoughTimePassed && (_ammo > 0))
         {
-            lazer.Shoot();
+            _lazer.Shoot();
             _ammo--;
             _timeOflastShot = Time.time;
         }

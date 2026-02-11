@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour
     [SerializeField] GameObject _prefabPlayer;
     [SerializeField] GameObject _prefabUI;
 
-    void Awake()
+    private void Awake()
     {
         GameObject.Instantiate(_prefabPlayer);
 

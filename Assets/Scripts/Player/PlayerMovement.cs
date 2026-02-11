@@ -9,14 +9,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Keyboard _keyboard;
 
-    void Start()
+    private void Start()
     {
         _rigidBodyPlayer = GetComponent<Rigidbody2D>();
         _keyboard = Keyboard.current;
     }
     
 
-    void Update()
+    private void Update()
     {
         Move();
         CheckBorder();

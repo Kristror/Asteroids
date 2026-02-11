@@ -6,10 +6,10 @@ public static class BorderController
 
     private static float _borderOffSet = 0.5f;
 
-    private static float leftBound;
-    private static float rightBound;
-    private static float topBound;
-    private static float bottomBound;
+    private static float _leftBorder;
+    private static float _rightBorder;
+    private static float _topBorder;
+    private static float _bottomBorder;
 
     private static void CalculateScreenBounds()
     {
@@ -18,10 +18,10 @@ public static class BorderController
         Vector3 bottomLeft = _camera.ViewportToWorldPoint(Vector3.zero);
         Vector3 topRight = _camera.ViewportToWorldPoint(new Vector3(1, 1, 0));
 
-        leftBound = bottomLeft.x - _borderOffSet;
-        rightBound = topRight.x + _borderOffSet;
-        bottomBound = bottomLeft.y - _borderOffSet;
-        topBound = topRight.y + _borderOffSet;
+        _leftBorder = bottomLeft.x - _borderOffSet;
+        _rightBorder = topRight.x + _borderOffSet;
+        _bottomBorder = bottomLeft.y - _borderOffSet;
+        _topBorder = topRight.y + _borderOffSet;
     }
 
     public static Vector2 CheckIfObjectOnBorder(Vector2 objectPosition)
@@ -33,25 +33,25 @@ public static class BorderController
 
         Vector3 newObjectPosition = objectPosition;
 
-        if (objectPosition.x < leftBound)
+        if (objectPosition.x < _leftBorder)
         {
-            newObjectPosition.x = rightBound;
+            newObjectPosition.x = _rightBorder;
             return newObjectPosition;
         }
-        else if (objectPosition.x > rightBound)
+        else if (objectPosition.x > _rightBorder)
         {
-            newObjectPosition.x = leftBound;
+            newObjectPosition.x = _leftBorder;
             return newObjectPosition;
         }
 
-        if (objectPosition.y < bottomBound)
+        if (objectPosition.y < _bottomBorder)
         {
-            newObjectPosition.y = topBound;
+            newObjectPosition.y = _topBorder;
             return newObjectPosition;
         }
-        else if (objectPosition.y > topBound)
+        else if (objectPosition.y > _topBorder)
         {
-            newObjectPosition.y = bottomBound;
+            newObjectPosition.y = _bottomBorder;
             return newObjectPosition;
         }
 

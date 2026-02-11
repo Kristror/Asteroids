@@ -14,7 +14,7 @@ public class DeathScreenUI : MonoBehaviour
     private string scoreText = "Score : ";
 
 
-    public void Start()
+    private void Start()
     {
         _restartGame.onClick.AddListener(RestartGame);
 
@@ -25,7 +25,7 @@ public class DeathScreenUI : MonoBehaviour
 
     private void Update()
     {
-        if (_playerCollision.isPlayerDead) 
+        if (_playerCollision.IsPlayerDead) 
         {
             _deathScreen.SetActive(true);
             _textScore.text = scoreText + Score.PlayerScore;

@@ -3,7 +3,7 @@
     public abstract class EnemyControllerBase : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyObject;
-    [SerializeField] private float _timeToSpawn;
+    [SerializeField, Min(0)] private float _timeToSpawn;
 
     private float _timeOfLastSpawn;
 

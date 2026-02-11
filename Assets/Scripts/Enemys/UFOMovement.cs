@@ -3,10 +3,10 @@
 
 public class UFOMovement : MonoBehaviour
 {
-    [SerializeField] private float _ufoMovementSpeed;
+    [SerializeField, Min(1)] private float _ufoMovementSpeed;
     private Rigidbody2D _rigidbodyUFO;
 
-    private GameObject _plaeyrObject;
+    private GameObject _playerObject;
 
     private void Start()
     {
@@ -15,11 +15,11 @@ public class UFOMovement : MonoBehaviour
 
     public void SetPlayer(GameObject playerObject)
     {
-        _plaeyrObject = playerObject;
+        _playerObject = playerObject;
     }
 
 
-    void Update()
+    private void Update()
     {
         MoveToPlayer();
         CheckBorder();
@@ -27,7 +27,7 @@ public class UFOMovement : MonoBehaviour
 
     private void MoveToPlayer()
     {
-        transform.position = Vector3.MoveTowards(transform.position,_plaeyrObject.transform.position, _ufoMovementSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position,_playerObject.transform.position, _ufoMovementSpeed * Time.deltaTime);
     }
 
     private void CheckBorder()
