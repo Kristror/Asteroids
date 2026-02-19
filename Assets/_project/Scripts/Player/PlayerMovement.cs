@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField, Min(0)] private float _movementSpeed;
+
     private Rigidbody2D _rigidBodyPlayer;
 
     private Keyboard _keyboard;
@@ -13,8 +14,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidBodyPlayer = GetComponent<Rigidbody2D>();
         _keyboard = Keyboard.current;
-    }
-    
+    }    
 
     private void Update()
     {
@@ -26,9 +26,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_keyboard.wKey.isPressed || _keyboard.upArrowKey.isPressed)
         {
-            _rigidBodyPlayer.AddForce(this.transform.up * _movementSpeed, ForceMode2D.Force);
+            _rigidBodyPlayer.AddForce(transform.up * _movementSpeed, ForceMode2D.Force);
         }
     }
+
     private void CheckBorder()
     {
         Vector2 newPosition = BorderController.CheckIfObjectOnBorder(transform.position);

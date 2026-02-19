@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-
 public class GameStarter : MonoBehaviour
 {
-    [SerializeField] GameObject _prefabPlayer;
-    [SerializeField] GameObject _enemySpawner;
-    [SerializeField] GameObject _prefabUI;
+    [SerializeField] private GameObject _prefabPlayer;
+    [SerializeField] private GameObject _enemySpawner;
+    [SerializeField] private GameObject _prefabUI;
 
     private void Awake()
     {

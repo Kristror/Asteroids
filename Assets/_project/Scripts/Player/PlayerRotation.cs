@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerRotation : MonoBehaviour
 {
     [SerializeField, Min(0)] private float _rotationSpeed;
+
     private Rigidbody2D _rigidBodyPlayer;
 
     private Keyboard _keyboard;

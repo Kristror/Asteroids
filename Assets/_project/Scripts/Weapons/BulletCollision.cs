@@ -14,7 +14,7 @@ public class BulletCollision : MonoBehaviour
     {
         if (collider.TryGetComponent<BaseEnemy>(out _))
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

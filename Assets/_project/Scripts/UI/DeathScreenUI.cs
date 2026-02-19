@@ -14,7 +14,6 @@ public class DeathScreenUI : MonoBehaviour
 
     private string scoreText = "ScoreController : ";
 
-
     private void Start()
     {
         _restartGame.onClick.AddListener(RestartGame);

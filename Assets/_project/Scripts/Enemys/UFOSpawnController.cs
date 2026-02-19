@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
 
-
 public class UFOSpawnController : EnemyControllerBase
 {
-    private GameObject _playerObject;
-
-    public void SetPlayer(GameObject playerObject)
-    {
-        _playerObject = playerObject;
-    }
+    private GameObject _playerObject;    
 
     private void Update()
     {
         SpawnUFO();
     }
+    public void SetPlayer(GameObject playerObject)
+    {
+        _playerObject = playerObject;
+    }
 
     private void SpawnUFO()
     {
-        if (isTimeToSpawnEnemy())
+        if (ShouldSpawnEnemy())
         {
             UFOMovement ufoMovement = SpawnEnemy().GetComponent<UFOMovement>();
 

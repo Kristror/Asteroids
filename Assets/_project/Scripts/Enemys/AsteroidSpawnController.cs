@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.RuleTile.TilingRuleOutput;
-
 
 public class AsteroidSpawnController : EnemyControllerBase
 {    
@@ -12,10 +9,9 @@ public class AsteroidSpawnController : EnemyControllerBase
 
     private void SpawnAsteroid()
     {
-        if (isTimeToSpawnEnemy())
+        if (ShouldSpawnEnemy())
         {
             GameObject asteroid =  SpawnEnemy();
-
 
             Vector2 screenSize = ScreenSize.GetScreenSizeInUnits();
 

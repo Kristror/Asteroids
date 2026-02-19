@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 public class Lazer : MonoBehaviour
 {
     private float _lazerDuration;
@@ -13,12 +12,12 @@ public class Lazer : MonoBehaviour
 
     public void Shoot()
     {
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
 
         StartCoroutine(LazerActivity());
     }
 
-    IEnumerator LazerActivity()
+    private IEnumerator LazerActivity()
     {
         yield return new WaitForSeconds(_lazerDuration);
         Deactivate();
@@ -26,6 +25,6 @@ public class Lazer : MonoBehaviour
 
     private void Deactivate()
     {
-        this.gameObject.SetActive(false); 
+        gameObject.SetActive(false); 
     }
 }

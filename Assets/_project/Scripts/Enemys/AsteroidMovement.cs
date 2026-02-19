@@ -7,25 +7,27 @@ public class AsteroidMovement : MonoBehaviour
 
     private Rigidbody2D _rigidBody;
 
-    public void Start()
+    private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
     }
-
-    public void SetMovementSpeed(float speed)
-    {
-        if( speed > 0) AsteroidMovementSpeed = speed;
-    }
-
     private void Update()
     {
         Move();
         CheckBorder();
     }
 
+    public void SetMovementSpeed(float speed)
+    {
+        if (speed > 0)
+        {
+            AsteroidMovementSpeed = speed;
+        }
+    }    
+
     private void Move()
     {
-        _rigidBody.AddForce((this.transform.up * AsteroidMovementSpeed), ForceMode2D.Force);
+        _rigidBody.AddForce((transform.up * AsteroidMovementSpeed), ForceMode2D.Force);
     }
 
     private void CheckBorder()

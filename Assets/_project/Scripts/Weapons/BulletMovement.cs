@@ -7,6 +7,10 @@ public class BulletMovement : MonoBehaviour
     [SerializeField, Min(0)] private float _bulletMovementSpeed;
 
     private Rigidbody2D _rigidBody;
+    private void Update()
+    {
+        Move();
+    }
 
     public void Shoot(Transform bulletStartPosition)
     {
@@ -14,13 +18,8 @@ public class BulletMovement : MonoBehaviour
         transform.rotation = bulletStartPosition.rotation;
 
         _rigidBody = GetComponent<Rigidbody2D>();
-        Destroy(this.gameObject, _timeToLive);
-    }
-
-    private void Update()
-    {
-        Move();
-    }
+        Destroy(gameObject, _timeToLive);
+    }    
 
     private void Move()
     {

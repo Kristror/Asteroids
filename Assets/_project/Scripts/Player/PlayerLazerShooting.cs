@@ -19,6 +19,7 @@ public class PlayerLazerShooting : MonoBehaviour
     private Lazer _lazer;
 
     private Mouse _mouse;
+
     private void Start()
     {
         Ammo = _maxAmmo;
@@ -33,6 +34,7 @@ public class PlayerLazerShooting : MonoBehaviour
         LazerShooting();
         Reload();
     }
+
     public float TimeToReload()
     {
         float reloadTime = (_timeToReload - (Time.time - _timeOflastShot));

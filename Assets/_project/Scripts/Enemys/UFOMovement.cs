@@ -6,25 +6,22 @@ public class UFOMovement : MonoBehaviour
     [SerializeField, Min(0)] private float _ufoMovementSpeed;
 
     private Rigidbody2D _rigidbody;
-
     private Transform _playerObject;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
-
-    public void SetPlayer(GameObject playerObject)
-    {
-        _playerObject = playerObject.transform;
-    }
-
-
     private void Update()
     {
         MoveToPlayer();
         CheckBorder();
     }
+
+    public void SetPlayer(GameObject playerObject)
+    {
+        _playerObject = playerObject.transform;
+    }   
 
     private void MoveToPlayer()
     {

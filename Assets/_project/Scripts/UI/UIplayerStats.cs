@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 
-
 public class UIplayerStats : MonoBehaviour
 {
     [SerializeField] private TMP_Text _textPosition;
@@ -14,13 +13,7 @@ public class UIplayerStats : MonoBehaviour
     private GameObject _playerGameObject;
     private Rigidbody2D _playerRigidBody;
     private PlayerLazerShooting _playerLazerShooting;
-
-    public void SetPlayer(GameObject playerObject)
-    {
-        _playerGameObject = playerObject;
-        _playerRigidBody = playerObject.GetComponent<Rigidbody2D>();
-        _playerLazerShooting = playerObject.GetComponent<PlayerLazerShooting>();
-    }
+    
     private void Update()
     {
         _textPosition.text  = _playerGameObject.transform.position.ToString();
@@ -29,5 +22,11 @@ public class UIplayerStats : MonoBehaviour
 
         _textLazerAmmo.text = _playerLazerShooting.Ammo.ToString();
         _textLazerReloadTime.text = Math.Round(_playerLazerShooting.TimeToReload(), 1).ToString();
+    }
+    public void SetPlayer(GameObject playerObject)
+    {
+        _playerGameObject = playerObject;
+        _playerRigidBody = playerObject.GetComponent<Rigidbody2D>();
+        _playerLazerShooting = playerObject.GetComponent<PlayerLazerShooting>();
     }
 }

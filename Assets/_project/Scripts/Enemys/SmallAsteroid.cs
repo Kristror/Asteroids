@@ -12,16 +12,15 @@ public class SmallAsteroid : BaseEnemy
         _asteroidMovement = GetComponent<AsteroidMovement>();
         RotateAtRandomAngle();
     }
-
-    private void RotateAtRandomAngle()
-    {
-        this.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-    }
-
-    public override void Collision(Collider2D collision) {}
-
     public void SetSpeed(float speed)
     {
         _asteroidMovement.SetMovementSpeed(speed * _asteroidSpeedMult);
     }
+
+    private void RotateAtRandomAngle()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+    }
+
+    protected override void Collision() {}    
 }
