@@ -1,37 +1,41 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Weapons;
 
-public class PlayerBulletShooting : MonoBehaviour
+namespace Player
 {
-    [SerializeField, Min(0)] private float _shootingSpeed;
-    [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] private Transform _bulletStartPosition;
-
-    private float _timeOflastShot = 0;
-
-    private Mouse _mouse;
-
-    private void Start()
+    public class PlayerBulletShooting : MonoBehaviour
     {
-        _mouse = Mouse.current;
-    }
+        [SerializeField, Min(0)] private float _shootingSpeed;
+        [SerializeField] private GameObject _bulletPrefab;
+        [SerializeField] private Transform _bulletStartPosition;
 
-    private void Update()
-    {
-        Shoot ();
-    }
+        private float _timeOflastShot = 0;
 
-    private void Shoot()
-    {
-        bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
+        private Mouse _mouse;
 
-        if (_mouse.leftButton.wasPressedThisFrame && isEnoughTimePassed)
+        private void Start()
         {
-            GameObject bullet = GameObject.Instantiate(_bulletPrefab);
+            _mouse = Mouse.current;
+        }
 
-            bullet.GetComponent<BulletMovement>().Shoot(_bulletStartPosition);
-            
-            _timeOflastShot = Time.time;
+        private void Update()
+        {
+            Shoot();
+        }
+
+        private void Shoot()
+        {
+            bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
+
+            if (_mouse.leftButton.wasPressedThisFrame && isEnoughTimePassed)
+            {
+                GameObject bullet = GameObject.Instantiate(_bulletPrefab);
+
+                bullet.GetComponent<BulletMovement>().Shoot(_bulletStartPosition);
+
+                _timeOflastShot = Time.time;
+            }
         }
     }
 }

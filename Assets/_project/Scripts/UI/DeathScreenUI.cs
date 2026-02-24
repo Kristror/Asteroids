@@ -1,42 +1,44 @@
-﻿using TMPro;
+﻿using Player;
+using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-public class DeathScreenUI : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private TMP_Text _textScore;
-    [SerializeField] private Button _restartGame;
-    [SerializeField] private GameObject _deathScreen;
-
-    private PlayerCollision _playerCollision;
-
-    private string scoreText = "ScoreController : ";
-
-    private void Start()
+    public class DeathScreenUI : MonoBehaviour
     {
-        _restartGame.onClick.AddListener(RestartGame);
-        _deathScreen.SetActive(false);
-    }
+        [SerializeField] private TMP_Text _textScore;
+        [SerializeField] private Button _restartGame;
+        [SerializeField] private GameObject _deathScreen;
 
-    public void SetPlayer(GameObject playerObject)
-    {
-        _playerCollision = playerObject.GetComponentInChildren<PlayerCollision>();
-    }
+        private PlayerCollision _playerCollision;
 
-    private void Update()
-    {
-        if (_playerCollision.IsPlayerDead) 
+        private string scoreText = "ScoreController : ";
+
+        private void Start()
         {
-            _deathScreen.SetActive(true);
-            _textScore.text = scoreText + ScoreController.PlayerScore;
+            _restartGame.onClick.AddListener(RestartGame);
+            _deathScreen.SetActive(false);
         }
-    }
 
-    private void RestartGame()
-    {
-        TimeController.ResumeTime();
-        SceneController.ReloadGame();
+        public void SetPlayer(GameObject playerObject)
+        {
+            _playerCollision = playerObject.GetComponentInChildren<PlayerCollision>();
+        }
+
+        private void Update()
+        {
+            if (_playerCollision.IsPlayerDead)
+            {
+                _deathScreen.SetActive(true);
+                _textScore.text = scoreText + ScoreController.PlayerScore;
+            }
+        }
+
+        private void RestartGame()
+        {
+            TimeController.ResumeTime();
+            SceneController.ReloadGame();
+        }
     }
 }

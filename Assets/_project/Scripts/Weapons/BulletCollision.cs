@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
+using Enemies;
 
-[RequireComponent(typeof(Collider2D))]
-public class BulletCollision : MonoBehaviour
+namespace Weapons
 {
-    private Collider2D _colliderBullet;
-
-    private void Start()
+    [RequireComponent(typeof(Collider2D))]
+    public class BulletCollision : MonoBehaviour
     {
-        _colliderBullet = GetComponent<Collider2D>();
-    }
+        private Collider2D _colliderBullet;
 
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.TryGetComponent<BaseEnemy>(out _))
+        private void Start()
         {
-            Destroy(gameObject);
+            _colliderBullet = GetComponent<Collider2D>();
+        }
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.TryGetComponent<BaseEnemy>(out _))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

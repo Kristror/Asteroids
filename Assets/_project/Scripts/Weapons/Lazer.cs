@@ -1,30 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Lazer : MonoBehaviour
+namespace Weapons
 {
-    private float _lazerDuration;
-
-    public void SetLazerDuration(float lazerDuration)
+    public class Lazer : MonoBehaviour
     {
-        _lazerDuration = lazerDuration;
-    }
+        private float _lazerDuration;
 
-    public void Shoot()
-    {
-        gameObject.SetActive(true);
+        public void SetLazerDuration(float lazerDuration)
+        {
+            _lazerDuration = lazerDuration;
+        }
 
-        StartCoroutine(LazerActivity());
-    }
+        public void Shoot()
+        {
+            gameObject.SetActive(true);
 
-    private IEnumerator LazerActivity()
-    {
-        yield return new WaitForSeconds(_lazerDuration);
-        Deactivate();
-    }
+            StartCoroutine(LazerActivity());
+        }
 
-    private void Deactivate()
-    {
-        gameObject.SetActive(false); 
+        private IEnumerator LazerActivity()
+        {
+            yield return new WaitForSeconds(_lazerDuration);
+            Deactivate();
+        }
+
+        private void Deactivate()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

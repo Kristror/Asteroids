@@ -1,24 +1,28 @@
 using UnityEngine;
+using Enemies;
 
-[RequireComponent(typeof(Collider2D))]
-public class PlayerCollision : MonoBehaviour
+namespace Player
 {
-    private Collider2D _colliderPlayer;
-
-    public bool IsPlayerDead { get; private set; }
-
-    private void Start()
+    [RequireComponent(typeof(Collider2D))]
+    public class PlayerCollision : MonoBehaviour
     {
-        _colliderPlayer = GetComponent<Collider2D>();
-        IsPlayerDead  = false;
-    }
+        public bool IsPlayerDead { get; private set; }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<BaseEnemy> (out _))
+        private Collider2D _colliderPlayer;
+
+        private void Start()
         {
-            IsPlayerDead = true;
-            TimeController.StopTime();
+            _colliderPlayer = GetComponent<Collider2D>();
+            IsPlayerDead = false;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent<BaseEnemy>(out _))
+            {
+                IsPlayerDead = true;
+                TimeController.StopTime();
+            }
         }
     }
 }

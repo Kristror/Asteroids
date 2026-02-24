@@ -1,42 +1,46 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour
+namespace Player
 {
-    [SerializeField, Min(0)] private float _movementSpeed;
-
-    private Rigidbody2D _rigidBodyPlayer;
-
-    private Keyboard _keyboard;
-
-    private void Start()
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class PlayerMovement : MonoBehaviour
     {
-        _rigidBodyPlayer = GetComponent<Rigidbody2D>();
-        _keyboard = Keyboard.current;
-    }    
+        [SerializeField, Min(0)] private float _movementSpeed;
 
-    private void Update()
-    {
-        Move();
-        CheckBorder();
-    }   
+        private Rigidbody2D _rigidBodyPlayer;
 
-    private void Move()
-    {
-        if (_keyboard.wKey.isPressed || _keyboard.upArrowKey.isPressed)
+        private Keyboard _keyboard;
+
+        private void Start()
         {
-            _rigidBodyPlayer.AddForce(transform.up * _movementSpeed, ForceMode2D.Force);
+            _rigidBodyPlayer = GetComponent<Rigidbody2D>();
+            _keyboard = Keyboard.current;
         }
-    }
 
-    private void CheckBorder()
-    {
-        Vector2 newPosition = BorderController.CheckIfObjectOnBorder(transform.position);
+        private void Update()
+        {
+            Move();
+            CheckBorder();
+        }
 
-        if (newPosition != Vector2.zero)         {
+        private void Move()
+        {
+            if (_keyboard.wKey.isPressed || _keyboard.upArrowKey.isPressed)
+            {
+                _rigidBodyPlayer.AddForce(transform.up * _movementSpeed, ForceMode2D.Force);
+            }
+        }
 
-            _rigidBodyPlayer.position = newPosition;
+        private void CheckBorder()
+        {
+            Vector2 newPosition = BorderController.CheckIfObjectOnBorder(transform.position);
+
+            if (newPosition != Vector2.zero)
+            {
+
+                _rigidBodyPlayer.position = newPosition;
+            }
         }
     }
 }

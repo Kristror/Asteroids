@@ -1,81 +1,84 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Weapons;
 
-
-public class PlayerLazerShooting : MonoBehaviour
+namespace Player
 {
-    [SerializeField, Min(1)] private int _maxAmmo;
-    [SerializeField, Min(0)] private float _timeToReload;
-    [SerializeField, Min(0)] private float _shootingSpeed;
-    [SerializeField, Min(0)] private float _lazerDuration;
-    [SerializeField] private GameObject _lazerObject;
-
-    public int Ammo { get; private set; }
-
-    private float _timeOflastShot = 0;
-    private float _timeOfReloadStart = 0;
-
-    private bool _isReloading = false;
-    private Lazer _lazer;
-
-    private Mouse _mouse;
-
-    private void Start()
+    public class PlayerLazerShooting : MonoBehaviour
     {
-        Ammo = _maxAmmo;
-        _lazer = _lazerObject.GetComponent<Lazer>();
-        _lazer.SetLazerDuration(_lazerDuration);
+        [SerializeField, Min(1)] private int _maxAmmo;
+        [SerializeField, Min(0)] private float _timeToReload;
+        [SerializeField, Min(0)] private float _shootingSpeed;
+        [SerializeField, Min(0)] private float _lazerDuration;
+        [SerializeField] private GameObject _lazerObject;
 
-        _mouse = Mouse.current;
-    }
+        public int Ammo { get; private set; }
 
-    private void Update()
-    {
-        LazerShooting();
-        Reload();
-    }
+        private float _timeOflastShot = 0;
+        private float _timeOfReloadStart = 0;
 
-    public float TimeToReload()
-    {
-        float reloadTime = (_timeToReload - (Time.time - _timeOflastShot));
+        private bool _isReloading = false;
+        private Lazer _lazer;
 
-        if (reloadTime > 0)
+        private Mouse _mouse;
+
+        private void Start()
         {
-            return reloadTime;
+            Ammo = _maxAmmo;
+            _lazer = _lazerObject.GetComponent<Lazer>();
+            _lazer.SetLazerDuration(_lazerDuration);
+
+            _mouse = Mouse.current;
         }
 
-        return 0;
-    }
-
-    private void Reload()
-    {
-        if (!_isReloading)
+        private void Update()
         {
-            if (Ammo < _maxAmmo)
+            LazerShooting();
+            Reload();
+        }
+
+        public float TimeToReload()
+        {
+            float reloadTime = (_timeToReload - (Time.time - _timeOflastShot));
+
+            if (reloadTime > 0)
             {
-                _timeOfReloadStart = Time.time;
-                _isReloading = true;
+                return reloadTime;
+            }
+
+            return 0;
+        }
+
+        private void Reload()
+        {
+            if (!_isReloading)
+            {
+                if (Ammo < _maxAmmo)
+                {
+                    _timeOfReloadStart = Time.time;
+                    _isReloading = true;
+                }
+            }
+            else
+            {
+                if (_timeToReload < Time.time - _timeOfReloadStart)
+                {
+                    Ammo++;
+                    _isReloading = false;
+                }
             }
         }
-        else
+
+        private void LazerShooting()
         {
-            if (_timeToReload < Time.time - _timeOfReloadStart)
+            bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
+
+            if (_mouse.rightButton.wasPressedThisFrame && isEnoughTimePassed && (Ammo > 0))
             {
-                Ammo++;
-                _isReloading = false;
+                _lazer.Shoot();
+                Ammo--;
+                _timeOflastShot = Time.time;
             }
-        }
-    }
-
-    private void LazerShooting()
-    {
-        bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
-
-        if (_mouse.rightButton.wasPressedThisFrame && isEnoughTimePassed && (Ammo > 0))
-        {
-            _lazer.Shoot();
-            Ammo--;
-            _timeOflastShot = Time.time;
         }
     }
 }

@@ -429,12 +429,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1108490163864765945, guid: 8ddffada896451142870c8d70da37d58, type: 3}
       propertyPath: m_Name
-      value: GameController
+      value: GameStarter
       objectReference: {fileID: 0}
-    - target: {fileID: 8107381314320229629, guid: 8ddffada896451142870c8d70da37d58, type: 3}
-      propertyPath: _enemySpawner
-      value: 
-      objectReference: {fileID: 817078276568905925, guid: 2d8a5664bb526944eb6c6df1d4d62adc, type: 3}
     - target: {fileID: 8128144520548196648, guid: 8ddffada896451142870c8d70da37d58, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
