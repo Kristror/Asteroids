@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilites;
 
 namespace UI
 {
@@ -12,8 +13,11 @@ namespace UI
         [SerializeField] private GameObject _deathScreen;
 
         private PlayerCollision _playerCollision;
+        private SceneController _sceneController;
+        private TimeController _timeController;
+        private ScoreController _scoreController;
 
-        private string scoreText = "ScoreController : ";
+        private string scoreText = "Score : ";
 
         private void Start()
         {
@@ -21,9 +25,12 @@ namespace UI
             _deathScreen.SetActive(false);
         }
 
-        public void SetPlayer(GameObject playerObject)
+        public void SetDependencies(GameObject playerObject, SceneController sceneController, TimeController timeController, ScoreController scoreController)
         {
             _playerCollision = playerObject.GetComponentInChildren<PlayerCollision>();
+            _sceneController = sceneController;
+            _timeController = timeController;
+            _scoreController = scoreController;
         }
 
         private void Update()
@@ -31,14 +38,14 @@ namespace UI
             if (_playerCollision.IsPlayerDead)
             {
                 _deathScreen.SetActive(true);
-                _textScore.text = scoreText + ScoreController.PlayerScore;
+                _textScore.text = scoreText + _scoreController.PlayerScore;
             }
         }
 
         private void RestartGame()
         {
-            TimeController.ResumeTime();
-            SceneController.ReloadGame();
+            _timeController.ResumeTime();
+            _sceneController.ReloadGame();
         }
     }
 }

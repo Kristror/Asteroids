@@ -13,17 +13,16 @@ namespace Enemies
         {
             _asteroidMovement = GetComponent<AsteroidMovement>();
             RotateAtRandomAngle();
+            MultiplySpeed();
         }
-        public void SetSpeed(float speed)
+        private void MultiplySpeed()
         {
-            _asteroidMovement.SetMovementSpeed(speed * _asteroidSpeedMult);
+            _asteroidMovement.MultiplySpeed(_asteroidSpeedMult);
         }
 
         private void RotateAtRandomAngle()
         {
             transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
         }
-
-        protected override void Collision() { }
     }
 }

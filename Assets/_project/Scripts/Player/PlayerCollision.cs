@@ -1,5 +1,6 @@
 using UnityEngine;
 using Enemies;
+using Utilites;
 
 namespace Player
 {
@@ -9,6 +10,7 @@ namespace Player
         public bool IsPlayerDead { get; private set; }
 
         private Collider2D _colliderPlayer;
+        private TimeController _timeController;
 
         private void Start()
         {
@@ -16,12 +18,17 @@ namespace Player
             IsPlayerDead = false;
         }
 
+        public void SetDependencies(TimeController timeController)
+        {
+            _timeController = timeController;
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<BaseEnemy>(out _))
             {
                 IsPlayerDead = true;
-                TimeController.StopTime();
+                _timeController.StopTime();
             }
         }
     }

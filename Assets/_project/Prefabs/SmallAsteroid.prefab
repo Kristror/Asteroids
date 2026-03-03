@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b5fa40199ed6543834a29093862104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AsteroidMovementSpeed>k__BackingField: 1
+  _asteroidMovementSpeed: 0.2
 --- !u!114 &-1068020739520512202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e418907c5f323e147aa35ddee3ebb3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _asteroidMovement: {fileID: 6274937213200084589}
   _asteroidSpeedMult: 1.25
 --- !u!50 &-4224571656375228767
 Rigidbody2D:

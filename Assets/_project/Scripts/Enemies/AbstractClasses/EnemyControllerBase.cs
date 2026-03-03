@@ -1,22 +1,32 @@
 ﻿using UnityEngine;
+using Utilites;
 
 namespace Enemies
 {
     public abstract class EnemyControllerBase : MonoBehaviour
     {
-        [SerializeField] private GameObject _enemyObject;
+        [SerializeField] protected GameObject _enemyObject;
         [SerializeField, Min(0)] private float _timeToSpawn;
 
         private float _timeOfLastSpawn;
 
-        private Camera _mainCamera;
+        protected BaseFactory _factory;
+        protected Camera _mainCamera;
+
+        protected ScoreController _scoreController;
 
         private void Awake()
         {
             _timeOfLastSpawn = Time.time;
             _mainCamera = Camera.main;
         }
-        public bool ShouldSpawnEnemy()
+
+        public void SetScoreScontroller(ScoreController scoreController)
+        {
+            _scoreController = scoreController;
+        }
+
+        protected bool ShouldSpawnEnemy()
         {
             if (_timeOfLastSpawn < Time.time - _timeToSpawn)
             {
@@ -29,7 +39,7 @@ namespace Enemies
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
             _timeOfLastSpawn = Time.time;
-            return GameObject.Instantiate(_enemyObject, spawnPosition, Quaternion.identity);
+            return _factory.CreateEnemy(spawnPosition).gameObject;
 
         }
 

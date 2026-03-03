@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using Weapons;
 
 namespace Enemies
@@ -6,21 +7,21 @@ namespace Enemies
     [RequireComponent(typeof(Collider2D))]
     public abstract class BaseEnemy : MonoBehaviour
     {
+        public UnityAction Destroyed;
+        public UnityAction Killed;
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<BulletCollision>(out _))
             {
-                ScoreController.KilledEnemy();
-                Collision();
+                Killed?.Invoke();
                 Destroy(gameObject);
             }
             if (collision.TryGetComponent<Lazer>(out _))
             {
-                ScoreController.KilledEnemy();
+                Destroyed?.Invoke();
                 Destroy(gameObject);
             }
         }
-
-        protected virtual void Collision() { }
     }
 }

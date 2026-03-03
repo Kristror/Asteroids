@@ -5,7 +5,7 @@ namespace Enemies
     [RequireComponent(typeof(Rigidbody2D))]
     public class AsteroidMovement : MonoBehaviour
     {
-        [field: SerializeField, Min(0)] public float AsteroidMovementSpeed { get; private set; }
+        [SerializeField, Min(0)] private float _asteroidMovementSpeed;
 
         private Rigidbody2D _rigidBody;
 
@@ -13,23 +13,26 @@ namespace Enemies
         {
             _rigidBody = GetComponent<Rigidbody2D>();
         }
+
         private void Update()
         {
             Move();
             CheckBorder();
         }
 
-        public void SetMovementSpeed(float speed)
+        public void MultiplySpeed(float multiplier)
         {
-            if (speed > 0)
+            float newSpeed = _asteroidMovementSpeed * multiplier;
+
+            if (newSpeed > 0)
             {
-                AsteroidMovementSpeed = speed;
+                _asteroidMovementSpeed = newSpeed;
             }
         }
 
         private void Move()
         {
-            _rigidBody.AddForce((transform.up * AsteroidMovementSpeed), ForceMode2D.Force);
+            _rigidBody.AddForce((transform.up * _asteroidMovementSpeed), ForceMode2D.Force);
         }
 
         private void CheckBorder()

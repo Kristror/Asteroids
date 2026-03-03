@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidSpawnController
   _enemyObject: {fileID: 5434302770225157985, guid: 9b0ff762ddf41a44d817d8a601277f8f, type: 3}
   _timeToSpawn: 5
+  _amountOfpieces: 2
+  _smallAsteroid: {fileID: 5434302770225157985, guid: ae4b0c508cb4b29488e068221f493fc0, type: 3}
 --- !u!114 &3540452012271918737
 MonoBehaviour:
   m_ObjectHideFlags: 0
