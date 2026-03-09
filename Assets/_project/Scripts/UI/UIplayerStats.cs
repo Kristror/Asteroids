@@ -13,22 +13,30 @@ namespace UI
         [SerializeField] private TMP_Text _textLazerAmmo;
         [SerializeField] private TMP_Text _textLazerReloadTime;
 
-        private GameObject _playerGameObject;
         private Rigidbody2D _playerRigidBody;
         private PlayerLazerShooting _playerLazerShooting;
 
         private void Update()
         {
-            _textPosition.text = _playerGameObject.transform.position.ToString();
-            _textRotation.text = Math.Round(_playerGameObject.transform.rotation.eulerAngles.z, 1).ToString();
-            _textSpeed.text = Math.Round(_playerRigidBody.linearVelocity.magnitude, 1).ToString();
+            ShowPlayerInfo();
+            ShowLazerInfo();
+        }
 
+        private void ShowLazerInfo()
+        {
             _textLazerAmmo.text = _playerLazerShooting.Ammo.ToString();
             _textLazerReloadTime.text = Math.Round(_playerLazerShooting.TimeToReload(), 1).ToString();
         }
+
+        private void ShowPlayerInfo()
+        {
+            _textPosition.text = _playerRigidBody.transform.position.ToString();
+            _textRotation.text = Math.Round(_playerRigidBody.transform.rotation.eulerAngles.z, 1).ToString();
+            _textSpeed.text = Math.Round(_playerRigidBody.linearVelocity.magnitude, 1).ToString();
+        }
+
         public void SetPlayer(GameObject playerObject)
         {
-            _playerGameObject = playerObject;
             _playerRigidBody = playerObject.GetComponent<Rigidbody2D>();
             _playerLazerShooting = playerObject.GetComponent<PlayerLazerShooting>();
         }

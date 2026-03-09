@@ -1,26 +1,26 @@
+﻿using System;
 using UnityEngine;
-using UnityEngine.Events;
 using Weapons;
 
 namespace Enemies
 {
     [RequireComponent(typeof(Collider2D))]
-    public abstract class BaseEnemy : MonoBehaviour
+    public class EnemyCollision : MonoBehaviour
     {
-        public UnityAction Destroyed;
-        public UnityAction Killed;
+        private Action Killed;
+        private Action Destroyed;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<BulletCollision>(out _))
             {
                 Killed?.Invoke();
-                Destroy(gameObject);
+                GameObject.Destroy(gameObject);
             }
             if (collision.TryGetComponent<Lazer>(out _))
             {
                 Destroyed?.Invoke();
-                Destroy(gameObject);
+                GameObject.Destroy(gameObject);
             }
         }
     }

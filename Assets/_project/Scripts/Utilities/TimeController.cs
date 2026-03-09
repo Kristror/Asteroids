@@ -1,15 +1,23 @@
-﻿using UnityEngine;
+﻿using Player;
+using UI;
+using UnityEngine;
 
 namespace Utilites
 {
     public class TimeController
     {
-        public void StopTime()
+        public TimeController(PlayerController playerController, UIController uIController)
+        {
+            playerController.PlayerDeath += StopTime;
+            uIController.RestartGame += ResumeTime;
+        }
+
+        private void StopTime()
         {
             Time.timeScale = 0;
         }
 
-        public void ResumeTime()
+        private void ResumeTime()
         {
             Time.timeScale = 1;
         }

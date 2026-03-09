@@ -1,12 +1,19 @@
-﻿namespace Utilites
+﻿using Enemies;
+
+namespace Utilites
 {
     public class ScoreController
     {
         private int _pointsForEnemy = 2;
-
         public int PlayerScore { get; private set; }
 
-        public void ResetScore()
+        public ScoreController(EnemiesController enemiesController) 
+        {
+            enemiesController.EnemyKilled += KilledEnemy;
+            ResetScore();
+        }
+
+        private void ResetScore()
         {
             PlayerScore = 0;
         }

@@ -1,4 +1,5 @@
 ﻿using Player;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,40 +13,37 @@ namespace UI
         [SerializeField] private Button _restartGame;
         [SerializeField] private GameObject _deathScreen;
 
-        private PlayerCollision _playerCollision;
+
         private SceneController _sceneController;
         private TimeController _timeController;
         private ScoreController _scoreController;
 
         private string scoreText = "Score : ";
 
+        public Action RestartGame;
+
         private void Start()
         {
-            _restartGame.onClick.AddListener(RestartGame);
+            _restartGame.onClick.AddListener(StartRestartGame);
             _deathScreen.SetActive(false);
         }
 
-        public void SetDependencies(GameObject playerObject, SceneController sceneController, TimeController timeController, ScoreController scoreController)
+        public void SetDependencies(PlayerController playerController, ScoreController scoreController, Action restartGame)
         {
-            _playerCollision = playerObject.GetComponentInChildren<PlayerCollision>();
-            _sceneController = sceneController;
-            _timeController = timeController;
+            playerController.PlayerDeath += PlayerDeath;
             _scoreController = scoreController;
+            RestartGame = restartGame;
         }
 
-        private void Update()
+        private void PlayerDeath()
         {
-            if (_playerCollision.IsPlayerDead)
-            {
-                _deathScreen.SetActive(true);
-                _textScore.text = scoreText + _scoreController.PlayerScore;
-            }
+            _deathScreen.SetActive(true);
+            _textScore.text = scoreText + _scoreController.PlayerScore;
         }
 
-        private void RestartGame()
+        private void StartRestartGame()
         {
-            _timeController.ResumeTime();
-            _sceneController.ReloadGame();
+            RestartGame?.Invoke();
         }
     }
 }

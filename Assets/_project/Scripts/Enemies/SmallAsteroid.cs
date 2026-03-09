@@ -3,7 +3,7 @@
 namespace Enemies
 {
     [RequireComponent(typeof(AsteroidMovement))]
-    public class SmallAsteroid : BaseEnemy
+    public class SmallAsteroid : MonoBehaviour
     {
         [SerializeField, Min(1)] private float _asteroidSpeedMult;
 

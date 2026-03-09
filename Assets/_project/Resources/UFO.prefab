@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 436318165942775399}
   - component: {fileID: 1948698722156222591}
   - component: {fileID: 3634831071007502630}
-  - component: {fileID: 1685572022207912609}
   - component: {fileID: 7338940026372364238}
   - component: {fileID: 4695996349629820234}
+  - component: {fileID: 5732093823261741892}
   m_Layer: 0
   m_Name: UFO
   m_TagString: Enemy
@@ -146,18 +146,6 @@ PolygonCollider2D:
       - {x: 0, y: -0.25}
       - {x: 0.5, y: 0}
   m_UseDelaunayMesh: 0
---- !u!114 &1685572022207912609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8156049091929572642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52685c39b97c3034ab6fbe252701df4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7338940026372364238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,3 +186,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5732093823261741892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8156049091929572642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e00a81606c1745428f74bc430f14502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyCollision

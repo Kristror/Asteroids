@@ -2,13 +2,13 @@
 
 namespace Enemies
 {
-    public class UFOSpawnController : EnemyControllerBase
+    public class UFOSpawnController : AbstractEnemySpawnController
     {
         private GameObject _playerObject;
 
         private void Start()
         {
-            _factory = new UFOFactory(_enemyObject);
+            _factory = new EnemyFactory();
         }
 
         private void Update()
@@ -25,12 +25,11 @@ namespace Enemies
         {
             if (ShouldSpawnEnemy())
             {
-                GameObject ufoObject = SpawnEnemy();
+                Enemy ufo = SpawnEnemy(EnemyType.UFO);
 
-                UFOMovement ufoMovement = ufoObject.GetComponent<UFOMovement>();
-                UFO ufo = ufoObject.GetComponent<UFO>();
+                UFOMovement ufoMovement = ufo.EnemyInstance.GetComponent<UFOMovement>();
 
-                ufo.Destroyed += _scoreController.KilledEnemy;
+                //ufo.Destroyed += _scoreController.KilledEnemy;
 
                 ufoMovement.SetPlayer(_playerObject);
             }

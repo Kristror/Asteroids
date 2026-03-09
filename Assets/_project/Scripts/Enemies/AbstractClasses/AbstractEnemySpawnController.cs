@@ -3,14 +3,14 @@ using Utilites;
 
 namespace Enemies
 {
-    public abstract class EnemyControllerBase : MonoBehaviour
+    public abstract class AbstractEnemySpawnController : MonoBehaviour
     {
-        [SerializeField] protected GameObject _enemyObject;
         [SerializeField, Min(0)] private float _timeToSpawn;
+
 
         private float _timeOfLastSpawn;
 
-        protected BaseFactory _factory;
+        protected EnemyFactory _factory;
         protected Camera _mainCamera;
 
         protected ScoreController _scoreController;
@@ -19,10 +19,11 @@ namespace Enemies
         {
             _timeOfLastSpawn = Time.time;
             _mainCamera = Camera.main;
+            _factory = new EnemyFactory();
         }
 
         public void SetScoreScontroller(ScoreController scoreController)
-        {
+        {///
             _scoreController = scoreController;
         }
 
@@ -35,11 +36,11 @@ namespace Enemies
             return false;
         }
 
-        protected GameObject SpawnEnemy()
+        protected Enemy SpawnEnemy(EnemyType enemyType)
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
             _timeOfLastSpawn = Time.time;
-            return _factory.CreateEnemy(spawnPosition).gameObject;
+            return _factory.CreateEnemy(enemyType, spawnPosition);
 
         }
 

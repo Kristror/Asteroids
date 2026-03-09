@@ -2,6 +2,7 @@
 
 public static class BorderController
 {
+    // убрать
     private static Camera _camera;
 
     private static float _borderOffSet = 0.5f;

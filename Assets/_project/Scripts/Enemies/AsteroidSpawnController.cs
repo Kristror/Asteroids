@@ -3,19 +3,9 @@ using Utilites;
 
 namespace Enemies
 {
-    public class AsteroidSpawnController : EnemyControllerBase
+    public class AsteroidSpawnController : AbstractEnemySpawnController
     {
-
         [SerializeField, Min(1)] private int _amountOfpieces;
-        [SerializeField] private GameObject _smallAsteroid;
-
-        private SmallAsteroidFactory _smallAsteroidFactory;
-
-        private void Start()
-        {
-            _factory = new AsteroidFactory(_enemyObject);
-            _smallAsteroidFactory = new SmallAsteroidFactory(_smallAsteroid);
-        }
 
         private void Update()
         {
@@ -26,34 +16,36 @@ namespace Enemies
         {
             if (ShouldSpawnEnemy())
             {
-                GameObject asteroidObject = SpawnEnemy();
+                Enemy asteroid = SpawnEnemy(EnemyType.Asteroid);
 
-                Asteroid asteroid = asteroidObject.GetComponent<Asteroid>();
+                //asteroid.Killed += SpawnSmallAsteroids;
+                //asteroid.Destroyed += _scoreController.KilledEnemy;
 
-                asteroid.Killed += SpawnSmallAsteroids;
-                asteroid.Destroyed += _scoreController.KilledEnemy; 
-
-                Vector2 screenSize = GetScreenSizeInUnits();
-
-                float x = Random.Range(0, screenSize.x);
-                float y = Random.Range(0, screenSize.y);
-
-                Vector2 direction = new Vector3(x, y) - asteroidObject.transform.position;
-                asteroidObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
+                RandomRotate(asteroid);
             }
+        }
+
+        private void RandomRotate(Enemy asteroid)
+        {
+            Vector2 screenSize = GetScreenSizeInUnits();
+
+            float x = Random.Range(0, screenSize.x);
+            float y = Random.Range(0, screenSize.y);
+
+            Vector2 direction = new Vector3(x, y) - asteroid.EnemyInstance.transform.position;
+            asteroid.EnemyInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
         }
 
         private void SpawnSmallAsteroids()
         {
             for (int i = 0; i < _amountOfpieces; i++)
             {
-                GameObject smallAsteroid = SpawnEnemy();
+                Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid);
 
-                Asteroid asteroid = smallAsteroid.GetComponent<Asteroid>();
-                asteroid.Destroyed += _scoreController.KilledEnemy;
+                //smallAsteroid.Destroyed += _scoreController.KilledEnemy;
 
-                smallAsteroid.transform.position = new Vector2(smallAsteroid.transform.position.x + Random.Range(-0.1f, 0.1f),
-                    smallAsteroid.transform.position.y + Random.Range(-0.1f, 0.1f));                
+                smallAsteroid.EnemyInstance.transform.position = new Vector2(smallAsteroid.EnemyInstance.transform.position.x + Random.Range(-0.1f, 0.1f),
+                    smallAsteroid.EnemyInstance.transform.position.y + Random.Range(-0.1f, 0.1f));                
             }
         }
 
@@ -65,6 +57,5 @@ namespace Enemies
 
             return new Vector2(screenWidthInUnits, screenHeightInUnits);
         }
-
     }
 }
