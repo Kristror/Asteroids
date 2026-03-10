@@ -1,19 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Utilites;
+using Random = UnityEngine.Random;
 
-namespace Enemies
+namespace Enemies.Spawners
 {
     public abstract class AbstractEnemySpawnController : MonoBehaviour
     {
         [SerializeField, Min(0)] private float _timeToSpawn;
-
+        protected ScoreController _scoreController;
 
         private float _timeOfLastSpawn;
 
         protected EnemyFactory _factory;
         protected Camera _mainCamera;
-
-        protected ScoreController _scoreController;
 
         private void Awake()
         {
@@ -22,8 +22,8 @@ namespace Enemies
             _factory = new EnemyFactory();
         }
 
-        public void SetScoreScontroller(ScoreController scoreController)
-        {///
+        public void SetScoreController(ScoreController scoreController)
+        {
             _scoreController = scoreController;
         }
 

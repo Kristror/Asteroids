@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using Utilites;
 
-namespace Enemies
+namespace Enemies.Spawners
 {
     public class AsteroidSpawnController : AbstractEnemySpawnController
     {
@@ -18,8 +17,9 @@ namespace Enemies
             {
                 Enemy asteroid = SpawnEnemy(EnemyType.Asteroid);
 
-                //asteroid.Killed += SpawnSmallAsteroids;
-                //asteroid.Destroyed += _scoreController.KilledEnemy;
+                asteroid.Killed += _scoreController.KilledEnemy;
+                asteroid.Killed += SpawnSmallAsteroids;
+                asteroid.Destroyed += _scoreController.KilledEnemy;
 
                 RandomRotate(asteroid);
             }
@@ -42,7 +42,8 @@ namespace Enemies
             {
                 Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid);
 
-                //smallAsteroid.Destroyed += _scoreController.KilledEnemy;
+                smallAsteroid.Killed += _scoreController.KilledEnemy;
+                smallAsteroid.Destroyed = _scoreController.KilledEnemy;
 
                 smallAsteroid.EnemyInstance.transform.position = new Vector2(smallAsteroid.EnemyInstance.transform.position.x + Random.Range(-0.1f, 0.1f),
                     smallAsteroid.EnemyInstance.transform.position.y + Random.Range(-0.1f, 0.1f));                

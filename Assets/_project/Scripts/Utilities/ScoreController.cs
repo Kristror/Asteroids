@@ -7,9 +7,8 @@ namespace Utilites
         private int _pointsForEnemy = 2;
         public int PlayerScore { get; private set; }
 
-        public ScoreController(EnemiesController enemiesController) 
+        public ScoreController() 
         {
-            enemiesController.EnemyKilled += KilledEnemy;
             ResetScore();
         }
 

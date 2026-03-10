@@ -1,4 +1,4 @@
-﻿namespace Enemies
+﻿namespace Enemies.Spawners
 {
     public enum EnemyType 
     {

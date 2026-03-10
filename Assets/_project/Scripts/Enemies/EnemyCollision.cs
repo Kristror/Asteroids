@@ -7,8 +7,8 @@ namespace Enemies
     [RequireComponent(typeof(Collider2D))]
     public class EnemyCollision : MonoBehaviour
     {
-        private Action Killed;
-        private Action Destroyed;
+        public Action Killed;
+        public Action Destroyed;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

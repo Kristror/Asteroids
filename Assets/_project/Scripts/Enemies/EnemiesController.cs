@@ -1,6 +1,5 @@
-﻿using Player;
-using System;
-using System.Collections;
+﻿using Enemies.Spawners;
+using Player;
 using UnityEngine;
 using Utilites;
 
@@ -8,12 +7,10 @@ namespace Enemies
 {
     public class EnemiesController
     {
-        public Action EnemyKilled;
-
         private AsteroidSpawnController _asteroidSpawnController;
         private UFOSpawnController _ufoSpawnController;
 
-        public EnemiesController(PlayerController playerController)
+        public EnemiesController(PlayerController playerController, ScoreController scoreController)
         {
             GameObject _enemySpawnerPrefab = Resources.Load<GameObject>("EnemySpawner");
             GameObject enemySpawner = GameObject.Instantiate(_enemySpawnerPrefab);
@@ -22,18 +19,18 @@ namespace Enemies
             _ufoSpawnController = enemySpawner.GetComponent<UFOSpawnController>();
 
             SetPlayer(playerController);
+            SetScoreController(scoreController);
         }
 
-        private void SetDependencies(ScoreController scoreController)
+        private void SetScoreController(ScoreController scoreController)
         {
-            /////////очки
-            _asteroidSpawnController.SetScoreScontroller(scoreController);
-            _ufoSpawnController.SetScoreScontroller(scoreController);
+            _asteroidSpawnController.SetScoreController(scoreController);
+            _ufoSpawnController.SetScoreController(scoreController);
         }
 
         private void SetPlayer(PlayerController playerController)
         {
-            _ufoSpawnController.SetPlayer(playerController.playerInstance);
+            _ufoSpawnController.SetPlayer(playerController);
         }
     }
     

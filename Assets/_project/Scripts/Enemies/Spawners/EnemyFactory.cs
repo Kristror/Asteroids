@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Enemies
+namespace Enemies.Spawners
 {
     public class EnemyFactory 
     {

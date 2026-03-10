@@ -7,15 +7,23 @@ namespace UI
 {
     public class UIController
     {
-        public Action RestartGame;
+        public Action RestartGame 
+        {
+            get { return _deathUI.RestartGame; }
+            set { _deathUI.RestartGame = value; }
+        }
+
+        private DeathScreenUI _deathUI;
 
         public UIController(PlayerController playerController, ScoreController scoreController)
         {
             GameObject _uiPrefab = Resources.Load<GameObject>("GameUI");
             GameObject ui = GameObject.Instantiate(_uiPrefab);
 
-            ui.GetComponentInChildren<DeathScreenUI>().SetDependencies(playerController, scoreController, RestartGame);
-            ui.GetComponentInChildren<UIplayerStats>().SetPlayer(playerController.playerInstance);
+
+            _deathUI = ui.GetComponentInChildren<DeathScreenUI>();
+            _deathUI.SetDependencies(playerController, scoreController);
+            ui.GetComponentInChildren<UIplayerStats>().SetPlayer(playerController.PlayerInstance);
         }
     }
 }

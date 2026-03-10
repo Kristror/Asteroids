@@ -7,12 +7,7 @@ namespace Player
     [RequireComponent(typeof(Collider2D))]
     public class PlayerCollision : MonoBehaviour
     {
-        private Action PlayerDeath;
-
-        public void SetAction(Action playerDeath)
-        {
-            PlayerDeath = playerDeath;
-        }
+        public Action PlayerDeath;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

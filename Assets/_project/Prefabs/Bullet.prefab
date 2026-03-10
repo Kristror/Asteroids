@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeToLive: 3
-  _bulletMovementSpeed: 1
+  _bulletMovementSpeed: 3
 --- !u!114 &-3962913893953356126
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Player;
+using UnityEngine;
 
-namespace Enemies
+namespace Enemies.Spawners
 {
     public class UFOSpawnController : AbstractEnemySpawnController
     {
-        private GameObject _playerObject;
+        private PlayerController _playerController;
 
         private void Start()
         {
@@ -16,9 +17,9 @@ namespace Enemies
             SpawnUFO();
         }
 
-        public void SetPlayer(GameObject playerObject)
+        public void SetPlayer(PlayerController playerController)
         {
-            _playerObject = playerObject;
+            _playerController = playerController;
         }
 
         private void SpawnUFO()
@@ -29,9 +30,10 @@ namespace Enemies
 
                 UFOMovement ufoMovement = ufo.EnemyInstance.GetComponent<UFOMovement>();
 
-                //ufo.Destroyed += _scoreController.KilledEnemy;
+                ufo.Killed += _scoreController.KilledEnemy;
+                ufo.Destroyed += _scoreController.KilledEnemy;
 
-                ufoMovement.SetPlayer(_playerObject);
+                ufoMovement.SetPlayer(_playerController.PlayerInstance);
             }
         }
     }

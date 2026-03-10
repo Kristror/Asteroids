@@ -9,6 +9,8 @@ namespace UI
 {
     public class DeathScreenUI : MonoBehaviour
     {
+        public Action RestartGame;
+
         [SerializeField] private TMP_Text _textScore;
         [SerializeField] private Button _restartGame;
         [SerializeField] private GameObject _deathScreen;
@@ -20,19 +22,16 @@ namespace UI
 
         private string scoreText = "Score : ";
 
-        public Action RestartGame;
-
         private void Start()
         {
             _restartGame.onClick.AddListener(StartRestartGame);
             _deathScreen.SetActive(false);
         }
 
-        public void SetDependencies(PlayerController playerController, ScoreController scoreController, Action restartGame)
+        public void SetDependencies(PlayerController playerController, ScoreController scoreController)
         {
             playerController.PlayerDeath += PlayerDeath;
             _scoreController = scoreController;
-            RestartGame = restartGame;
         }
 
         private void PlayerDeath()

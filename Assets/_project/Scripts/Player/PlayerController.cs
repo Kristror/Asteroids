@@ -1,18 +1,19 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
-using Utilites;
 
 namespace Player
 {
     public class PlayerController
     {
-        public Action PlayerDeath;
+        public Action PlayerDeath 
+        {
+            get { return _playerCollision.PlayerDeath; }
+            set { _playerCollision.PlayerDeath = value; }
+        }
 
         private PlayerCollision _playerCollision;
-        private TimeController _timeController;
 
-        public GameObject playerInstance { get; private set; }
+        public GameObject PlayerInstance { get; private set; }
 
         public PlayerController()
         {
@@ -20,11 +21,9 @@ namespace Player
 
             //передвать ввод отдельно в классы
 
-            playerInstance = GameObject.Instantiate(_prefabPlayer);
+            PlayerInstance = GameObject.Instantiate(_prefabPlayer);
 
-            _playerCollision = playerInstance.GetComponentInChildren<PlayerCollision>();
-
-            _playerCollision.SetAction(PlayerDeath);
+            _playerCollision = PlayerInstance.GetComponentInChildren<PlayerCollision>();
         }
     }
 }

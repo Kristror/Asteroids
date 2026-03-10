@@ -8,7 +8,7 @@ namespace Weapons
     {
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.TryGetComponent<Enemy>(out _))
+            if (collider.TryGetComponent<EnemyCollision>(out _))
             {
                 Destroy(gameObject);
             }

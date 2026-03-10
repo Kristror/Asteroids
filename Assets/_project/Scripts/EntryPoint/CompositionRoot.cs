@@ -1,7 +1,6 @@
 ﻿using Enemies;
 using Player;
 using UI;
-using UnityEngine;
 using Utilites;
 
 namespace EntryPoint
@@ -11,9 +10,9 @@ namespace EntryPoint
         public void Initialize()
         {
             PlayerController playerController = new PlayerController();
-            EnemiesController enemiesController = new EnemiesController(playerController);
+            ScoreController scoreController = new ScoreController();
 
-            ScoreController scoreController = new ScoreController(enemiesController);
+            EnemiesController enemiesController = new EnemiesController(playerController, scoreController);
             UIController uiController = new UIController(playerController, scoreController);
 
             TimeController timeController = new TimeController(playerController, uiController);
