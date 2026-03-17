@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Utilites;
 
 namespace Enemies
 {
@@ -8,6 +9,7 @@ namespace Enemies
         [SerializeField, Min(0)] private float _asteroidMovementSpeed;
 
         private Rigidbody2D _rigidBody;
+        private BorderController _borderController;
 
         private void Start()
         {
@@ -18,6 +20,12 @@ namespace Enemies
         {
             Move();
             CheckBorder();
+        }
+
+        public void SetBorderController(BorderController borderController)
+        {
+            _borderController = borderController;
+
         }
 
         public void MultiplySpeed(float multiplier)
@@ -37,7 +45,7 @@ namespace Enemies
 
         private void CheckBorder()
         {
-            Vector2 newPosition = BorderController.CheckIfObjectOnBorder(transform.position);
+            Vector2 newPosition = _borderController.CheckIfObjectOnBorder(transform.position);
 
             if (newPosition != Vector2.zero)
             {

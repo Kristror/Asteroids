@@ -1,10 +1,8 @@
-﻿using Enemies;
-
-namespace Utilites
+﻿namespace Utilites
 {
     public class ScoreController
     {
-        private int _pointsForEnemy = 2;
+        private const int _pointsForEnemy = 2;
         public int PlayerScore { get; private set; }
 
         public ScoreController() 

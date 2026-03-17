@@ -10,14 +10,14 @@ namespace Enemies
             get { return _enemyCollision.Destroyed; }
             set { _enemyCollision.Destroyed = value; }
         }
-        public Action Killed
+        public Action<Vector2> Killed
         {
             get { return _enemyCollision.Killed; }
             set { _enemyCollision.Killed = value; }
         }
+        public GameObject EnemyInstance { get; private set; }
 
         private EnemyCollision _enemyCollision;
-        public GameObject EnemyInstance { get; private set; }
 
         public Enemy(GameObject enemyObject)
         {

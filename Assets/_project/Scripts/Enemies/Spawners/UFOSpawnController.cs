@@ -30,10 +30,9 @@ namespace Enemies.Spawners
 
                 UFOMovement ufoMovement = ufo.EnemyInstance.GetComponent<UFOMovement>();
 
-                ufo.Killed += _scoreController.KilledEnemy;
                 ufo.Destroyed += _scoreController.KilledEnemy;
 
-                ufoMovement.SetPlayer(_playerController.PlayerInstance);
+                ufoMovement.SetDependencies(_playerController.PlayerInstance, _borderController);
             }
         }
     }

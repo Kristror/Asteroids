@@ -9,10 +9,11 @@ namespace EntryPoint
     {
         public void Initialize()
         {
-            PlayerController playerController = new PlayerController();
+            BorderController borderController = new BorderController();
             ScoreController scoreController = new ScoreController();
 
-            EnemiesController enemiesController = new EnemiesController(playerController, scoreController);
+            PlayerController playerController = new PlayerController(borderController);
+            EnemiesController enemiesController = new EnemiesController(playerController, scoreController, borderController);
             UIController uiController = new UIController(playerController, scoreController);
 
             TimeController timeController = new TimeController(playerController, uiController);

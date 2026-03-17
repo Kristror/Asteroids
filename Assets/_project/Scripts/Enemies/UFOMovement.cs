@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Utilites;
 
 namespace Enemies
 {
@@ -9,20 +10,23 @@ namespace Enemies
 
         private Rigidbody2D _rigidbody;
         private Transform _playerObject;
+        private BorderController _borderController;
 
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
         }
+
         private void Update()
         {
             MoveToPlayer();
             CheckBorder();
         }
 
-        public void SetPlayer(GameObject playerObject)
+        public void SetDependencies(GameObject playerObject, BorderController borderController)
         {
             _playerObject = playerObject.transform;
+            _borderController = borderController;
         }
 
         private void MoveToPlayer()
@@ -34,7 +38,7 @@ namespace Enemies
 
         private void CheckBorder()
         {
-            Vector2 newPosition = BorderController.CheckIfObjectOnBorder(transform.position);
+            Vector2 newPosition = _borderController.CheckIfObjectOnBorder(transform.position);
 
             if (newPosition != Vector2.zero)
             {

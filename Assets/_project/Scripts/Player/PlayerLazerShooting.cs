@@ -20,21 +20,21 @@ namespace Player
         private bool _isReloading = false;
         private Lazer _lazer;
 
-        private Mouse _mouse;
-
         private void Start()
         {
             Ammo = _maxAmmo;
             _lazer = _lazerObject.GetComponent<Lazer>();
             _lazer.SetLazerDuration(_lazerDuration);
-
-            _mouse = Mouse.current;
         }
 
         private void Update()
         {
-            LazerShooting();
             Reload();
+        }
+
+        public void SetDependencies(PlayerInputController inputController)
+        {
+            inputController.ShootLazer += ShootLazer;
         }
 
         public float TimeToReload()
@@ -69,11 +69,11 @@ namespace Player
             }
         }
 
-        private void LazerShooting()
+        private void ShootLazer()
         {
             bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
 
-            if (_mouse.rightButton.wasPressedThisFrame && isEnoughTimePassed && (Ammo > 0))
+            if (isEnoughTimePassed && (Ammo > 0))
             {
                 _lazer.Shoot();
                 Ammo--;

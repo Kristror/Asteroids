@@ -7,14 +7,15 @@ namespace Enemies
     [RequireComponent(typeof(Collider2D))]
     public class EnemyCollision : MonoBehaviour
     {
-        public Action Killed;
+        public Action<Vector2> Killed;
         public Action Destroyed;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<BulletCollision>(out _))
             {
-                Killed?.Invoke();
+                Killed?.Invoke(transform.position);
+                Destroyed?.Invoke();
                 GameObject.Destroy(gameObject);
             }
             if (collision.TryGetComponent<Lazer>(out _))

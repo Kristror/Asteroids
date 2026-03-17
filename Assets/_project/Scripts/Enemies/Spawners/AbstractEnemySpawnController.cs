@@ -1,19 +1,18 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Utilites;
-using Random = UnityEngine.Random;
 
 namespace Enemies.Spawners
 {
     public abstract class AbstractEnemySpawnController : MonoBehaviour
     {
         [SerializeField, Min(0)] private float _timeToSpawn;
+
         protected ScoreController _scoreController;
-
-        private float _timeOfLastSpawn;
-
+        protected BorderController _borderController;
         protected EnemyFactory _factory;
         protected Camera _mainCamera;
+
+        private float _timeOfLastSpawn;
 
         private void Awake()
         {
@@ -22,9 +21,10 @@ namespace Enemies.Spawners
             _factory = new EnemyFactory();
         }
 
-        public void SetScoreController(ScoreController scoreController)
+        public void SetDependencies(ScoreController scoreController, BorderController borderController)
         {
             _scoreController = scoreController;
+            _borderController = borderController;
         }
 
         protected bool ShouldSpawnEnemy()
@@ -42,6 +42,12 @@ namespace Enemies.Spawners
             _timeOfLastSpawn = Time.time;
             return _factory.CreateEnemy(enemyType, spawnPosition);
 
+        }
+
+        protected Enemy SpawnEnemy(EnemyType enemyType, Vector2 spawnPosition)
+        {
+            _timeOfLastSpawn = Time.time;
+            return _factory.CreateEnemy(enemyType, spawnPosition);
         }
 
         private Vector2 GetRandomSpawnPosition()

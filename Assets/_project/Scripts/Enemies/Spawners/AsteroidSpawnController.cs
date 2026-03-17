@@ -6,6 +6,8 @@ namespace Enemies.Spawners
     {
         [SerializeField, Min(1)] private int _amountOfpieces;
 
+        private const float _smallAsteroidSpawnOffSet = 0.2f;
+
         private void Update()
         {
             SpawnAsteroid();
@@ -17,7 +19,8 @@ namespace Enemies.Spawners
             {
                 Enemy asteroid = SpawnEnemy(EnemyType.Asteroid);
 
-                asteroid.Killed += _scoreController.KilledEnemy;
+                asteroid.EnemyInstance.GetComponent<AsteroidMovement>().SetBorderController(_borderController);
+
                 asteroid.Killed += SpawnSmallAsteroids;
                 asteroid.Destroyed += _scoreController.KilledEnemy;
 
@@ -36,17 +39,18 @@ namespace Enemies.Spawners
             asteroid.EnemyInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
         }
 
-        private void SpawnSmallAsteroids()
+        private void SpawnSmallAsteroids(Vector2 position)
         {
             for (int i = 0; i < _amountOfpieces; i++)
             {
-                Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid);
+                Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, position);
 
-                smallAsteroid.Killed += _scoreController.KilledEnemy;
+                smallAsteroid.EnemyInstance.GetComponent<AsteroidMovement>().SetBorderController(_borderController);
+
                 smallAsteroid.Destroyed = _scoreController.KilledEnemy;
 
-                smallAsteroid.EnemyInstance.transform.position = new Vector2(smallAsteroid.EnemyInstance.transform.position.x + Random.Range(-0.1f, 0.1f),
-                    smallAsteroid.EnemyInstance.transform.position.y + Random.Range(-0.1f, 0.1f));                
+                smallAsteroid.EnemyInstance.transform.position = new Vector2(smallAsteroid.EnemyInstance.transform.position.x + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet),
+                    smallAsteroid.EnemyInstance.transform.position.y + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet));                
             }
         }
 

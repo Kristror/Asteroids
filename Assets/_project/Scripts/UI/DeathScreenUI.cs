@@ -20,7 +20,7 @@ namespace UI
         private TimeController _timeController;
         private ScoreController _scoreController;
 
-        private string scoreText = "Score : ";
+        private const string scoreText = "Score : ";
 
         private void Start()
         {

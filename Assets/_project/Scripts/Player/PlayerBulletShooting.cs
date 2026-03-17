@@ -7,32 +7,27 @@ namespace Player
     public class PlayerBulletShooting : MonoBehaviour
     {
         [SerializeField, Min(0)] private float _shootingSpeed;
-        [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletStartPosition;
 
         private float _timeOflastShot = 0;
-
-        private Mouse _mouse;
+        private BulletSpawner _bulletFactory;
 
         private void Start()
         {
-            _mouse = Mouse.current;
+            _bulletFactory = new BulletSpawner();
         }
-
-        private void Update()
+        public void SetDependencies(PlayerInputController inputController)
         {
-            Shoot();
+            inputController.ShootBullet += Shoot;
         }
 
         private void Shoot()
         {
             bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
 
-            if (_mouse.leftButton.wasPressedThisFrame && isEnoughTimePassed)
+            if (isEnoughTimePassed)
             {
-                GameObject bullet = GameObject.Instantiate(_bulletPrefab);
-
-                bullet.GetComponent<BulletMovement>().Shoot(_bulletStartPosition);
+                _bulletFactory.SpawnBullet(_bulletStartPosition);
 
                 _timeOflastShot = Time.time;
             }
