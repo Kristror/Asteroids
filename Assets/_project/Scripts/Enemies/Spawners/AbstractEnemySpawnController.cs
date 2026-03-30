@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Utilites;
+using Zenject;
 
 namespace Enemies.Spawners
 {
@@ -8,7 +9,6 @@ namespace Enemies.Spawners
         [SerializeField, Min(0)] private float _timeToSpawn;
 
         protected ScoreController _scoreController;
-        protected BorderController _borderController;
         protected EnemyFactory _factory;
         protected Camera _mainCamera;
 
@@ -18,13 +18,13 @@ namespace Enemies.Spawners
         {
             _timeOfLastSpawn = Time.time;
             _mainCamera = Camera.main;
-            _factory = new EnemyFactory();
         }
 
-        public void SetDependencies(ScoreController scoreController, BorderController borderController)
+        [Inject]
+        public void Construct(ScoreController scoreController, EnemyFactory factory)
         {
             _scoreController = scoreController;
-            _borderController = borderController;
+            _factory = factory;
         }
 
         protected bool ShouldSpawnEnemy()
@@ -40,14 +40,14 @@ namespace Enemies.Spawners
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
             _timeOfLastSpawn = Time.time;
-            return _factory.CreateEnemy(enemyType, spawnPosition);
+            return _factory.Create(enemyType, spawnPosition);
 
         }
 
         protected Enemy SpawnEnemy(EnemyType enemyType, Vector2 spawnPosition)
         {
             _timeOfLastSpawn = Time.time;
-            return _factory.CreateEnemy(enemyType, spawnPosition);
+            return _factory.Create(enemyType, spawnPosition);
         }
 
         private Vector2 GetRandomSpawnPosition()

@@ -11,15 +11,13 @@ namespace Enemies.Spawners
         private void Update()
         {
             SpawnAsteroid();
-        }        
+        }
 
         private void SpawnAsteroid()
         {
             if (ShouldSpawnEnemy())
             {
                 Enemy asteroid = SpawnEnemy(EnemyType.Asteroid);
-
-                asteroid.EnemyInstance.GetComponent<AsteroidMovement>().SetBorderController(_borderController);
 
                 asteroid.Killed += SpawnSmallAsteroids;
                 asteroid.Destroyed += _scoreController.KilledEnemy;
@@ -44,8 +42,6 @@ namespace Enemies.Spawners
             for (int i = 0; i < _amountOfpieces; i++)
             {
                 Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, position);
-
-                smallAsteroid.EnemyInstance.GetComponent<AsteroidMovement>().SetBorderController(_borderController);
 
                 smallAsteroid.Destroyed = _scoreController.KilledEnemy;
 

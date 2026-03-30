@@ -164,7 +164,6 @@ GameObject:
   - component: {fileID: 5648883001520658644}
   - component: {fileID: 1307084206930866049}
   - component: {fileID: 3020136917402259003}
-  - component: {fileID: 3368625230950844673}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -230,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _movementSpeed: 0.5
-  _rotationSpeed: 1
+  _rotationSpeed: 0.2
 --- !u!114 &1307084206930866049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,18 +261,6 @@ MonoBehaviour:
   _shootingSpeed: 3
   _lazerDuration: 2
   _lazerObject: {fileID: 3334544127456473933}
---- !u!114 &3368625230950844673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5804629590611808013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70cf04b8c1377064cb088c123bea8bad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player.PLayerInputController
 --- !u!1 &6241787106418837605
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +342,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.091415524, g: 1, b: 0, a: 1}

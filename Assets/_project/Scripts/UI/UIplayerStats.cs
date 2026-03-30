@@ -2,6 +2,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace UI
 {
@@ -22,6 +23,15 @@ namespace UI
             ShowLazerInfo();
         }
 
+        [Inject]
+        public void Construct(PlayerController playerController)
+        {
+            GameObject playerObject = playerController.PlayerInstance;
+
+            _playerRigidBody = playerObject.GetComponent<Rigidbody2D>();
+            _playerLazerShooting = playerObject.GetComponent<PlayerLazerShooting>();
+        }
+
         private void ShowLazerInfo()
         {
             _textLazerAmmo.text = _playerLazerShooting.Ammo.ToString();
@@ -34,11 +44,6 @@ namespace UI
             _textRotation.text = Math.Round(_playerRigidBody.transform.rotation.eulerAngles.z, 1).ToString();
             _textSpeed.text = Math.Round(_playerRigidBody.linearVelocity.magnitude, 1).ToString();
         }
-
-        public void SetPlayer(GameObject playerObject)
-        {
-            _playerRigidBody = playerObject.GetComponent<Rigidbody2D>();
-            _playerLazerShooting = playerObject.GetComponent<PlayerLazerShooting>();
-        }
+       
     }
 }

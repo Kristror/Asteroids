@@ -1,10 +1,10 @@
 ﻿using System;
-using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Player
 {
-    public class PlayerInputController : MonoBehaviour
+    public class PlayerInputController : ITickable
     {
         public Action ShootBullet;
         public Action ShootLazer;
@@ -14,13 +14,13 @@ namespace Player
         private Keyboard _keyboard;
         private Mouse _mouse;
 
-        public void Start()
+        public PlayerInputController()
         {
             _keyboard = Keyboard.current;
             _mouse = Mouse.current;
         }
 
-        private void Update()
+        public void Tick()
         {
             CheckMouse();
             CheckKeyboard();

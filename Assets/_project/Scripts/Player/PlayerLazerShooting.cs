@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Weapons;
+using Zenject;
 
 namespace Player
 {
@@ -32,7 +32,8 @@ namespace Player
             Reload();
         }
 
-        public void SetDependencies(PlayerInputController inputController)
+        [Inject]
+        public void Construct(PlayerInputController inputController)
         {
             inputController.ShootLazer += ShootLazer;
         }

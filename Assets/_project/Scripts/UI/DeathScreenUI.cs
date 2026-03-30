@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilites;
+using Zenject;
 
 namespace UI
 {
@@ -28,7 +29,8 @@ namespace UI
             _deathScreen.SetActive(false);
         }
 
-        public void SetDependencies(PlayerController playerController, ScoreController scoreController)
+        [Inject]
+        public void Construct(PlayerController playerController, ScoreController scoreController)
         {
             playerController.PlayerDeath += PlayerDeath;
             _scoreController = scoreController;

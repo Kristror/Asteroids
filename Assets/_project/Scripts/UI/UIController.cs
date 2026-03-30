@@ -15,15 +15,11 @@ namespace UI
 
         private DeathScreenUI _deathUI;
 
-        public UIController(PlayerController playerController, ScoreController scoreController)
+        public UIController(PlayerController playerController, ScoreController scoreController, UIFactory uIFactory)
         {
-            GameObject _uiPrefab = Resources.Load<GameObject>("GameUI");
-            GameObject ui = GameObject.Instantiate(_uiPrefab);
+            GameObject ui = uIFactory.Create().gameObject;
 
-
-            _deathUI = ui.GetComponentInChildren<DeathScreenUI>();
-            _deathUI.SetDependencies(playerController, scoreController);
-            ui.GetComponentInChildren<UIplayerStats>().SetPlayer(playerController.PlayerInstance);
+            _deathUI = ui.GetComponent<DeathScreenUI>();
         }
     }
 }

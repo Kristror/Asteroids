@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Utilites;
 
 namespace Player
 {
@@ -16,19 +15,11 @@ namespace Player
 
         private PlayerCollision _playerCollision;
 
-        public PlayerController(BorderController borderController)
+        public PlayerController(PlayerFactory playerFactory)
         {
-            GameObject _prefabPlayer = Resources.Load<GameObject>("Player");
-
-            PlayerInstance = GameObject.Instantiate(_prefabPlayer);
+            PlayerInstance = playerFactory.Create().gameObject;
 
             _playerCollision = PlayerInstance.GetComponentInChildren<PlayerCollision>();
-
-            PlayerInputController inputController = PlayerInstance.GetComponent<PlayerInputController>();
-
-            PlayerInstance.GetComponent<PlayerMovement>().SetDependencies(inputController ,borderController);
-            PlayerInstance.GetComponent<PlayerBulletShooting>().SetDependencies(inputController);
-            PlayerInstance.GetComponent<PlayerLazerShooting>().SetDependencies(inputController);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Utilites;
+using Zenject;
 
 namespace Enemies
 {
@@ -22,7 +23,8 @@ namespace Enemies
             CheckBorder();
         }
 
-        public void SetBorderController(BorderController borderController)
+        [Inject]
+        public void Construct(BorderController borderController)
         {
             _borderController = borderController;
 

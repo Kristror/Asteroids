@@ -1,23 +1,29 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace Enemies.Spawners
 {
-    public class EnemyFactory 
+    public class EnemyFactory
     {
+        private readonly DiContainer _container;
+
         private GameObject _asteroidObject;
         private GameObject _smallAsteroidObject;
         private GameObject _ufoObject;
 
-        public EnemyFactory() 
+        public EnemyFactory(DiContainer container) 
         {
+            _container = container;
+
             _asteroidObject = Resources.Load<GameObject>("Asteroid");
             _smallAsteroidObject = Resources.Load<GameObject>("SmallAsteroid");
             _ufoObject = Resources.Load<GameObject>("UFO");
         }
 
-        public Enemy CreateEnemy(EnemyType enemyType,Vector2 position) 
+        public Enemy Create(EnemyType enemyType,Vector2 position) 
         {
             GameObject enemyObject;
+
             switch (enemyType)
             {
                 case EnemyType.Asteroid:
@@ -34,7 +40,8 @@ namespace Enemies.Spawners
                     break;
             }
 
-            Enemy enemy = new Enemy(GameObject.Instantiate(enemyObject,position, Quaternion.identity));
+            Enemy enemy = new Enemy(_container.InstantiatePrefab(enemyObject));
+            enemy.EnemyInstance.transform.position = position;
             return enemy;
         }
     }

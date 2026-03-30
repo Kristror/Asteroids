@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Player;
+using UnityEngine;
 using Utilites;
+using Zenject;
 
 namespace Enemies
 {
@@ -9,7 +11,7 @@ namespace Enemies
         [SerializeField, Min(0)] private float _ufoMovementSpeed;
 
         private Rigidbody2D _rigidbody;
-        private Transform _playerObject;
+        private Transform _playerTransform;
         private BorderController _borderController;
 
         private void Start()
@@ -23,15 +25,16 @@ namespace Enemies
             CheckBorder();
         }
 
-        public void SetDependencies(GameObject playerObject, BorderController borderController)
+        [Inject]
+        public void Construct(PlayerController playerController, BorderController borderController)
         {
-            _playerObject = playerObject.transform;
+            _playerTransform = playerController.PlayerInstance.transform;
             _borderController = borderController;
         }
 
         private void MoveToPlayer()
         {
-            Vector2 direction = (_playerObject.position - transform.position).normalized;
+            Vector2 direction = (_playerTransform.position - transform.position).normalized;
 
             _rigidbody.AddForce(direction * _ufoMovementSpeed, ForceMode2D.Force);
         }

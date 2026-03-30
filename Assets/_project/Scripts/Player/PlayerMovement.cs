@@ -1,5 +1,6 @@
 using UnityEngine;
 using Utilites;
+using Zenject;
 
 namespace Player
 {
@@ -22,7 +23,8 @@ namespace Player
             CheckBorder();
         }
 
-        public void SetDependencies(PlayerInputController inputController,BorderController borderController)
+        [Inject]
+        public void Construct(PlayerInputController inputController, BorderController borderController)
         {
             _borderController = borderController;
 
