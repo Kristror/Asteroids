@@ -263,8 +263,8 @@ GameObject:
   - component: {fileID: 2449728455610665077}
   - component: {fileID: 3292080705238316531}
   - component: {fileID: 6339489711510149735}
-  - component: {fileID: 5576633354259868954}
-  - component: {fileID: 4659672946140050632}
+  - component: {fileID: 2536082575903715612}
+  - component: {fileID: 6118866556997078593}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5576633354259868954
+--- !u!114 &2536082575903715612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -365,29 +365,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 3229905760586734197}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 570aec303c3767c41bcdd241b320401a, type: 3}
+  m_Script: {fileID: 11500000, guid: 59ba00221e1f0c141885491d2667362d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UI.UIplayerStats
+  m_EditorClassIdentifier: Assembly-CSharp::UI.DeathUIView
+  _textScore: {fileID: 6616810137019612238}
+  _restartGameButon: {fileID: 5051660526466381180}
+  _deathScreen: {fileID: 1238170770599396399}
+--- !u!114 &6118866556997078593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3229905760586734197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d6111526a206844b06af49829a5691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.PlayerStatsUIView
   _textPosition: {fileID: 5311251160363195225}
   _textRotation: {fileID: 4992039571834634916}
   _textSpeed: {fileID: 823838970426130546}
   _textLazerAmmo: {fileID: 3871655408614774063}
   _textLazerReloadTime: {fileID: 4706148127309245846}
---- !u!114 &4659672946140050632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3229905760586734197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5ae0d40d73cb8440a9eadc571c76639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UI.DeathScreenUI
-  _textScore: {fileID: 6616810137019612238}
-  _restartGame: {fileID: 5051660526466381180}
-  _deathScreen: {fileID: 1238170770599396399}
 --- !u!1 &3843523988444857215
 GameObject:
   m_ObjectHideFlags: 0

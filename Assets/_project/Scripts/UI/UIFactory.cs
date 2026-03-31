@@ -2,7 +2,7 @@
 
 namespace UI
 {
-    public class UIFactory : PlaceholderFactory<UIplayerStats>
+    public class UIFactory : PlaceholderFactory<PlayerStatsUIView>
     {
     }
 }

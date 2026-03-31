@@ -5,7 +5,7 @@ namespace Utilites
 {
     public class SceneController
     {
-        public SceneController(UIController uIController)
+        public SceneController(UIManager uIController)
         {
             uIController.RestartGame += ReloadGame;
         }

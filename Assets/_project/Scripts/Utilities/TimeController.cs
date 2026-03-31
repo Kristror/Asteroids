@@ -6,7 +6,7 @@ namespace Utilites
 {
     public class TimeController
     {
-        public TimeController(PlayerController playerController, UIController uIController)
+        public TimeController(PlayerController playerController, UIManager uIController)
         {
             playerController.PlayerDeath += StopTime;
             uIController.RestartGame += ResumeTime;

@@ -5,7 +5,6 @@ using UI;
 using UnityEngine;
 using Utilites;
 using Zenject;
-using Zenject.Asteroids;
 
 namespace Instalers
 {
@@ -72,11 +71,19 @@ namespace Instalers
         private void BindUI()
         {
             Container
-               .BindFactory<UIplayerStats, UIFactory>()
+               .BindFactory<PlayerStatsUIView, UIFactory>()
                .FromComponentInNewPrefab(Resources.Load<GameObject>("GameUI"));
 
             Container
-                .Bind<UIController>()
+                .Bind<DeathUIModel>()
+                .AsSingle();
+
+            Container
+                .Bind<PlayerStatsUIModel>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesAndSelfTo<UIManager>()
                 .AsSingle();
         }
     }
