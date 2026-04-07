@@ -12,6 +12,17 @@ namespace Player
 
         private Rigidbody2D _rigidBodyPlayer;
         private BorderController _borderController;
+        private PlayerInputController _playerInputController;
+
+        [Inject]
+        public void Construct(PlayerInputController inputController, BorderController borderController)
+        {
+            _borderController = borderController;
+            _playerInputController = inputController;
+
+            _playerInputController.Move += Move;
+            _playerInputController.Rotate += Rotate;
+        }
 
         private void Start()
         {
@@ -23,13 +34,10 @@ namespace Player
             CheckBorder();
         }
 
-        [Inject]
-        public void Construct(PlayerInputController inputController, BorderController borderController)
+        private void OnDestroy()
         {
-            _borderController = borderController;
-
-            inputController.Move += Move;
-            inputController.Rotate += Rotate;
+            _playerInputController.Move -= Move;
+            _playerInputController.Rotate -= Rotate;
         }
 
         private void Move()

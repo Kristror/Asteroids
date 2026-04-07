@@ -35,10 +35,12 @@
         {
             _playerStatsUIView.ShowSpeed(_playerStatsUIModel.PlayerSpeed);
         }
+
         private void UpdateLazerAmmo()
         {
             _playerStatsUIView.ShowLazerAmmo(_playerStatsUIModel.LazerAmmo);
         }
+
         private void UpdateLazerReloadTime()
         {
             _playerStatsUIView.ShowLazerReloadTime(_playerStatsUIModel.LazerReloadTime);

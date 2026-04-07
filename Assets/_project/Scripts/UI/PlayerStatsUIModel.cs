@@ -18,10 +18,8 @@ namespace UI
 
         public PlayerStatsUIModel(PlayerController playerController)
         {
-            GameObject playerObject = playerController.PlayerInstance;
-
-            _playerRigidBody = playerObject.GetComponent<Rigidbody2D>();
-            _playerLazerShooting = playerObject.GetComponent<PlayerLazerShooting>();
+            _playerRigidBody = playerController.PlayerInstance.GetComponent<Rigidbody2D>();
+            _playerLazerShooting = playerController.PlayerInstance.GetComponent<PlayerLazerShooting>();
         }
     }
 }

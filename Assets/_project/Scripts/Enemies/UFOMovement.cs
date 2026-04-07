@@ -14,6 +14,13 @@ namespace Enemies
         private Transform _playerTransform;
         private BorderController _borderController;
 
+        [Inject]
+        public void Construct(PlayerController playerController, BorderController borderController)
+        {
+            _playerTransform = playerController.PlayerInstance.transform;
+            _borderController = borderController;
+        }
+
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -23,13 +30,6 @@ namespace Enemies
         {
             MoveToPlayer();
             CheckBorder();
-        }
-
-        [Inject]
-        public void Construct(PlayerController playerController, BorderController borderController)
-        {
-            _playerTransform = playerController.PlayerInstance.transform;
-            _borderController = borderController;
         }
 
         private void MoveToPlayer()

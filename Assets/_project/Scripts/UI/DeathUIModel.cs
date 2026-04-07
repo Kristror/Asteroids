@@ -5,12 +5,10 @@ namespace UI
 {
     public class DeathUIModel
     {
-        public Action RestartGame;
+        public event Action RestartGame;
 
         public string PlayerScore => scoreText + _scoreController.PlayerScore;
 
-        private SceneController _sceneController;
-        private TimeController _timeController;
         private ScoreController _scoreController;
 
         private const string scoreText = "Score : ";
@@ -20,7 +18,7 @@ namespace UI
             _scoreController = scoreController;
         }
 
-        private void StartRestartGame()
+        public void StartRestartGame()
         {
             RestartGame?.Invoke();
         }

@@ -7,8 +7,8 @@ namespace Enemies
     [RequireComponent(typeof(Collider2D))]
     public class EnemyCollision : MonoBehaviour
     {
-        public Action<Vector2> Killed;
-        public Action Destroyed;
+        public event Action<Vector2> Killed;
+        public event Action Destroyed;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -23,6 +23,12 @@ namespace Enemies
                 Destroyed?.Invoke();
                 GameObject.Destroy(gameObject);
             }
+        }
+
+        private void OnDestroy()
+        {
+            Killed = null;
+            Destroyed = null;
         }
     }
 }

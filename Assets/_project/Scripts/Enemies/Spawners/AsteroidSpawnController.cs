@@ -19,8 +19,8 @@ namespace Enemies.Spawners
             {
                 Enemy asteroid = SpawnEnemy(EnemyType.Asteroid);
 
-                asteroid.Killed += SpawnSmallAsteroids;
-                asteroid.Destroyed += _scoreController.KilledEnemy;
+                asteroid.EnemyCollision.Killed += SpawnSmallAsteroids;
+                asteroid.EnemyCollision.Destroyed += _scoreController.KilledEnemy;
 
                 RandomRotate(asteroid);
             }
@@ -43,7 +43,7 @@ namespace Enemies.Spawners
             {
                 Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, position);
 
-                smallAsteroid.Destroyed = _scoreController.KilledEnemy;
+                smallAsteroid.EnemyCollision.Destroyed += _scoreController.KilledEnemy;
 
                 smallAsteroid.EnemyInstance.transform.position = new Vector2(smallAsteroid.EnemyInstance.transform.position.x + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet),
                     smallAsteroid.EnemyInstance.transform.position.y + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet));                

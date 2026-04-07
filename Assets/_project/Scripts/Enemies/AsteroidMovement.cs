@@ -12,6 +12,13 @@ namespace Enemies
         private Rigidbody2D _rigidBody;
         private BorderController _borderController;
 
+        [Inject]
+        public void Construct(BorderController borderController)
+        {
+            _borderController = borderController;
+
+        }
+
         private void Start()
         {
             _rigidBody = GetComponent<Rigidbody2D>();
@@ -21,13 +28,6 @@ namespace Enemies
         {
             Move();
             CheckBorder();
-        }
-
-        [Inject]
-        public void Construct(BorderController borderController)
-        {
-            _borderController = borderController;
-
         }
 
         public void MultiplySpeed(float multiplier)

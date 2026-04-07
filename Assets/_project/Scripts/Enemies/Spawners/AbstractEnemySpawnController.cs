@@ -14,17 +14,17 @@ namespace Enemies.Spawners
 
         private float _timeOfLastSpawn;
 
-        private void Awake()
-        {
-            _timeOfLastSpawn = Time.time;
-            _mainCamera = Camera.main;
-        }
-
         [Inject]
-        public void Construct(ScoreController scoreController, EnemyFactory factory)
+        public void Construct(ScoreController scoreController, EnemyFactory factory, Camera camera)
         {
             _scoreController = scoreController;
             _factory = factory;
+            _mainCamera = camera;
+        }
+
+        private void Awake()
+        {
+            _timeOfLastSpawn = Time.time;
         }
 
         protected bool ShouldSpawnEnemy()

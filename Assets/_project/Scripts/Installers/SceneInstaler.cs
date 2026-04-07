@@ -3,6 +3,7 @@ using Enemies.Spawners;
 using Player;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Utilites;
 using Zenject;
 
@@ -20,6 +21,22 @@ namespace Instalers
 
         private void BindUnitlities()
         {
+            Container.
+                Bind<Camera>()
+                .FromInstance(Camera.main)
+                .AsSingle();
+            
+            Container.
+                Bind<Keyboard>()
+                .FromInstance(Keyboard.current)
+                .AsSingle();
+            
+            Container.
+                Bind<Mouse>()
+                .FromInstance(Mouse.current)
+                .AsSingle();
+
+
             Container
                 .Bind<BorderController>()
                 .AsSingle();

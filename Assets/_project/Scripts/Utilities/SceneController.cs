@@ -1,13 +1,22 @@
-﻿using UI;
+﻿using System;
+using UI;
 using UnityEngine.SceneManagement;
 
 namespace Utilites
 {
-    public class SceneController
+    public class SceneController :IDisposable
     {
-        public SceneController(UIManager uIController)
+        private UIManager _uIManager;
+        public SceneController(UIManager uIManager)
         {
-            uIController.RestartGame += ReloadGame;
+            _uIManager = uIManager;
+
+            _uIManager.DeathUIpresenter.DeathUIModel.RestartGame += ReloadGame;
+        }
+
+        public void Dispose()
+        {
+            _uIManager.DeathUIpresenter.DeathUIModel.RestartGame -= ReloadGame;
         }
 
         private void ReloadGame()

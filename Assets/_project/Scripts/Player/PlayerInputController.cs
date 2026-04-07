@@ -6,18 +6,18 @@ namespace Player
 {
     public class PlayerInputController : ITickable
     {
-        public Action ShootBullet;
-        public Action ShootLazer;
-        public Action Move;
-        public Action<int> Rotate;
+        public event Action ShootBullet;
+        public event Action ShootLazer;
+        public event Action Move;
+        public event Action<int> Rotate;
 
         private Keyboard _keyboard;
         private Mouse _mouse;
 
-        public PlayerInputController()
+        public PlayerInputController(Keyboard keyboard, Mouse mouse)
         {
-            _keyboard = Keyboard.current;
-            _mouse = Mouse.current;
+            _keyboard = keyboard;
+            _mouse = mouse;
         }
 
         public void Tick()

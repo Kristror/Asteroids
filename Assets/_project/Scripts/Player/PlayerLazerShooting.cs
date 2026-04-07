@@ -19,6 +19,14 @@ namespace Player
 
         private bool _isReloading = false;
         private Lazer _lazer;
+        private PlayerInputController _playerInputController;
+
+        [Inject]
+        public void Construct(PlayerInputController inputController)
+        {
+            _playerInputController = inputController;
+            _playerInputController.ShootLazer += ShootLazer;
+        }
 
         private void Start()
         {
@@ -32,10 +40,9 @@ namespace Player
             Reload();
         }
 
-        [Inject]
-        public void Construct(PlayerInputController inputController)
+        private void OnDestroy()
         {
-            inputController.ShootLazer += ShootLazer;
+            _playerInputController.ShootLazer -= ShootLazer;
         }
 
         public float TimeToReload()

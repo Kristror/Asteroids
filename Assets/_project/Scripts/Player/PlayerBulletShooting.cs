@@ -11,16 +11,24 @@ namespace Player
 
         private float _timeOflastShot = 0;
         private BulletSpawner _bulletFactory;
+        private PlayerInputController _playerInputController;
+
+        [Inject]
+        public void Construct(PlayerInputController inputController)
+        {
+            _playerInputController = inputController;
+
+            _playerInputController.ShootBullet += Shoot;
+        }
 
         private void Start()
         {
             _bulletFactory = new BulletSpawner();
         }
 
-        [Inject]
-        public void Construct(PlayerInputController inputController)
+        private void OnDestroy()
         {
-            inputController.ShootBullet += Shoot;
+            _playerInputController.ShootBullet -= Shoot;
         }
 
         private void Shoot()

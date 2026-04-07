@@ -13,8 +13,9 @@ namespace Utilites
         private float _topBorder;
         private float _bottomBorder;
 
-        public BorderController()
+        public BorderController(Camera camera)
         {
+            _camera = camera;
             CalculateScreenBounds();
         }
 
@@ -49,8 +50,6 @@ namespace Utilites
 
         private void CalculateScreenBounds()
         {
-            _camera = Camera.main;
-
             Vector3 bottomLeft = _camera.ViewportToWorldPoint(Vector3.zero);
             Vector3 topRight = _camera.ViewportToWorldPoint(new Vector3(1, 1, 0));
 

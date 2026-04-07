@@ -13,9 +13,7 @@
             {
                 Enemy ufo = SpawnEnemy(EnemyType.UFO);
 
-                UFOMovement ufoMovement = ufo.EnemyInstance.GetComponent<UFOMovement>();
-
-                ufo.Destroyed += _scoreController.KilledEnemy;
+                ufo.EnemyCollision.Destroyed += _scoreController.KilledEnemy;
             }
         }
     }
