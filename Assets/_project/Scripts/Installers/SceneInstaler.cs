@@ -5,6 +5,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utilites;
+using Weapons;
 using Zenject;
 
 namespace Instalers
@@ -69,10 +70,25 @@ namespace Instalers
             Container
                 .Bind<PlayerController>()
                 .AsSingle();
+
+            Container
+                .BindFactory<BulletCollision, BulletFactory>().FromComponentInNewPrefab(Resources.Load<GameObject>("Bullet"));
         }
 
         private void BindEnemies()
         {
+            Container
+                .BindFactory<AsteroidMovement, AsteroidFactory>()
+                .FromComponentInNewPrefab(Resources.Load<GameObject>("Asteroid"));
+            
+            Container
+                .BindFactory<SmallAsteroid, SmallAsteroidFactory>()
+                .FromComponentInNewPrefab(Resources.Load<GameObject>("SmallAsteroid"));
+            
+            Container
+                .BindFactory<UFOMovement, UFOFactory>()
+                .FromComponentInNewPrefab(Resources.Load<GameObject>("UFO"));
+
             Container.Bind<EnemyFactory>().AsSingle();
 
             Container

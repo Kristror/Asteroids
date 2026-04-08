@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d76c3c8795bed340a2fb7800504d626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBulletShooting
-  _shootingSpeed: 1
+  _shootingSpeed: 0.2
   _bulletStartPosition: {fileID: 7940503678993877250}
 --- !u!114 &3020136917402259003
 MonoBehaviour:

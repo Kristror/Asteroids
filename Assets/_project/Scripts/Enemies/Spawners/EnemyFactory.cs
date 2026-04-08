@@ -1,46 +1,41 @@
 ﻿using UnityEngine;
-using Zenject;
 
 namespace Enemies.Spawners
 {
     public class EnemyFactory
     {
-        private readonly DiContainer _container;
 
-        private GameObject _asteroidObject;
-        private GameObject _smallAsteroidObject;
-        private GameObject _ufoObject;
+        private AsteroidFactory _asteroidFactory;
+        private SmallAsteroidFactory _smallAsteroidFactory;
+        private UFOFactory _ufoFactory;
 
-        public EnemyFactory(DiContainer container) 
+        public EnemyFactory(AsteroidFactory asteroidFactory, SmallAsteroidFactory smallAsteroidFactory, UFOFactory ufoFactory) 
         {
-            _container = container;
-
-            _asteroidObject = Resources.Load<GameObject>("Asteroid");
-            _smallAsteroidObject = Resources.Load<GameObject>("SmallAsteroid");
-            _ufoObject = Resources.Load<GameObject>("UFO");
+            _asteroidFactory = asteroidFactory;
+            _smallAsteroidFactory = smallAsteroidFactory;
+            _ufoFactory = ufoFactory;
         }
 
         public Enemy Create(EnemyType enemyType,Vector2 position) 
         {
-            GameObject enemyObject;
+            Enemy enemy;
 
             switch (enemyType)
             {
                 case EnemyType.Asteroid:
-                    enemyObject = _asteroidObject;
+                    enemy = new Enemy(_asteroidFactory.Create().gameObject);
                     break;
                 case EnemyType.SmallAsteroid:
-                    enemyObject = _smallAsteroidObject;
+                    enemy = new Enemy(_smallAsteroidFactory.Create().gameObject);
                     break;
                 case EnemyType.UFO:
-                    enemyObject = _ufoObject;
+                    enemy = new Enemy(_ufoFactory.Create().gameObject);
                     break;
                 default:
-                    enemyObject = _asteroidObject;
+                    enemy = new Enemy(_asteroidFactory.Create().gameObject);
                     break;
             }
 
-            Enemy enemy = new Enemy(_container.InstantiatePrefab(enemyObject));
             enemy.EnemyInstance.transform.position = position;
             return enemy;
         }
