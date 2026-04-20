@@ -1,13 +1,19 @@
-﻿namespace UI
+﻿using Zenject;
+
+namespace UI
 {
-    public class PlayerStatsUIPresenter
+    public class PlayerStatsUIPresenter : ITickable
     {
         private PlayerStatsUIModel _playerStatsUIModel;
         private PlayerStatsUIView _playerStatsUIView;
 
-        public PlayerStatsUIPresenter(PlayerStatsUIModel playerStatsUIModel, PlayerStatsUIView playerStatsUIView)
+        public PlayerStatsUIPresenter(PlayerStatsUIModel playerStatsUIModel)
         {
             _playerStatsUIModel = playerStatsUIModel;
+        }
+
+        public void SetView(PlayerStatsUIView playerStatsUIView)
+        {
             _playerStatsUIView = playerStatsUIView;
         }
 

@@ -22,18 +22,18 @@ namespace Instalers
 
         private void BindUnitlities()
         {
-            Container.
-                Bind<Camera>()
+            Container
+                .Bind<Camera>()
                 .FromInstance(Camera.main)
                 .AsSingle();
             
-            Container.
-                Bind<Keyboard>()
+            Container
+                .Bind<Keyboard>()
                 .FromInstance(Keyboard.current)
                 .AsSingle();
             
-            Container.
-                Bind<Mouse>()
+            Container
+                .Bind<Mouse>()
                 .FromInstance(Mouse.current)
                 .AsSingle();
 
@@ -46,13 +46,13 @@ namespace Instalers
                 .Bind<ScoreController>()
                 .AsSingle();
 
-            Container.
-                Bind<TimeController>()
+            Container
+                .BindInterfacesAndSelfTo<TimeController>()
                 .AsSingle()
                 .NonLazy();
 
-            Container.
-                Bind<SceneController>()
+            Container
+                .BindInterfacesAndSelfTo<SceneController>()
                 .AsSingle()
                 .NonLazy();
         }
@@ -72,7 +72,8 @@ namespace Instalers
                 .AsSingle();
 
             Container
-                .BindFactory<BulletCollision, BulletFactory>().FromComponentInNewPrefab(Resources.Load<GameObject>("Bullet"));
+                .BindFactory<BulletCollision, BulletFactory>()
+                .FromComponentInNewPrefab(Resources.Load<GameObject>("Bullet"));
         }
 
         private void BindEnemies()
@@ -89,7 +90,9 @@ namespace Instalers
                 .BindFactory<UFOMovement, UFOFactory>()
                 .FromComponentInNewPrefab(Resources.Load<GameObject>("UFO"));
 
-            Container.Bind<EnemyFactory>().AsSingle();
+            Container
+                .Bind<EnemyFactory>()
+                .AsSingle();
 
             Container
                .BindFactory<AsteroidSpawnController, EnemiesControllerFactory>()
@@ -110,14 +113,23 @@ namespace Instalers
             Container
                 .Bind<DeathUIModel>()
                 .AsSingle();
+            
+            Container
+                .BindInterfacesAndSelfTo<DeathUIPresenter>()
+                .AsSingle();
 
             Container
                 .Bind<PlayerStatsUIModel>()
                 .AsSingle();
+            
+            Container
+                .BindInterfacesAndSelfTo<PlayerStatsUIPresenter>()
+                .AsSingle();
 
             Container
-                .BindInterfacesAndSelfTo<UIManager>()
-                .AsSingle();
+                .Bind<UIManager>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

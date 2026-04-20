@@ -1,25 +1,21 @@
-﻿using Player;
-using UnityEngine;
-using Zenject;
+﻿using UnityEngine;
 
 namespace UI
 {
-    public class UIManager : ITickable
+    public class UIManager 
     {
-        public DeathUIPresenter DeathUIpresenter;
+        private DeathUIPresenter _deathUIpresenter;
         private PlayerStatsUIPresenter _playerStatsUIPresenter;
 
-        public UIManager(PlayerController playerController, PlayerStatsUIModel playerStatsUIModel, DeathUIModel deathUIModel, UIFactory uIFactory)
+        public UIManager(UIFactory uIFactory, DeathUIPresenter deathUIPresenter, PlayerStatsUIPresenter playerStatsUIPresenter)
         {
             GameObject ui = uIFactory.Create().gameObject;
 
-            DeathUIpresenter = new DeathUIPresenter(playerController, deathUIModel, ui.GetComponent<DeathUIView>());
-            _playerStatsUIPresenter = new PlayerStatsUIPresenter(playerStatsUIModel, ui.GetComponent<PlayerStatsUIView>());
-        }
+            _deathUIpresenter = deathUIPresenter;
+            _playerStatsUIPresenter = playerStatsUIPresenter;
 
-        public void Tick()
-        {
-            _playerStatsUIPresenter.Tick();
+            _deathUIpresenter.SetView(ui.GetComponent<DeathUIView>());
+            _playerStatsUIPresenter.SetView(ui.GetComponent<PlayerStatsUIView>());
         }
     }
 }

@@ -6,17 +6,18 @@ namespace Utilites
 {
     public class SceneController :IDisposable
     {
-        private UIManager _uIManager;
-        public SceneController(UIManager uIManager)
-        {
-            _uIManager = uIManager;
+        private DeathUIPresenter _deathUIPresenter;
 
-            _uIManager.DeathUIpresenter.DeathUIModel.RestartGame += ReloadGame;
+        public SceneController(DeathUIPresenter deathUIPresenter)
+        {
+            _deathUIPresenter = deathUIPresenter;
+
+            _deathUIPresenter.SubscribeToRestartGame(ReloadGame);
         }
 
         public void Dispose()
         {
-            _uIManager.DeathUIpresenter.DeathUIModel.RestartGame -= ReloadGame;
+            _deathUIPresenter.UnSubscribeToRestartGame(ReloadGame);
         }
 
         private void ReloadGame()

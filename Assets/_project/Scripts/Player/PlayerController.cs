@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Player
 {
@@ -13,6 +14,16 @@ namespace Player
             PlayerInstance = playerFactory.Create().gameObject;
 
             PlayerCollision = PlayerInstance.GetComponentInChildren<PlayerCollision>();
+        }
+
+        public void SubscribeToPlayerDeath(Action func)
+        {
+            PlayerCollision.PlayerDeath += func;
+        } 
+
+        public void UnSubscribeToPlayerDeath(Action func)
+        {
+            PlayerCollision.PlayerDeath -= func;
         }
     }
 }

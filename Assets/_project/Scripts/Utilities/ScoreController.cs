@@ -15,7 +15,7 @@
             PlayerScore = 0;
         }
 
-        public void KilledEnemy()
+        public void EnemyKilled()
         {
             PlayerScore += _pointsForEnemy;
         }

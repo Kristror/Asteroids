@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Enemies
@@ -6,12 +7,17 @@ namespace Enemies
     {
         public GameObject EnemyInstance { get; private set; }
 
-        public EnemyCollision EnemyCollision;
+        private EnemyCollision _enemyCollision;
 
         public Enemy(GameObject enemyObject)
         {
             EnemyInstance = enemyObject;
-            EnemyCollision = EnemyInstance.GetComponent<EnemyCollision>();
+            _enemyCollision = EnemyInstance.GetComponent<EnemyCollision>();
+        }
+
+        public void SubscribeToCollison(Action<Vector2> func)
+        {
+            _enemyCollision.KilledByBullet += func;
         }
 
     }

@@ -8,20 +8,21 @@ namespace Utilites
     public class TimeController : IDisposable
     {
         private PlayerController _playerController;
-        private UIManager _uIManager;
+        private DeathUIPresenter _deathUIPresenter;
 
-        public TimeController(PlayerController playerController, UIManager uIManager)
+        public TimeController(PlayerController playerController, DeathUIPresenter deathUIPresenter)
         {
             _playerController = playerController;
-            _uIManager = uIManager;
+            _deathUIPresenter = deathUIPresenter;
 
-            _playerController.PlayerCollision.PlayerDeath += StopTime;
-            _uIManager.DeathUIpresenter.DeathUIModel.RestartGame += ResumeTime;
+            _playerController.SubscribeToPlayerDeath(StopTime);
+            _deathUIPresenter.SubscribeToRestartGame(ResumeTime);
         }
+
         public void Dispose()
         {
-            _playerController.PlayerCollision.PlayerDeath -= StopTime;
-            _uIManager.DeathUIpresenter.DeathUIModel.RestartGame -= ResumeTime;
+            _playerController.UnSubscribeToPlayerDeath(StopTime);
+            _deathUIPresenter.UnSubscribeToRestartGame(ResumeTime);
         }
 
         private void StopTime()

@@ -12,8 +12,6 @@
             if (ShouldSpawnEnemy())
             {
                 Enemy ufo = SpawnEnemy(EnemyType.UFO);
-
-                ufo.EnemyCollision.Destroyed += _scoreController.KilledEnemy;
             }
         }
     }
