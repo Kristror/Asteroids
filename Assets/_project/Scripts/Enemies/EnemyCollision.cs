@@ -9,7 +9,9 @@ namespace Enemies
     [RequireComponent(typeof(Collider2D))]
     public class EnemyCollision : MonoBehaviour
     {
-        public event Action<Vector2> KilledByBullet;
+        public Vector2 Position => transform.position;
+
+        public event Action<EnemyCollision> KilledByBullet;
 
         private ScoreController _scoreController;
 
@@ -24,7 +26,7 @@ namespace Enemies
         {
             if (collision.TryGetComponent<BulletCollision>(out _))
             {
-                KilledByBullet?.Invoke(transform.position);
+                KilledByBullet?.Invoke(this);
                 _scoreController.EnemyKilled();
                 GameObject.Destroy(gameObject);
             }
@@ -32,19 +34,6 @@ namespace Enemies
             {
                 _scoreController.EnemyKilled();
                 GameObject.Destroy(gameObject);
-            }
-        }
-
-        private void OnDestroy()
-        {
-            if (KilledByBullet != null)
-            {
-                Delegate[] subscribers = KilledByBullet.GetInvocationList();
-
-                foreach (Delegate subscriber in subscribers)
-                {
-                    KilledByBullet -= (Action<Vector2>)subscriber;
-                }
             }
         }
     }

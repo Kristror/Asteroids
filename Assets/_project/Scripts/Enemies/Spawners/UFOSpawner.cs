@@ -1,6 +1,6 @@
 ﻿namespace Enemies.Spawners
 {
-    public class UFOSpawnController : AbstractEnemySpawnController
+    public class UFOSpawner : AbstractEnemySpawner
     {
         private void Update()
         {

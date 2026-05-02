@@ -16,7 +16,6 @@ namespace Enemies
         public void Construct(BorderController borderController)
         {
             _borderController = borderController;
-
         }
 
         private void Start()

@@ -3,13 +3,13 @@
 namespace Enemies
 {
     [RequireComponent(typeof(AsteroidMovement))]
-    public class SmallAsteroid : MonoBehaviour
+    public class SmallAsteroid : Enemy
     {
         [SerializeField, Min(1)] private float _asteroidSpeedMult;
 
         private AsteroidMovement _asteroidMovement;
 
-        private void Awake()
+        private void Start()
         {
             _asteroidMovement = GetComponent<AsteroidMovement>();
             RotateAtRandomAngle();

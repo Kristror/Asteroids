@@ -2,7 +2,7 @@
 
 namespace Enemies.Spawners
 {
-    public class AsteroidFactory : PlaceholderFactory<AsteroidMovement>
+    public class AsteroidFactory : PlaceholderFactory<Asteroid>
     {
     }
 }

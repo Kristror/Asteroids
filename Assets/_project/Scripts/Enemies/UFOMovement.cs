@@ -11,13 +11,13 @@ namespace Enemies
         [SerializeField, Min(0)] private float _ufoMovementSpeed;
 
         private Rigidbody2D _rigidbody;
-        private Transform _playerTransform;
+        private PlayerObject _playerObject;
         private BorderController _borderController;
 
         [Inject]
-        public void Construct(PlayerController playerController, BorderController borderController)
+        public void Construct(PlayerObject playerController, BorderController borderController)
         {
-            _playerTransform = playerController.PlayerInstance.transform;
+            _playerObject = playerController;
             _borderController = borderController;
         }
 
@@ -34,7 +34,7 @@ namespace Enemies
 
         private void MoveToPlayer()
         {
-            Vector2 direction = (_playerTransform.position - transform.position).normalized;
+            Vector2 direction = (_playerObject.PlayerPosition - transform.position).normalized;
 
             _rigidbody.AddForce(direction * _ufoMovementSpeed, ForceMode2D.Force);
         }

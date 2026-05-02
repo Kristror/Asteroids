@@ -56,7 +56,6 @@ namespace Player
 
             if (newPosition != Vector2.zero)
             {
-
                 _rigidBodyPlayer.position = newPosition;
             }
         }

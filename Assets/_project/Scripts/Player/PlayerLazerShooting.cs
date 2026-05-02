@@ -16,8 +16,8 @@ namespace Player
 
         private float _timeOflastShot = 0;
         private float _timeOfReloadStart = 0;
-
         private bool _isReloading = false;
+
         private Lazer _lazer;
         private PlayerInputController _playerInputController;
 

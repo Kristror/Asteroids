@@ -4,7 +4,6 @@ namespace Enemies.Spawners
 {
     public class EnemyFactory
     {
-
         private AsteroidFactory _asteroidFactory;
         private SmallAsteroidFactory _smallAsteroidFactory;
         private UFOFactory _ufoFactory;
@@ -23,20 +22,21 @@ namespace Enemies.Spawners
             switch (enemyType)
             {
                 case EnemyType.Asteroid:
-                    enemy = new Enemy(_asteroidFactory.Create().gameObject);
+                    enemy = _asteroidFactory.Create();
                     break;
                 case EnemyType.SmallAsteroid:
-                    enemy = new Enemy(_smallAsteroidFactory.Create().gameObject);
+                    enemy = _smallAsteroidFactory.Create();
                     break;
                 case EnemyType.UFO:
-                    enemy = new Enemy(_ufoFactory.Create().gameObject);
+                    enemy = _ufoFactory.Create();
                     break;
                 default:
-                    enemy = new Enemy(_asteroidFactory.Create().gameObject);
+                    enemy = _asteroidFactory.Create();
                     break;
             }
 
-            enemy.EnemyInstance.transform.position = position;
+            enemy.Positon = position;
+
             return enemy;
         }
     }

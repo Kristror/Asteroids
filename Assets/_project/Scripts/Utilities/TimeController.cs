@@ -2,26 +2,30 @@
 using System;
 using UI;
 using UnityEngine;
+using Zenject;
 
 namespace Utilites
 {
-    public class TimeController : IDisposable
+    public class TimeController : IInitializable,IDisposable
     {
-        private PlayerController _playerController;
+        private PlayerObject _playerObject;
         private DeathUIPresenter _deathUIPresenter;
 
-        public TimeController(PlayerController playerController, DeathUIPresenter deathUIPresenter)
+        public TimeController(PlayerObject playerController, DeathUIPresenter deathUIPresenter)
         {
-            _playerController = playerController;
-            _deathUIPresenter = deathUIPresenter;
+            _playerObject = playerController;
+            _deathUIPresenter = deathUIPresenter;            
+        }
 
-            _playerController.SubscribeToPlayerDeath(StopTime);
+        public void Initialize()
+        {
+            _playerObject.SubscribeToPlayerDeath(StopTime);
             _deathUIPresenter.SubscribeToRestartGame(ResumeTime);
         }
 
         public void Dispose()
         {
-            _playerController.UnSubscribeToPlayerDeath(StopTime);
+            _playerObject.UnSubscribeToPlayerDeath(StopTime);
             _deathUIPresenter.UnSubscribeToRestartGame(ResumeTime);
         }
 
@@ -34,5 +38,7 @@ namespace Utilites
         {
             Time.timeScale = 1;
         }
+
+        
     }
 }

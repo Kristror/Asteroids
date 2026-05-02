@@ -1,24 +1,27 @@
 ﻿using Player;
 using System;
+using Zenject;
 
 namespace UI
 {
-    public class DeathUIPresenter : IDisposable
+    public class DeathUIPresenter : IInitializable,IDisposable
     {
         private DeathUIModel _deathUIModel;
         private DeathUIView _deathUIView;
 
-        private PlayerController _playerController;
+        private PlayerObject _playerController;
 
-        public DeathUIPresenter(PlayerController playerController, DeathUIModel model)
+        public DeathUIPresenter(PlayerObject playerController, DeathUIModel model)
         {
-            _playerController = playerController;
-
-            _playerController.SubscribeToPlayerDeath(PlayerDeath);
-
+            _playerController = playerController;            
             _deathUIModel = model;
         }
-        
+
+        public void Initialize()
+        {
+            _playerController.SubscribeToPlayerDeath(PlayerDeath);
+        }
+
         public void SetView(DeathUIView view)
         {
             _deathUIView = view; 

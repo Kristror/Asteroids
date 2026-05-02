@@ -2,7 +2,7 @@
 
 namespace UI
 {
-    public class PlayerStatsUIPresenter : ITickable
+    public class PlayerStatsUIPresenter : IInitializable,ITickable
     {
         private PlayerStatsUIModel _playerStatsUIModel;
         private PlayerStatsUIView _playerStatsUIView;
@@ -11,11 +11,15 @@ namespace UI
         {
             _playerStatsUIModel = playerStatsUIModel;
         }
+        public void Initialize()
+        {
+            _playerStatsUIModel.SetLazerShooting();
+        }
 
         public void SetView(PlayerStatsUIView playerStatsUIView)
         {
             _playerStatsUIView = playerStatsUIView;
-        }
+        }        
 
         public void Tick()
         {
@@ -50,7 +54,6 @@ namespace UI
         private void UpdateLazerReloadTime()
         {
             _playerStatsUIView.ShowLazerReloadTime(_playerStatsUIModel.LazerReloadTime);
-        }
-
+        }        
     }
 }

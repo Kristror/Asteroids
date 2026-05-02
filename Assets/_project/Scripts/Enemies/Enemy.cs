@@ -3,19 +3,39 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class Enemy
+    [RequireComponent(typeof(EnemyCollision))]
+    public abstract class Enemy : MonoBehaviour
     {
-        public GameObject EnemyInstance { get; private set; }
-
+        public Vector3 Positon 
+        { 
+            get 
+            { 
+               return transform.position; 
+            }
+            set 
+            {
+                transform.position = value;
+            } 
+        }
+        public Quaternion Rotation
+        {
+            get
+            {
+                return transform.rotation;
+            }
+            set
+            {
+                transform.rotation = value;
+            }
+        }
         private EnemyCollision _enemyCollision;
 
-        public Enemy(GameObject enemyObject)
+        public void Awake()
         {
-            EnemyInstance = enemyObject;
-            _enemyCollision = EnemyInstance.GetComponent<EnemyCollision>();
+            _enemyCollision = GetComponent<EnemyCollision>();
         }
 
-        public void SubscribeToCollison(Action<Vector2> func)
+        public void SubscribeToCollison(Action<EnemyCollision> func)
         {
             _enemyCollision.KilledByBullet += func;
         }

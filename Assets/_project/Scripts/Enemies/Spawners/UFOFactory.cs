@@ -2,7 +2,7 @@
 
 namespace Enemies.Spawners
 {
-    public class UFOFactory : PlaceholderFactory<UFOMovement>
+    public class UFOFactory : PlaceholderFactory<UFO>
     {
     }
 }

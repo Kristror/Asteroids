@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Enemies.Spawners
 {
-    public abstract class AbstractEnemySpawnController : MonoBehaviour
+    public abstract class AbstractEnemySpawner : MonoBehaviour
     {
         [SerializeField, Min(0)] private float _timeToSpawn;
 

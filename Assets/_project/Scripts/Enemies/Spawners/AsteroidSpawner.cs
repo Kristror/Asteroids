@@ -2,7 +2,7 @@
 
 namespace Enemies.Spawners
 {
-    public class AsteroidSpawnController : AbstractEnemySpawnController
+    public class AsteroidSpawner : AbstractEnemySpawner
     {
         [SerializeField, Min(1)] private int _amountOfpieces;
 
@@ -32,19 +32,26 @@ namespace Enemies.Spawners
             float x = Random.Range(0, screenSize.x);
             float y = Random.Range(0, screenSize.y);
 
-            Vector2 direction = new Vector3(x, y) - asteroid.EnemyInstance.transform.position;
-            asteroid.EnemyInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
+            Vector2 direction = new Vector3(x, y) - asteroid.Positon;
+            asteroid.Rotation = Quaternion.FromToRotation(Vector3.up, direction);
         }
 
-        public void SpawnSmallAsteroids(Vector2 position)
+        public void SpawnSmallAsteroids(EnemyCollision enemyCollision)
         {
             for (int i = 0; i < _amountOfpieces; i++)
             {
-                Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, position);
+                Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, enemyCollision.Position);
 
-                smallAsteroid.EnemyInstance.transform.position = new Vector2(smallAsteroid.EnemyInstance.transform.position.x + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet),
-                    smallAsteroid.EnemyInstance.transform.position.y + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet));                
+                float x = smallAsteroid.Positon.x + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet);
+                float y = smallAsteroid.Positon.y + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet);
+                smallAsteroid.Positon = new Vector2(x, y);                
             }
+            Unsubscribe(enemyCollision);
+        }
+
+        private void Unsubscribe(EnemyCollision enemy)
+        {
+            enemy.KilledByBullet -= SpawnSmallAsteroids;
         }
 
         private Vector2 GetScreenSizeInUnits()

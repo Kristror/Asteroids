@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6274937213200084589}
   - component: {fileID: -3204176241603488637}
   - component: {fileID: 5017167249550695798}
+  - component: {fileID: 883024717099483745}
   m_Layer: 0
   m_Name: Asteroid
   m_TagString: Enemy
@@ -183,3 +184,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e00a81606c1745428f74bc430f14502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyCollision
+--- !u!114 &883024717099483745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5434302770225157985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acaa412997cbfba4cbb028099b7144ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Asteroid
