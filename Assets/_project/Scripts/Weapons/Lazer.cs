@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Cysharp.Threading.Tasks;
 
 namespace Weapons
 {
     public class Lazer : MonoBehaviour
     {
-        private float _lazerDuration;
+        private int _lazerDuration;
 
-        public void SetLazerDuration(float lazerDuration)
+        public void SetLazerDuration(int lazerDuration)
         {
             _lazerDuration = lazerDuration;
         }
@@ -16,12 +16,12 @@ namespace Weapons
         {
             gameObject.SetActive(true);
 
-            StartCoroutine(LazerActivity());
+            UniTaskVoid waitForLazer = LazerActivity();
         }
 
-        private IEnumerator LazerActivity()
+        private async UniTaskVoid LazerActivity()
         {
-            yield return new WaitForSeconds(_lazerDuration);
+            await UniTask.Delay(_lazerDuration);
             Deactivate();
         }
 

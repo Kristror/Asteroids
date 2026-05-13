@@ -8,24 +8,24 @@ namespace Utilites
 {
     public class TimeController : IInitializable,IDisposable
     {
-        private PlayerObject _playerObject;
+        private PlayerProvider _playerProvider;
         private DeathUIPresenter _deathUIPresenter;
 
-        public TimeController(PlayerObject playerController, DeathUIPresenter deathUIPresenter)
+        public TimeController(PlayerProvider playerProvider, DeathUIPresenter deathUIPresenter)
         {
-            _playerObject = playerController;
+            _playerProvider = playerProvider;
             _deathUIPresenter = deathUIPresenter;            
         }
 
         public void Initialize()
         {
-            _playerObject.SubscribeToPlayerDeath(StopTime);
+            _playerProvider.SubscribeToPlayerDeath(StopTime);
             _deathUIPresenter.SubscribeToRestartGame(ResumeTime);
         }
 
         public void Dispose()
         {
-            _playerObject.UnSubscribeToPlayerDeath(StopTime);
+            _playerProvider.UnSubscribeToPlayerDeath(StopTime);
             _deathUIPresenter.UnSubscribeToRestartGame(ResumeTime);
         }
 
@@ -37,8 +37,6 @@ namespace Utilites
         private void ResumeTime()
         {
             Time.timeScale = 1;
-        }
-
-        
+        }        
     }
 }

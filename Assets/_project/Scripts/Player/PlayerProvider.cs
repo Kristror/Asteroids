@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Player
 {
-    public class PlayerObject : IInitializable
+    public class PlayerProvider : IInitializable
     {
         public Vector3 PlayerPosition => PlayerInstance.transform.position;
         public float PlayerRotation => PlayerInstance.transform.rotation.eulerAngles.z;
@@ -17,7 +17,7 @@ namespace Player
         private Rigidbody2D _playerRigidBody;
         private PlayerShipFactory _PlayerShipFactory;
 
-        public PlayerObject(PlayerShipFactory playerShipFactory)
+        public PlayerProvider(PlayerShipFactory playerShipFactory)
         {
             _PlayerShipFactory = playerShipFactory;
         }

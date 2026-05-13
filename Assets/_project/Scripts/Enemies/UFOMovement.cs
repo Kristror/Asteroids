@@ -11,13 +11,13 @@ namespace Enemies
         [SerializeField, Min(0)] private float _ufoMovementSpeed;
 
         private Rigidbody2D _rigidbody;
-        private PlayerObject _playerObject;
+        private PlayerProvider _playerProvider;
         private BorderController _borderController;
 
         [Inject]
-        public void Construct(PlayerObject playerController, BorderController borderController)
+        public void Construct(PlayerProvider playerProvider, BorderController borderController)
         {
-            _playerObject = playerController;
+            _playerProvider = playerProvider;
             _borderController = borderController;
         }
 
@@ -34,18 +34,16 @@ namespace Enemies
 
         private void MoveToPlayer()
         {
-            Vector2 direction = (_playerObject.PlayerPosition - transform.position).normalized;
+            Vector2 direction = (_playerProvider.PlayerPosition - transform.position).normalized;
 
             _rigidbody.AddForce(direction * _ufoMovementSpeed, ForceMode2D.Force);
         }
 
         private void CheckBorder()
         {
-            Vector2 newPosition = _borderController.CheckIfObjectOnBorder(transform.position);
-
-            if (newPosition != Vector2.zero)
+            if (_borderController.CheckIfObjectOnBorder(transform.position))
             {
-                _rigidbody.position = newPosition;
+                _rigidbody.position = _borderController.MoveObjectOnOtherSide(transform.position);
             }
         }
     }

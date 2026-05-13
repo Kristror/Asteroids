@@ -1,16 +1,23 @@
-﻿namespace Enemies.Spawners
+﻿using Cysharp.Threading.Tasks;
+using System.Threading;
+
+namespace Enemies.Spawners
 {
     public class UFOSpawner : AbstractEnemySpawner
     {
-        private void Update()
+        private void Awake()
         {
-            SpawnUFO();
+            UniTaskVoid spawnEnemies = SpawnUFO();
         }
 
-        private void SpawnUFO()
+        private async UniTaskVoid SpawnUFO()
         {
-            if (ShouldSpawnEnemy())
+            _enemiesSpawnToken = new CancellationTokenSource();
+
+            while (true)
             {
+                await UniTask.Delay(_timeToSpawn, cancellationToken: _enemiesSpawnToken.Token);
+
                 Enemy ufo = SpawnEnemy(EnemyType.UFO);
             }
         }

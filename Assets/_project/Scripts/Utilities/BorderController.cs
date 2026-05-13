@@ -19,7 +19,22 @@ namespace Utilites
             CalculateScreenBounds();
         }
 
-        public Vector2 CheckIfObjectOnBorder(Vector2 objectPosition)
+        public bool CheckIfObjectOnBorder(Vector2 objectPosition)
+        {
+            if ((objectPosition.x < _leftBorder) || (objectPosition.x > _rightBorder))
+            {              
+                return true;
+            }
+
+            if ((objectPosition.y < _bottomBorder) || (objectPosition.y > _topBorder))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public Vector2 MoveObjectOnOtherSide(Vector2 objectPosition)
         {
             Vector3 newObjectPosition = objectPosition;
 
@@ -45,7 +60,7 @@ namespace Utilites
                 return newObjectPosition;
             }
 
-            return Vector2.zero;
+            return newObjectPosition;
         }
 
         private void CalculateScreenBounds()

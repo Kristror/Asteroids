@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Utilites
 {
-    public class SceneController :IDisposable
+    public class SceneController : IDisposable
     {
         private DeathUIPresenter _deathUIPresenter;
 

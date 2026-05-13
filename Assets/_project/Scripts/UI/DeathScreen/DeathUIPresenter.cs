@@ -9,17 +9,23 @@ namespace UI
         private DeathUIModel _deathUIModel;
         private DeathUIView _deathUIView;
 
-        private PlayerObject _playerController;
+        private PlayerProvider _playerProvider;
 
-        public DeathUIPresenter(PlayerObject playerController, DeathUIModel model)
+        public DeathUIPresenter(PlayerProvider playerProvider, DeathUIModel model)
         {
-            _playerController = playerController;            
+            _playerProvider = playerProvider;            
             _deathUIModel = model;
         }
 
         public void Initialize()
         {
-            _playerController.SubscribeToPlayerDeath(PlayerDeath);
+            _playerProvider.SubscribeToPlayerDeath(PlayerDeath);
+        }
+
+        public void Dispose()
+        {
+            _deathUIView.OnClick.RemoveAllListeners();
+            _playerProvider.UnSubscribeToPlayerDeath(PlayerDeath);
         }
 
         public void SetView(DeathUIView view)
@@ -37,12 +43,6 @@ namespace UI
         public void UnSubscribeToRestartGame(Action func)
         {
             _deathUIModel.RestartGame -= func;
-        }
-
-        public void Dispose()
-        {
-            _deathUIView.OnClick.RemoveAllListeners();
-            _playerController.UnSubscribeToPlayerDeath(PlayerDeath);
         }
 
         private void StartRestartGame()

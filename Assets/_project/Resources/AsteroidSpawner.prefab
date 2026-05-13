@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5804517eb0ac0ea469e63c9736f2a34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidSpawnController
-  _timeToSpawn: 5
+  _timeToSpawn: 5000
   _amountOfpieces: 2

@@ -260,7 +260,7 @@ MonoBehaviour:
   _maxAmmo: 3
   _timeToReload: 5
   _shootingSpeed: 3
-  _lazerDuration: 2
+  _lazerDuration: 2000
   _lazerObject: {fileID: 3334544127456473933}
 --- !u!114 &-474188770926941647
 MonoBehaviour:

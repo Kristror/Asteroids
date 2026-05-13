@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d579b6d0b4cae674e9d14b5216d79bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UFOSpawnController
-  _timeToSpawn: 10
+  _timeToSpawn: 10000

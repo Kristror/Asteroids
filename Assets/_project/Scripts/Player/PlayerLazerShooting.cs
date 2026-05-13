@@ -9,7 +9,7 @@ namespace Player
         [SerializeField, Min(1)] private int _maxAmmo;
         [SerializeField, Min(0)] private float _timeToReload;
         [SerializeField, Min(0)] private float _shootingSpeed;
-        [SerializeField, Min(0)] private float _lazerDuration;
+        [SerializeField, Min(0)] private int _lazerDuration;
         [SerializeField] private GameObject _lazerObject;
 
         public int Ammo { get; private set; }

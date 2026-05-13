@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using System.Threading;
+using UnityEngine;
 
 namespace Enemies.Spawners
 {
@@ -8,15 +10,19 @@ namespace Enemies.Spawners
 
         private const float _smallAsteroidSpawnOffSet = 0.2f;
 
-        private void Update()
-        {
-            SpawnAsteroid();
+        private void Awake()
+        {            
+            UniTaskVoid spawnEnemies = SpawnAsteroid();            
         }
 
-        private void SpawnAsteroid()
+        private async UniTaskVoid SpawnAsteroid()
         {
-            if (ShouldSpawnEnemy())
+            _enemiesSpawnToken = new CancellationTokenSource();
+
+            while (true)
             {
+                await UniTask.Delay(_timeToSpawn, cancellationToken: _enemiesSpawnToken.Token);
+
                 Enemy asteroid = SpawnEnemy(EnemyType.Asteroid);
 
                 asteroid.SubscribeToCollison(SpawnSmallAsteroids);

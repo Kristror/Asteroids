@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
 using Utilites;
 using Zenject;
 
@@ -6,13 +7,13 @@ namespace Enemies.Spawners
 {
     public abstract class AbstractEnemySpawner : MonoBehaviour
     {
-        [SerializeField, Min(0)] private float _timeToSpawn;
+        [SerializeField, Min(0)] protected int _timeToSpawn;
 
         protected ScoreController _scoreController;
         protected EnemyFactory _factory;
         protected Camera _mainCamera;
 
-        private float _timeOfLastSpawn;
+        protected CancellationTokenSource _enemiesSpawnToken;
 
         [Inject]
         public void Construct(ScoreController scoreController, EnemyFactory factory, Camera camera)
@@ -22,31 +23,21 @@ namespace Enemies.Spawners
             _mainCamera = camera;
         }
 
-        private void Awake()
+        private void OnDestroy()
         {
-            _timeOfLastSpawn = Time.time;
-        }
-
-        protected bool ShouldSpawnEnemy()
-        {
-            if (_timeOfLastSpawn < Time.time - _timeToSpawn)
-            {
-                return true;
-            }
-            return false;
+            _enemiesSpawnToken?.Cancel();
+            _enemiesSpawnToken?.Dispose();
         }
 
         protected Enemy SpawnEnemy(EnemyType enemyType)
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
-            _timeOfLastSpawn = Time.time;
             return _factory.Create(enemyType, spawnPosition);
 
         }
 
         protected Enemy SpawnEnemy(EnemyType enemyType, Vector2 spawnPosition)
         {
-            _timeOfLastSpawn = Time.time;
             return _factory.Create(enemyType, spawnPosition);
         }
 

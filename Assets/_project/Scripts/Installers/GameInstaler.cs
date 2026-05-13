@@ -1,6 +1,7 @@
 ﻿using Enemies;
 using Enemies.Spawners;
 using Player;
+using Saving;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,12 +11,13 @@ using Zenject;
 
 namespace Instalers
 {
-    public class SceneInstaller : MonoInstaller
+    public class GameInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
             BindPlayer();
             BindUtilities();
+            BindSaving();            
             BindEnemies();
             BindUI();
         }
@@ -26,10 +28,10 @@ namespace Instalers
 
             Container.BindFactory<PlayerShip, PlayerShipFactory>().FromComponentInNewPrefab(Resources.Load<GameObject>("Player"));
 
-            Container.BindInterfacesAndSelfTo<PlayerObject>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerProvider>().AsSingle();
 
             Container.BindFactory<BulletCollision, BulletFactory>().FromComponentInNewPrefab(Resources.Load<GameObject>("Bullet"));
-        }
+        } 
 
         private void BindUtilities()
         {
@@ -37,12 +39,17 @@ namespace Instalers
             Container.Bind<Keyboard>().FromInstance(Keyboard.current).AsSingle();            
             Container.Bind<Mouse>().FromInstance(Mouse.current).AsSingle();
 
-
             Container.Bind<BorderController>().AsSingle();
             Container.Bind<ScoreController>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<TimeController>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneController>().AsSingle();
+        }
+
+        private void BindSaving()
+        {
+            Container.Bind<IPlayerSaveLoad>().To<PlayerPrefsSaving>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerSaveController>().AsSingle();
         }
 
         private void BindEnemies()
@@ -56,7 +63,7 @@ namespace Instalers
             Container.BindFactory<AsteroidSpawner, AsteroidSpawnerFactory>().FromComponentInNewPrefab(Resources.Load<GameObject>("AsteroidSpawner"));               
             Container.BindFactory<UFOSpawner, UFOSpawnerFactory>().FromComponentInNewPrefab(Resources.Load<GameObject>("UFOSpawner"));
 
-            Container.BindInterfacesAndSelfTo<EnemiesSpawnerFactoryRunner>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<EnemiesSpawnerFactoryRunner>().AsSingle();
         }
 
         private void BindUI()
@@ -70,7 +77,7 @@ namespace Instalers
             Container.BindInterfacesAndSelfTo<DeathUIPresenter>().AsSingle();            
             Container.BindInterfacesAndSelfTo<PlayerStatsUIPresenter>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<UIPresenterInitializer>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<UIPresenterInitializer>().AsSingle(); 
         }
     }
 }
