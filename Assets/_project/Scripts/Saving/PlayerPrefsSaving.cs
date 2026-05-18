@@ -4,20 +4,21 @@ namespace Saving
 {
     public class PlayerPrefsSaving : IPlayerSaveLoad
     {
+        string SaveDataKey = "SaveData";
         public void Save(PlayerSaveData saveData)
         {
             string saveString = JsonUtility.ToJson(saveData);
-            PlayerPrefs.SetString("SaveData", saveString);
+            PlayerPrefs.SetString(SaveDataKey, saveString);
         }
 
         public bool IsThereSave()
         {
-            return PlayerPrefs.HasKey("SaveData");
+            return PlayerPrefs.HasKey(SaveDataKey);
         }
 
         public PlayerSaveData Load()
         {
-            string loadString = PlayerPrefs.GetString("SaveData");
+            string loadString = PlayerPrefs.GetString(SaveDataKey);
             PlayerSaveData saveData = JsonUtility.FromJson<PlayerSaveData>(loadString);
 
             return saveData;
