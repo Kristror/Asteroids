@@ -17,13 +17,13 @@ namespace Saving
             _playerProvider = playerProvider;
             _scoreController = scoreController;
             _playerSave = playerSave;
-
-            
         }
+
         public void Initialize()
         {
             _playerProvider.SubscribeToPlayerDeath(CompareBestScore);
         }
+
         public void Dispose()
         {
             _playerProvider.UnSubscribeToPlayerDeath(CompareBestScore);
