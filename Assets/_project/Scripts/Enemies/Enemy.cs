@@ -1,3 +1,4 @@
+using Enemies.Spawners;
 using System;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace Enemies
                 transform.position = value;
             } 
         }
+
         public Quaternion Rotation
         {
             get
@@ -28,11 +30,17 @@ namespace Enemies
                 transform.rotation = value;
             }
         }
+
         private EnemyCollision _enemyCollision;
 
         public void Awake()
         {
-            _enemyCollision = GetComponent<EnemyCollision>();
+            _enemyCollision = GetComponent<EnemyCollision>();            
+        }
+
+        public void SetType(EnemyType type)
+        {
+            _enemyCollision.SetType(type);
         }
 
         public void SubscribeToCollison(Action<EnemyCollision> func)

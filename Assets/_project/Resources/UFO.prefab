@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e00a81606c1745428f74bc430f14502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyCollision
+  Type: 2
 --- !u!114 &2758205131742649466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,3 +212,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40e2cee4c9db85d47931fd1537bf10a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.UFO
+  Type: 2

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using PlayerAnalytics;
+using System.Threading;
 using UnityEngine;
 using Utilites;
 using Zenject;
@@ -33,7 +34,6 @@ namespace Enemies.Spawners
         {
             Vector2 spawnPosition = GetRandomSpawnPosition();
             return _factory.Create(enemyType, spawnPosition);
-
         }
 
         protected Enemy SpawnEnemy(EnemyType enemyType, Vector2 spawnPosition)

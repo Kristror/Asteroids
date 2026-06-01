@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Saving
 {
-    public class PlayerSaveController : IInitializable,IDisposable
+    public class PlayerSaveController : IInitializable, IDisposable
     {
         private IPlayerSaveLoad _playerSave;
         private ScoreController _scoreController;
