@@ -1,6 +1,7 @@
 ﻿using Enemies;
 using Enemies.Spawners;
 using Player;
+using PlayerAnalytics;
 using Saving;
 using UI;
 using UnityEngine;
@@ -17,7 +18,8 @@ namespace Instalers
         {
             BindPlayer();
             BindUtilities();
-            BindSaving();            
+            BindSaving();
+            BindAnalytics();            
             BindEnemies();
             BindUI();
         }
@@ -50,6 +52,14 @@ namespace Instalers
         {
             Container.Bind<IPlayerSaveLoad>().To<PlayerPrefsSaving>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerSaveController>().AsSingle();
+        }
+        
+        private void BindAnalytics()
+        {
+            Container.BindInterfacesAndSelfTo<AnalyticsWthFirebase>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<AnalyticsController>().AsSingle();
+            Container.Bind<PlayerStatisticsController>().AsSingle();
         }
 
         private void BindEnemies()

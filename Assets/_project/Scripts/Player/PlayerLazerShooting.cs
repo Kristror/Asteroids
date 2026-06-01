@@ -1,3 +1,5 @@
+using PlayerAnalytics;
+using System;
 using UnityEngine;
 using Weapons;
 using Zenject;
@@ -18,13 +20,18 @@ namespace Player
         private float _timeOfReloadStart = 0;
         private bool _isReloading = false;
 
+        private PlayerStatisticsController _playerStatisticsController;
+        private AnalyticsController _analyticsController;
         private Lazer _lazer;
         private PlayerInputController _playerInputController;
 
         [Inject]
-        public void Construct(PlayerInputController inputController)
+        public void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, AnalyticsController analyticsController)
         {
             _playerInputController = inputController;
+            _playerStatisticsController = playerStatisticsController;
+            _analyticsController = analyticsController;
+
             _playerInputController.ShootLazer += ShootLazer;
         }
 
@@ -84,6 +91,8 @@ namespace Player
             if (isEnoughTimePassed && (Ammo > 0))
             {
                 _lazer.Shoot();
+                _playerStatisticsController.ShotLazer();
+                _analyticsController.LazerUsed();
                 Ammo--;
                 _timeOflastShot = Time.time;
             }

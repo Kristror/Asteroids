@@ -1,3 +1,4 @@
+using PlayerAnalytics;
 using UnityEngine;
 using Weapons;
 using Zenject;
@@ -14,11 +15,13 @@ namespace Player
         private float _timeOflastShot = 0;
         private BulletFactory _bulletFactory;
         private PlayerInputController _playerInputController;
+        private PlayerStatisticsController _playerStatisticsController;
 
         [Inject]
-        public void Construct(PlayerInputController inputController, BulletFactory bulletFactory)
+        public void Construct(PlayerInputController inputController,PlayerStatisticsController playerStatisticsController, BulletFactory bulletFactory)
         {
             _playerInputController = inputController;
+            _playerStatisticsController = playerStatisticsController;
             _bulletFactory = bulletFactory;
 
             _playerInputController.ShootBullet += Shoot;
@@ -41,6 +44,8 @@ namespace Player
 
                 bullet.transform.position = _bulletStartPosition.position;
                 bullet.transform.rotation = _bulletStartPosition.rotation;
+
+                _playerStatisticsController.ShotBullet();
 
                 _timeOflastShot = Time.time;
             }

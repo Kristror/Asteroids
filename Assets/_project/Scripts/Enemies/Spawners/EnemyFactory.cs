@@ -36,6 +36,7 @@ namespace Enemies.Spawners
             }
 
             enemy.Positon = position;
+            enemy.SetType(enemyType);
 
             return enemy;
         }
