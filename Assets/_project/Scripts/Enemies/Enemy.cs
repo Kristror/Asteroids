@@ -1,23 +1,14 @@
 using Enemies.Spawners;
 using System;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Enemies
 {
     [RequireComponent(typeof(EnemyCollision))]
     public abstract class Enemy : MonoBehaviour
     {
-        public Vector3 Positon 
-        { 
-            get 
-            { 
-               return transform.position; 
-            }
-            set 
-            {
-                transform.position = value;
-            } 
-        }
+        public Vector3 Positon => transform.position;
 
         public Quaternion Rotation
         {
@@ -33,13 +24,14 @@ namespace Enemies
 
         private EnemyCollision _enemyCollision;
 
-        public void Awake()
+        private void Awake()
         {
             _enemyCollision = GetComponent<EnemyCollision>();            
         }
 
-        public void SetType(EnemyType type)
+        public void Intitialize(EnemyType type, Vector2 position)
         {
+            transform.position = position;
             _enemyCollision.SetType(type);
         }
 

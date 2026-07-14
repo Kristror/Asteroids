@@ -1,5 +1,6 @@
+using Cysharp.Threading.Tasks;
 using PlayerAnalytics;
-using System;
+using System.Threading;
 using UnityEngine;
 using Weapons;
 using Zenject;
@@ -9,7 +10,7 @@ namespace Player
     public class PlayerLazerShooting : MonoBehaviour
     {
         [SerializeField, Min(1)] private int _maxAmmo;
-        [SerializeField, Min(0)] private float _timeToReload;
+        [SerializeField, Min(0)] private int _timeToReload;
         [SerializeField, Min(0)] private float _shootingSpeed;
         [SerializeField, Min(0)] private int _lazerDuration;
         [SerializeField] private GameObject _lazerObject;
@@ -17,13 +18,13 @@ namespace Player
         public int Ammo { get; private set; }
 
         private float _timeOflastShot = 0;
-        private float _timeOfReloadStart = 0;
-        private bool _isReloading = false;
 
         private PlayerStatisticsController _playerStatisticsController;
         private AnalyticsController _analyticsController;
         private Lazer _lazer;
         private PlayerInputController _playerInputController;
+
+        protected CancellationTokenSource _reloadAmmoToken;
 
         [Inject]
         public void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, AnalyticsController analyticsController)
@@ -38,50 +39,46 @@ namespace Player
         private void Start()
         {
             Ammo = _maxAmmo;
+
             _lazer = _lazerObject.GetComponent<Lazer>();
             _lazer.SetLazerDuration(_lazerDuration);
-        }
 
-        private void Update()
-        {
-            Reload();
-        }
+            UniTaskVoid reloadAmmo = ReloadAmmo();
+        }       
 
         private void OnDestroy()
         {
-            _playerInputController.ShootLazer -= ShootLazer;
+            _playerInputController.ShootLazer -= ShootLazer; 
+            _reloadAmmoToken?.Cancel();
+            _reloadAmmoToken?.Dispose();
         }
 
-        public float TimeToReload()
+        private async UniTaskVoid ReloadAmmo()
         {
-            float reloadTime = (_timeToReload - (Time.time - _timeOflastShot));
+            _reloadAmmoToken = new CancellationTokenSource();
 
-            if (reloadTime > 0)
-            {
-                return reloadTime;
-            }
-
-            return 0;
-        }
-
-        private void Reload()
-        {
-            if (!_isReloading)
+            while (true)
             {
                 if (Ammo < _maxAmmo)
                 {
-                    _timeOfReloadStart = Time.time;
-                    _isReloading = true;
-                }
-            }
-            else
-            {
-                if (_timeToReload < Time.time - _timeOfReloadStart)
-                {
+                    await UniTask.Delay(_timeToReload, cancellationToken: _reloadAmmoToken.Token);
+
                     Ammo++;
-                    _isReloading = false;
                 }
+                await UniTask.DelayFrame(1);
             }
+        }
+
+        public float ShootingCooldown()
+        {
+            float cooldown = (_shootingSpeed - (Time.time - _timeOflastShot));
+
+            if (cooldown > 0)
+            {
+                return cooldown;
+            }
+
+            return 0;
         }
 
         private void ShootLazer()
@@ -91,8 +88,10 @@ namespace Player
             if (isEnoughTimePassed && (Ammo > 0))
             {
                 _lazer.Shoot();
+
                 _playerStatisticsController.ShotLazer();
                 _analyticsController.LazerUsed();
+
                 Ammo--;
                 _timeOflastShot = Time.time;
             }

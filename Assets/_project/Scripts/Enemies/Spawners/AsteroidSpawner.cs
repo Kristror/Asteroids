@@ -44,13 +44,14 @@ namespace Enemies.Spawners
 
         public void SpawnSmallAsteroids(EnemyCollision enemyCollision)
         {
+            Vector2 collisionPosition = enemyCollision.Position;
+
             for (int i = 0; i < _amountOfpieces; i++)
             {
-                Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, enemyCollision.Position);
+                float x = collisionPosition.x + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet);
+                float y = collisionPosition.y + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet);
 
-                float x = smallAsteroid.Positon.x + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet);
-                float y = smallAsteroid.Positon.y + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet);
-                smallAsteroid.Positon = new Vector2(x, y);                
+                Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, new Vector2(x, y));             
             }
             Unsubscribe(enemyCollision);
         }

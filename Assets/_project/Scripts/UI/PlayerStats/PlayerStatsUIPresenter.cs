@@ -23,6 +23,8 @@ namespace UI
 
         public void Tick()
         {
+            _playerStatsUIModel.UpdateData();
+
             UpdatePlayerPosition();
             UpdatePlayerRotation();
             UpdatePlayerSpeed();
@@ -53,7 +55,7 @@ namespace UI
 
         private void UpdateLazerReloadTime()
         {
-            _playerStatsUIView.ShowLazerReloadTime(_playerStatsUIModel.LazerReloadTime);
+            _playerStatsUIView.ShowLazerReloadTime(_playerStatsUIModel.LazerCooldown);
         }        
     }
 }

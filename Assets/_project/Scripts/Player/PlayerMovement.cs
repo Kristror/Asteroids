@@ -10,7 +10,7 @@ namespace Player
         [SerializeField, Min(0)] private float _movementSpeed;
         [SerializeField, Min(0)] private float _rotationSpeed;
 
-        private Rigidbody2D _rigidBodyPlayer;
+        private Rigidbody2D _rigidBody;
         private BorderController _borderController;
         private PlayerInputController _playerInputController;
 
@@ -26,7 +26,7 @@ namespace Player
 
         private void Start()
         {
-            _rigidBodyPlayer = GetComponent<Rigidbody2D>();
+            _rigidBody = GetComponent<Rigidbody2D>();
         }
 
         private void Update()
@@ -42,19 +42,19 @@ namespace Player
 
         private void Move()
         {
-            _rigidBodyPlayer.AddForce(transform.up * _movementSpeed, ForceMode2D.Force);            
+            _rigidBody.AddForce(transform.up * _movementSpeed, ForceMode2D.Force);            
         }
 
         private void Rotate(int direction)
         {
-            _rigidBodyPlayer.AddTorque(_rotationSpeed * direction, ForceMode2D.Force);
+            _rigidBody.AddTorque(_rotationSpeed * direction, ForceMode2D.Force);
         }
 
         private void CheckBorder()
         {
             if (_borderController.CheckIfObjectOnBorder(transform.position))
             {
-                _rigidBodyPlayer.position = _borderController.MoveObjectOnOtherSide(transform.position);
+                _rigidBody.position = _borderController.MoveObjectOnOtherSide(transform.position);
             }
         }
     }

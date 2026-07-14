@@ -7,7 +7,7 @@ namespace Utilites
     public class SceneController : IDisposable
     {
         private DeathUIPresenter _deathUIPresenter;
-
+        
         public SceneController(DeathUIPresenter deathUIPresenter)
         {
             _deathUIPresenter = deathUIPresenter;

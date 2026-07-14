@@ -10,7 +10,7 @@ namespace Weapons
         {
             if (collider.TryGetComponent<EnemyCollision>(out _))
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

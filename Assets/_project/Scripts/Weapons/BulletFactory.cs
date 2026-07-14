@@ -2,7 +2,7 @@
 
 namespace Weapons
 {
-    public class BulletFactory : PlaceholderFactory<BulletCollision>
+    public class BulletFactory : PlaceholderFactory<BulletMovement>
     {
     }
 }

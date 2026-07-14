@@ -1,12 +1,10 @@
 ﻿using Firebase;
 using Firebase.Analytics;
-using System;
 using UnityEngine;
-using Zenject;
 
 namespace PlayerAnalytics
 {
-    public class AnalyticsWthFirebase : IAnalytics, IInitializable, IDisposable
+    public class AnalyticsWthFirebase : IAnalytics
     {
         private PlayerStatistics _playerStatistics;
 

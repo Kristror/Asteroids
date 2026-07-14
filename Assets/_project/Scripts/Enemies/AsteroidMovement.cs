@@ -46,7 +46,7 @@ namespace Enemies
 
         private void CheckBorder()
         {
-             if (_borderController.CheckIfObjectOnBorder(transform.position))
+            if (_borderController.CheckIfObjectOnBorder(transform.position))
             {
                 transform.position = _borderController.MoveObjectOnOtherSide(transform.position);
             }

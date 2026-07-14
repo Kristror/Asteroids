@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Weapons
@@ -6,6 +7,8 @@ namespace Weapons
     public class BulletMovement : MonoBehaviour
     {
         [SerializeField, Min(0)] private float _bulletMovementSpeed;
+
+        private const int _timeToLive = 2000;
 
         private Rigidbody2D _rigidBody;
 
@@ -17,6 +20,27 @@ namespace Weapons
         private void Update()
         {
             Move();
+        }
+
+        public void StartMovementFromPoint(Transform startPosition)
+        {
+            transform.position = startPosition.position;
+            transform.rotation = startPosition.rotation;
+
+            SetActive(true);
+
+            UniTaskVoid waitForLazer = StopBullet();
+        }
+
+        private async UniTaskVoid StopBullet()
+        {
+            await UniTask.Delay(_timeToLive);
+            SetActive(false);
+        }
+
+        public void SetActive(bool active)
+        {
+            gameObject.SetActive(active);
         }
 
         private void Move()

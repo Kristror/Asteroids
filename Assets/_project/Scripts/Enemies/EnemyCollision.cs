@@ -32,18 +32,20 @@ namespace Enemies
             if (collision.TryGetComponent<BulletCollision>(out _))
             {
                 KilledByBullet?.Invoke(this);
-                _scoreController.EnemyKilled();
-                UpdateStatistics();
-
-                GameObject.Destroy(gameObject);
+                Death();
             }
             if (collision.TryGetComponent<Lazer>(out _))
             {
-                _scoreController.EnemyKilled();
-                UpdateStatistics();
-
-                GameObject.Destroy(gameObject);
+                Death();
             }
+        }
+
+        private void Death()
+        {
+            _scoreController.EnemyKilled();
+            UpdateStatistics();
+
+            GameObject.Destroy(gameObject);
         }
 
         public void SetType(EnemyType type)

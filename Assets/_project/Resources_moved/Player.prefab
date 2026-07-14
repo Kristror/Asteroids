@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLazerShooting
   _maxAmmo: 3
-  _timeToReload: 5
+  _timeToReload: 5000
   _shootingSpeed: 3
   _lazerDuration: 2000
   _lazerObject: {fileID: 3334544127456473933}

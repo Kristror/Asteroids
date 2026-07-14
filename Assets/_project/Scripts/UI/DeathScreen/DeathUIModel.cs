@@ -7,11 +7,11 @@ namespace UI
     {
         public event Action RestartGame;
 
-        public string PlayerScore => scoreText + _scoreController.PlayerScore;
+        public string PlayerScore => _scoreText + _scoreController.PlayerScore;
 
         private ScoreController _scoreController;
 
-        private const string scoreText = "Score : ";
+        private const string _scoreText = "Score : ";
         
         public DeathUIModel(ScoreController scoreController)
         {

@@ -2,10 +2,14 @@
 {
     public interface IAnalytics
     {
+        void Initialize();
+
+        void Dispose();
+
         void GameStarted();
 
         void SendPlayerStatistics();
 
-        void LazerUsed();
+        void LazerUsed();        
     }
 }

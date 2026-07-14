@@ -6,31 +6,31 @@ namespace Player
 {
     public class PlayerProvider : IInitializable
     {
-        public Vector3 PlayerPosition => PlayerInstance.transform.position;
-        public float PlayerRotation => PlayerInstance.transform.rotation.eulerAngles.z;
-        public float PlayerSpeed => _playerRigidBody.linearVelocity.magnitude;
-
-        public GameObject PlayerInstance { get; private set; }
+        public Vector3 PlayerPosition => _playerInstance.transform.position;
+        public float PlayerRotation => _playerInstance.transform.rotation.eulerAngles.z;
+        public float PlayerSpeed => _rigidBody.linearVelocity.magnitude;
         public PlayerCollision PlayerCollision { get; private set; }
         public PlayerLazerShooting PlayerLazerShooting { get; private set; }
 
-        private Rigidbody2D _playerRigidBody;
-        private PlayerShipFactory _PlayerShipFactory;
+
+        private GameObject _playerInstance;
+        private Rigidbody2D _rigidBody;
+        private PlayerShipFactory _playerShipFactory;
 
         public PlayerProvider(PlayerShipFactory playerShipFactory)
         {
-            _PlayerShipFactory = playerShipFactory;
+            _playerShipFactory = playerShipFactory;
         }
 
         public void Initialize()
         {
-            PlayerInstance = _PlayerShipFactory.Create().gameObject;
+            _playerInstance = _playerShipFactory.Create().gameObject;
 
-            _playerRigidBody = PlayerInstance.GetComponent<Rigidbody2D>();
+            _rigidBody = _playerInstance.GetComponent<Rigidbody2D>();
 
-            PlayerCollision = PlayerInstance.GetComponentInChildren<PlayerCollision>();
+            PlayerCollision = _playerInstance.GetComponentInChildren<PlayerCollision>();
 
-            PlayerLazerShooting = PlayerInstance.GetComponent<PlayerLazerShooting>();
+            PlayerLazerShooting = _playerInstance.GetComponent<PlayerLazerShooting>();
             
         }
 

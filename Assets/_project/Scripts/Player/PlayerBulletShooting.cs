@@ -10,19 +10,20 @@ namespace Player
         [SerializeField, Min(0)] private float _shootingSpeed;
         [SerializeField] private Transform _bulletStartPosition;
 
-        private const float _timeToLive = 2;
-
         private float _timeOflastShot = 0;
-        private BulletFactory _bulletFactory;
+        private BulletPool _bulletPool;
+        private int _bulletPollSize = 25;
         private PlayerInputController _playerInputController;
         private PlayerStatisticsController _playerStatisticsController;
 
         [Inject]
-        public void Construct(PlayerInputController inputController,PlayerStatisticsController playerStatisticsController, BulletFactory bulletFactory)
+        public void Construct(PlayerInputController inputController,PlayerStatisticsController playerStatisticsController, BulletPool bulletPool)
         {
             _playerInputController = inputController;
             _playerStatisticsController = playerStatisticsController;
-            _bulletFactory = bulletFactory;
+
+            _bulletPool = bulletPool;
+            _bulletPool.FillPool(_bulletPollSize);
 
             _playerInputController.ShootBullet += Shoot;
         }
@@ -38,12 +39,9 @@ namespace Player
 
             if (isEnoughTimePassed)
             {
-                GameObject bullet = _bulletFactory.Create().gameObject;
+                BulletMovement bullet = _bulletPool.Next();
 
-                GameObject.Destroy(bullet, _timeToLive);
-
-                bullet.transform.position = _bulletStartPosition.position;
-                bullet.transform.rotation = _bulletStartPosition.rotation;
+                bullet.StartMovementFromPoint(_bulletStartPosition);                
 
                 _playerStatisticsController.ShotBullet();
 

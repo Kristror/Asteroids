@@ -9,7 +9,7 @@ namespace PlayerAnalytics
         private IAnalytics _analytic;
         private PlayerProvider _playerProvider;
 
-        public AnalyticsController(AnalyticsWthFirebase analytic, PlayerProvider playerProvider) 
+        public AnalyticsController(IAnalytics analytic, PlayerProvider playerProvider) 
         {
             _analytic = analytic;
             _playerProvider = playerProvider;
@@ -17,12 +17,14 @@ namespace PlayerAnalytics
 
         public void Initialize()
         {
+            _analytic.Initialize();
             _analytic.GameStarted();
             _playerProvider.SubscribeToPlayerDeath(PlayerDeath);
         }
 
         public void Dispose()
         {
+            _analytic.Dispose();
             _playerProvider.UnSubscribeToPlayerDeath(PlayerDeath);
         }
 
