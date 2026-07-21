@@ -2,7 +2,7 @@
 
 namespace UI
 {
-    public class UIPresenterInitializer : IInitializable
+    public class GameUIPresenterInitializer : IInitializable
     {
         private DeathUIPresenter _deathUIPresenter;
         private PlayerStatsUIPresenter _playerStatsUIPresenter;
@@ -10,7 +10,7 @@ namespace UI
         private PlayerStatsUIViewFactory _playerStatsUIViewFactory;
         private DeathUIViewFactory _deathUIViewFactory;
 
-        public UIPresenterInitializer(PlayerStatsUIViewFactory playerStatsUIViewFactory, DeathUIViewFactory deathUIViewFactory, DeathUIPresenter deathUIPresenter, PlayerStatsUIPresenter playerStatsUIPresenter)
+        public GameUIPresenterInitializer(PlayerStatsUIViewFactory playerStatsUIViewFactory, DeathUIViewFactory deathUIViewFactory, DeathUIPresenter deathUIPresenter, PlayerStatsUIPresenter playerStatsUIPresenter)
         {
             _playerStatsUIViewFactory = playerStatsUIViewFactory;
             _deathUIViewFactory = deathUIViewFactory;

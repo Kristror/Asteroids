@@ -5,9 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_project/Scenes/Asteroids.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 0
+    path: Assets/_project/Scenes/MainMenu.unity
+    guid: 53230522d66c06d46b3f569766ca783a
+  - enabled: 1
+    path: Assets/_project/Scenes/Loading.unity
+    guid: e3eebb3338186d245950b4bb175eb332
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1a04913a21965bf488c43bff321bbd80, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

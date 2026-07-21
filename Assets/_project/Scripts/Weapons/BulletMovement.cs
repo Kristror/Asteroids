@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 
 namespace Weapons
@@ -11,6 +12,8 @@ namespace Weapons
         private const int _timeToLive = 2000;
 
         private Rigidbody2D _rigidBody;
+
+        private CancellationTokenSource _cts;
 
         private void Start()
         {
@@ -28,13 +31,13 @@ namespace Weapons
             transform.rotation = startPosition.rotation;
 
             SetActive(true);
-
             UniTaskVoid waitForLazer = StopBullet();
         }
 
         private async UniTaskVoid StopBullet()
         {
-            await UniTask.Delay(_timeToLive);
+            _cts = new CancellationTokenSource();
+            await UniTask.Delay(_timeToLive, cancellationToken: _cts.Token);
             SetActive(false);
         }
 
@@ -46,6 +49,11 @@ namespace Weapons
         private void Move()
         {
             _rigidBody.AddForce(transform.up * _bulletMovementSpeed, ForceMode2D.Force);
+        }
+
+        private void OnDestroy()
+        {
+            _cts?.Dispose();
         }
     }
 }
