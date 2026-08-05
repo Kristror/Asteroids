@@ -6,7 +6,7 @@ namespace Weapons
     {
         private List<BulletMovement> _pool;
         private BulletFactory _bulletFactory;
-        private int _poolLenght;
+        private int _poolLength;
         private int _index;
 
         public BulletPool(BulletFactory bulletFactory)
@@ -16,10 +16,10 @@ namespace Weapons
         }
         public void FillPool(int poolLenght)
         {
-            _poolLenght = poolLenght;
+            _poolLength = poolLenght;
             _index = 0;
 
-            for (int i = 0; i < _poolLenght; i++)
+            for (int i = 0; i < _poolLength; i++)
             {
                 BulletMovement bullet = _bulletFactory.Create();
                 bullet.SetActive(false);
@@ -37,7 +37,7 @@ namespace Weapons
         private void AdvanceIndex()
         {
             _index++;
-            if (_index >= _poolLenght) _index = 0;
+            if (_index >= _poolLength) _index = 0;
         }
     }
 }

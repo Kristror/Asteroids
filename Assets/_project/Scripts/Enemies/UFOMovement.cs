@@ -1,6 +1,6 @@
 ﻿using Player;
 using UnityEngine;
-using Utilites;
+using Utilities;
 using Zenject;
 
 namespace Enemies
@@ -23,13 +23,13 @@ namespace Enemies
 
         private void Start()
         {
+            _borderController.TrackObject(transform);
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
         private void Update()
         {
             MoveToPlayer();
-            CheckBorder();
         }
 
         private void MoveToPlayer()
@@ -39,12 +39,9 @@ namespace Enemies
             _rigidbody.AddForce(direction * _ufoMovementSpeed, ForceMode2D.Force);
         }
 
-        private void CheckBorder()
+        private void OnDestroy()
         {
-            if (_borderController.CheckIfObjectOnBorder(transform.position))
-            {
-                _rigidbody.position = _borderController.MoveObjectOnOtherSide(transform.position);
-            }
+            _borderController.StopTrackingObject(transform);
         }
     }
 }

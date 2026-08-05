@@ -12,18 +12,18 @@ namespace Player
 
         private float _timeOflastShot = 0;
         private BulletPool _bulletPool;
-        private int _bulletPollSize = 25;
+        private int _bulletPoolSize = 25;
         private PlayerInputController _playerInputController;
         private PlayerStatisticsController _playerStatisticsController;
 
         [Inject]
-        public void Construct(PlayerInputController inputController,PlayerStatisticsController playerStatisticsController, BulletPool bulletPool)
+        public void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, BulletPool bulletPool)
         {
             _playerInputController = inputController;
             _playerStatisticsController = playerStatisticsController;
 
             _bulletPool = bulletPool;
-            _bulletPool.FillPool(_bulletPollSize);
+            _bulletPool.FillPool(_bulletPoolSize);
 
             _playerInputController.ShootBullet += Shoot;
         }

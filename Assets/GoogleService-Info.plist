@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:1051064745496:ios:a0bad0f8c830b41ef88d6d</string>
+	<key>DATABASE_URL</key>
+	<string>https://asteroids-af1cc-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>

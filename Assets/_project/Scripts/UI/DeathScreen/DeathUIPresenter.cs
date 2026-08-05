@@ -24,7 +24,7 @@ namespace UI
 
         public void Dispose()
         {
-            _deathUIView.OnClick.RemoveAllListeners();
+            _deathUIView.OnClick.RemoveListener(StartRestartGame);
             _playerProvider.UnSubscribeToPlayerDeath(PlayerDeath);
         }
 

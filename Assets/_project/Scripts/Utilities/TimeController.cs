@@ -4,7 +4,7 @@ using UI;
 using UnityEngine;
 using Zenject;
 
-namespace Utilites
+namespace Utilities
 {
     public class TimeController : IInitializable,IDisposable
     {

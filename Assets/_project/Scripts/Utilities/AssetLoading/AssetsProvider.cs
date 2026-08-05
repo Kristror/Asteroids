@@ -1,11 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace AssetLoading
+namespace Utilities.AssetLoading
 {
     public class AssetsProvider 
     {
-        private AssetsConstants _assetsConstants;
         private IAssetLoader _assetLoader;
 
         public GameObject MainMenuUIObject;
@@ -20,16 +19,19 @@ namespace AssetLoading
         public GameObject DeathUIObject;
         public GameObject PlayerStatsUIObject;
 
+        public bool isMainMenuAssetsLoaded = false;
+        public bool isGameAssetsLoaded = false;
+
 
         public AssetsProvider(IAssetLoader assetLoader)
         {
             _assetLoader = assetLoader;
-            _assetsConstants = new AssetsConstants();
         }
         
         public async UniTask LoadMainMenuAssets()
         {
             await LoadMainMenuUI();
+            isMainMenuAssetsLoaded = true;
         }
 
         public async UniTask LoadGameAssets() 
@@ -37,56 +39,57 @@ namespace AssetLoading
             await UniTask.WhenAll(
                 LoadPLayer(), LoadBullet(), LoadAsteroid(), LoadSmallAsteroid(),
                 LoadUFO(), LoadAsteroidSpawner(), LoadUFOSpawner(), LoadDeathUI(), LoadPlayerStatsUI());
+            isGameAssetsLoaded = true;
         }
 
         private async UniTask LoadMainMenuUI()
         {
-            MainMenuUIObject = await _assetLoader.LoadObjectByName(_assetsConstants.MainMenuUI);
+            MainMenuUIObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.MainMenuUI);
         }
 
         private async UniTask LoadPLayer()
         {
-            PlayerObject = await _assetLoader.LoadObjectByName(_assetsConstants.Player);            
+            PlayerObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.Player);            
         }
 
         private async UniTask LoadBullet()
         {
-            BulletObject = await _assetLoader.LoadObjectByName(_assetsConstants.Bullet);
+            BulletObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.Bullet);
         }
 
         private async UniTask LoadAsteroid()
         {
-            AsteroidObject = await _assetLoader.LoadObjectByName(_assetsConstants.Asteroid);
+            AsteroidObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.Asteroid);
         }
 
         private async UniTask LoadSmallAsteroid()
         {
-            SmallAsteroidObject = await _assetLoader.LoadObjectByName(_assetsConstants.SmallAsteroid);
+            SmallAsteroidObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.SmallAsteroid);
         }
 
         private async UniTask LoadUFO()
         {
-            UFOObject = await _assetLoader.LoadObjectByName(_assetsConstants.UFO);
+            UFOObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.UFO);
         }
 
         private async UniTask LoadAsteroidSpawner()
         {
-            AsteroidSpawnerObject = await _assetLoader.LoadObjectByName(_assetsConstants.AsteroidSpawner);
+            AsteroidSpawnerObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.AsteroidSpawner);
         }
 
         private async UniTask LoadUFOSpawner()
         {
-            UFOSpawnerObject = await _assetLoader.LoadObjectByName(_assetsConstants.UFOSpawner);
+            UFOSpawnerObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.UFOSpawner);
         }
 
         private async UniTask LoadDeathUI()
         {
-            DeathUIObject = await _assetLoader.LoadObjectByName(_assetsConstants.DeathUI);
+            DeathUIObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.DeathUI);
         }
 
         private async UniTask LoadPlayerStatsUI()
         {
-            PlayerStatsUIObject = await _assetLoader.LoadObjectByName(_assetsConstants.PlayerStatsUI);
+            PlayerStatsUIObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.PlayerStatsUI);
         }
     }
 }

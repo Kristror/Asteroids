@@ -261,7 +261,7 @@ MonoBehaviour:
   _timeToReload: 5000
   _shootingSpeed: 3
   _lazerDuration: 2000
-  _lazerObject: {fileID: 3334544127456473933}
+  _lazer: {fileID: 8722408203679260283}
 --- !u!114 &-474188770926941647
 MonoBehaviour:
   m_ObjectHideFlags: 0

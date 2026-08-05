@@ -1,5 +1,5 @@
 ﻿using System;
-using Utilites;
+using Utilities;
 
 namespace UI
 {
@@ -10,16 +10,16 @@ namespace UI
         public string PlayerScore => _scoreText + _scoreController.PlayerScore;
 
         private ScoreController _scoreController;
-        private SceneLoader _sceneLoader;
+        private LoadingController _loadingController;
 
         private const string _scoreText = "Score : ";
         
-        public DeathUIModel(ScoreController scoreController, SceneLoader sceneLoader)
+        public DeathUIModel(ScoreController scoreController, LoadingController loadingController)
         {
             _scoreController = scoreController;
-            _sceneLoader = sceneLoader;
+            _loadingController = loadingController;
 
-            RestartGame += _sceneLoader.LoadGame;
+            RestartGame += loadingController.LoadGame;
         }
 
         public void StartRestartGame()

@@ -2,7 +2,7 @@
 
 namespace UI
 {
-    public class MainMenuUIPresenter
+    public class MainMenuUIPresenter : IDisposable
     {
         private MainMenuUIModel _mainMenuUIModel;
         private MainMenuUIView _mainMenuUIView;
@@ -18,16 +18,6 @@ namespace UI
             _mainMenuUIView.OnClick.AddListener(BeginGame);
         }
 
-        public void SubscribeToStartGame(Action func)
-        {
-            _mainMenuUIModel.StartGame += func;
-        }
-
-        public void UnSubscribeToStartGame(Action func)
-        {
-            _mainMenuUIModel.StartGame -= func;
-        }
-
         private void BeginGame()
         {
             _mainMenuUIModel.BeginGame();
@@ -35,7 +25,7 @@ namespace UI
 
         public void Dispose()
         {
-            _mainMenuUIView.OnClick.RemoveAllListeners();
+            _mainMenuUIView.OnClick.RemoveListener(BeginGame);
         }
     }
 }

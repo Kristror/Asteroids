@@ -15,9 +15,11 @@ namespace Weapons
 
         private CancellationTokenSource _cts;
 
-        private void Start()
+        private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody2D>();
+
+            _cts = new CancellationTokenSource();
         }
 
         private void Update()
@@ -31,14 +33,28 @@ namespace Weapons
             transform.rotation = startPosition.rotation;
 
             SetActive(true);
-            UniTaskVoid waitForLazer = StopBullet();
+            UniTaskVoid bulletTimer = BulletLiveTimer();
         }
 
-        private async UniTaskVoid StopBullet()
+        private async UniTaskVoid BulletLiveTimer()
         {
-            _cts = new CancellationTokenSource();
             await UniTask.Delay(_timeToLive, cancellationToken: _cts.Token);
             SetActive(false);
+        }
+
+        public void StopBullet()
+        {
+            CleanCTS();
+            SetActive(false);
+        }
+
+        private void CleanCTS()
+        {
+            if (_cts != null && !_cts.IsCancellationRequested)
+            {
+                _cts.Cancel();
+                _cts?.Dispose();
+            }
         }
 
         public void SetActive(bool active)
@@ -53,7 +69,7 @@ namespace Weapons
 
         private void OnDestroy()
         {
-            _cts?.Dispose();
+            CleanCTS();
         }
     }
 }

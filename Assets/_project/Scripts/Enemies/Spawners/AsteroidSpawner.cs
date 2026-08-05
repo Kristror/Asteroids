@@ -17,15 +17,18 @@ namespace Enemies.Spawners
 
         private async UniTaskVoid SpawnAsteroid()
         {
-            _enemiesSpawnToken = new CancellationTokenSource();
+            _cts = new CancellationTokenSource();
 
             while (true)
             {
-                await UniTask.Delay(_timeToSpawn, cancellationToken: _enemiesSpawnToken.Token);
+                await UniTask.Delay(_timeToSpawn, cancellationToken: _cts.Token);
 
                 Enemy asteroid = SpawnEnemy(EnemyType.Asteroid);
 
-                asteroid.SubscribeToCollison(SpawnSmallAsteroids);
+                EnemyCollision enemyCollision = asteroid.GetEnemyCollision();
+                //закидываем астеройд в бордер контроллер
+
+                enemyCollision.SubscribeToCollision(SpawnSmallAsteroids);
 
                 RandomRotate(asteroid);
             }
@@ -38,7 +41,7 @@ namespace Enemies.Spawners
             float x = Random.Range(0, screenSize.x);
             float y = Random.Range(0, screenSize.y);
 
-            Vector2 direction = new Vector3(x, y) - asteroid.Positon;
+            Vector2 direction = new Vector3(x, y) - asteroid.Position;
             asteroid.Rotation = Quaternion.FromToRotation(Vector3.up, direction);
         }
 
@@ -53,12 +56,7 @@ namespace Enemies.Spawners
 
                 Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, new Vector2(x, y));             
             }
-            Unsubscribe(enemyCollision);
-        }
-
-        private void Unsubscribe(EnemyCollision enemy)
-        {
-            enemy.KilledByBullet -= SpawnSmallAsteroids;
+            enemyCollision.UnSubscribeToCollision(SpawnSmallAsteroids);
         }
 
         private Vector2 GetScreenSizeInUnits()

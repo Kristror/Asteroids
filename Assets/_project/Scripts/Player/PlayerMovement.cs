@@ -1,5 +1,5 @@
 using UnityEngine;
-using Utilites;
+using Utilities;
 using Zenject;
 
 namespace Player
@@ -20,6 +20,8 @@ namespace Player
             _borderController = borderController;
             _playerInputController = inputController;
 
+
+            _borderController.TrackObject(transform);
             _playerInputController.Move += Move;
             _playerInputController.Rotate += Rotate;
         }
@@ -29,13 +31,10 @@ namespace Player
             _rigidBody = GetComponent<Rigidbody2D>();
         }
 
-        private void Update()
-        {
-            CheckBorder();
-        }
-
         private void OnDestroy()
         {
+
+            _borderController.StopTrackingObject(transform);
             _playerInputController.Move -= Move;
             _playerInputController.Rotate -= Rotate;
         }
@@ -48,14 +47,6 @@ namespace Player
         private void Rotate(int direction)
         {
             _rigidBody.AddTorque(_rotationSpeed * direction, ForceMode2D.Force);
-        }
-
-        private void CheckBorder()
-        {
-            if (_borderController.CheckIfObjectOnBorder(transform.position))
-            {
-                _rigidBody.position = _borderController.MoveObjectOnOtherSide(transform.position);
-            }
         }
     }
 }

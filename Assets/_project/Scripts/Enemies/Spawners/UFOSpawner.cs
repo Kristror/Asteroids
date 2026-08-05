@@ -12,11 +12,11 @@ namespace Enemies.Spawners
 
         private async UniTaskVoid SpawnUFO()
         {
-            _enemiesSpawnToken = new CancellationTokenSource();
+            _cts = new CancellationTokenSource();
 
             while (true)
             {
-                await UniTask.Delay(_timeToSpawn, cancellationToken: _enemiesSpawnToken.Token);
+                await UniTask.Delay(_timeToSpawn, cancellationToken: _cts.Token);
 
                 Enemy ufo = SpawnEnemy(EnemyType.UFO);
             }

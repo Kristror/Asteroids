@@ -2,7 +2,7 @@
 using PlayerAnalytics;
 using System;
 using UnityEngine;
-using Utilites;
+using Utilities;
 using Weapons;
 using Zenject;
 
@@ -14,7 +14,7 @@ namespace Enemies
         private EnemyType _type;
         public Vector2 Position => transform.position;
 
-        public event Action<EnemyCollision> KilledByBullet;
+        private event Action<EnemyCollision> KilledByBullet;
 
         private ScoreController _scoreController;
         private PlayerStatisticsController _playerStatisticsController;
@@ -24,6 +24,16 @@ namespace Enemies
         {
             _scoreController = scoreController;
             _playerStatisticsController = playerStatisticsController;
+        }
+
+        public void SubscribeToCollision(Action<EnemyCollision> func)
+        {
+            KilledByBullet += func;
+        }
+
+        public void UnSubscribeToCollision(Action<EnemyCollision> func)
+        {
+            KilledByBullet -= func;
         }
 
 

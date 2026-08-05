@@ -1,4 +1,4 @@
-using AssetLoading;
+using Utilities.AssetLoading;
 using UI;
 using Zenject;
 
@@ -19,6 +19,7 @@ namespace Installers
             Container.BindFactory<MainMenuUIView, MainMenuUIViewFactory>().FromComponentInNewPrefab(_assetsProvider.MainMenuUIObject);
             Container.Bind<MainMenuUIPresenter>().AsSingle();
             Container.BindInterfacesAndSelfTo<MainMenuUIPresenterInitializer>().AsSingle();
+            Container.BindExecutionOrder<MainMenuUIPresenterInitializer>(-1);
         }
     }
 }

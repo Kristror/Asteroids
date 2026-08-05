@@ -1,5 +1,5 @@
-using AssetLoading;
-using Utilites;
+using Utilities.AssetLoading;
+using Utilities;
 using Zenject;
 
 namespace Installers
@@ -13,10 +13,12 @@ namespace Installers
 
         private void BindLoaders()
         {
-            Container.Bind<IAssetLoader>().To<LoacalAddressablesLoader>().AsSingle();
+            Container.Bind<IAssetLoader>().To<LocalAddressablesLoader>().AsSingle();
             Container.Bind<AssetsProvider>().AsSingle();
 
             Container.Bind<SceneLoader>().AsSingle();
+
+            Container.Bind<LoadingController>().AsSingle();
         }
     }
 }

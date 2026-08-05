@@ -4,17 +4,17 @@ namespace Enemies.Spawners
 {
     public class EnemiesSpawnerFactoryRunner : IInitializable
     {
-        private AsteroidSpawnerFactory _asteroidSpawnerFactor;
+        private AsteroidSpawnerFactory _asteroidSpawnerFactory;
         private UFOSpawnerFactory _uFOSpawnerFactory;
         public EnemiesSpawnerFactoryRunner(AsteroidSpawnerFactory asteroidSpawnerFactory, UFOSpawnerFactory uFOSpawnerFactory)
         {
-            _asteroidSpawnerFactor = asteroidSpawnerFactory;
+            _asteroidSpawnerFactory = asteroidSpawnerFactory;
             _uFOSpawnerFactory = uFOSpawnerFactory;
         }
 
         public void Initialize()
         {
-            _asteroidSpawnerFactor.Create();
+            _asteroidSpawnerFactory.Create();
             _uFOSpawnerFactory.Create();
         }
     }

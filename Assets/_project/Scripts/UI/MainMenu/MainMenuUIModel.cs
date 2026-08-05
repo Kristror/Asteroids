@@ -1,36 +1,20 @@
-﻿using AssetLoading;
-using System;
-using UnityEditor;
-using UnityEngine;
-using Utilites;
+﻿using Utilities;
 
 namespace UI
 {
     public class MainMenuUIModel
     {
-        public event Action StartGame;
 
-        private AssetsProvider _assetsProvider;
-        private SceneLoader _sceneLoader;
+        private LoadingController _loadingController;
 
-        public MainMenuUIModel(AssetsProvider assetsProvider, SceneLoader sceneLoader)
+        public MainMenuUIModel(LoadingController loadingController)
         {
-            _assetsProvider = assetsProvider;
-            _sceneLoader = sceneLoader;
-
-            StartGame += Start;
+            _loadingController = loadingController;
         }
 
         public void BeginGame()
         {
-            StartGame?.Invoke();
-        }
-
-        private async void Start()
-        {
-            await _assetsProvider.LoadGameAssets();
-
-            _sceneLoader.LoadGame();
+           _loadingController.LoadGame();
         }
     }
 }

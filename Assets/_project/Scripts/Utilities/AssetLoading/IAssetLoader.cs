@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace AssetLoading
+namespace Utilities.AssetLoading
 {
     public interface IAssetLoader 
     {

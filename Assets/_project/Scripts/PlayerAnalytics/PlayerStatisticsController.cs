@@ -26,7 +26,7 @@
 
         public void AsteroidKilled()
         {
-            _playerStatistics.AstroidsKilled++;
+            _playerStatistics.AsteroidsKilled++;
         }
 
         public void UfoKilled()

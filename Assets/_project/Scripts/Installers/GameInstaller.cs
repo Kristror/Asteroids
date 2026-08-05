@@ -1,13 +1,13 @@
-﻿using AssetLoading;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using Enemies;
 using Enemies.Spawners;
 using Player;
 using PlayerAnalytics;
 using Saving;
 using UI;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using Utilites;
+using Utilities;
+using Utilities.AssetLoading;
 using Weapons;
 using Zenject;
 
@@ -32,6 +32,7 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<PlayerInputController>().AsSingle();
             Container.BindFactory<PlayerShip, PlayerShipFactory>().FromComponentInNewPrefab(_assetsProvider.PlayerObject);
             Container.BindInterfacesAndSelfTo<PlayerProvider>().AsSingle();
+            Container.BindExecutionOrder<PlayerProvider>(-1);
 
             Container.BindFactory<BulletMovement, BulletFactory>().FromComponentInNewPrefab(_assetsProvider.BulletObject);
             Container.Bind<BulletPool>().AsSingle();
@@ -43,7 +44,7 @@ namespace Installers
             Container.Bind<Keyboard>().FromInstance(Keyboard.current).AsSingle();
             Container.Bind<Mouse>().FromInstance(Mouse.current).AsSingle();
 
-            Container.Bind<BorderController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BorderController>().AsSingle();
             Container.Bind<ScoreController>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<TimeController>().AsSingle();
@@ -57,7 +58,7 @@ namespace Installers
 
         private void BindAnalytics()
         {
-            Container.Bind<IAnalytics>().To<AnalyticsWthFirebase>().AsSingle();
+            Container.Bind<IAnalytics>().To<AnalyticsWithFirebase>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<AnalyticsController>().AsSingle();
             Container.Bind<PlayerStatisticsController>().AsSingle();
@@ -89,6 +90,7 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<PlayerStatsUIPresenter>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GameUIPresenterInitializer>().AsSingle();
+            Container.BindExecutionOrder<GameUIPresenterInitializer>(-1);
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class SceneList
     {
-        public string MainMenu = "MainMenuScene";
-        public string Game = "AsteroidsScene";
+        public const string MainMenu = "MainMenuScene";
+        public const string Game = "AsteroidsScene";
     }
 }

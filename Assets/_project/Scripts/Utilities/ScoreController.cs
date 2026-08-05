@@ -1,4 +1,4 @@
-﻿namespace Utilites
+﻿namespace Utilities
 {
     public class ScoreController
     {

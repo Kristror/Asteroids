@@ -1,31 +1,18 @@
 ﻿using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
-using Utilities;
 
-namespace Utilites
+namespace Utilities
 {
     public class SceneLoader
     {
-        private SceneList _sceneList;
-
-        public SceneLoader()
-        {
-            _sceneList = new();
-        }
-
-        public void StartMainMenu()
-        {
-            Addressables.LoadSceneAsync(_sceneList.MainMenu, LoadSceneMode.Additive);
-        }
-
         public void LoadMainMenu()
         {
-            Addressables.LoadSceneAsync(_sceneList.MainMenu, LoadSceneMode.Single);
+            Addressables.LoadSceneAsync(SceneList.MainMenu, LoadSceneMode.Single);
         }
 
         public void LoadGame()
         {
-            Addressables.LoadSceneAsync(_sceneList.Game, LoadSceneMode.Single);
+            Addressables.LoadSceneAsync(SceneList.Game, LoadSceneMode.Single);
         }
     }
 }

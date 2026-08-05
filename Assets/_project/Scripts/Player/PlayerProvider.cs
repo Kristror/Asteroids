@@ -9,13 +9,14 @@ namespace Player
         public Vector3 PlayerPosition => _playerInstance.transform.position;
         public float PlayerRotation => _playerInstance.transform.rotation.eulerAngles.z;
         public float PlayerSpeed => _rigidBody.linearVelocity.magnitude;
-        public PlayerCollision PlayerCollision { get; private set; }
-        public PlayerLazerShooting PlayerLazerShooting { get; private set; }
-
+        public int PlayerLazerAmmo => _playerLazerShooting.Ammo;
+        public float PlayerLazerCoolDown => _playerLazerShooting.ShootingCooldown();
 
         private GameObject _playerInstance;
         private Rigidbody2D _rigidBody;
-        private PlayerShipFactory _playerShipFactory;
+        private PlayerShipFactory _playerShipFactory; 
+        private PlayerCollision _playerCollision;
+        private PlayerLazerShooting _playerLazerShooting;
 
         public PlayerProvider(PlayerShipFactory playerShipFactory)
         {
@@ -28,20 +29,20 @@ namespace Player
 
             _rigidBody = _playerInstance.GetComponent<Rigidbody2D>();
 
-            PlayerCollision = _playerInstance.GetComponentInChildren<PlayerCollision>();
+            _playerCollision = _playerInstance.GetComponentInChildren<PlayerCollision>();
 
-            PlayerLazerShooting = _playerInstance.GetComponent<PlayerLazerShooting>();
+            _playerLazerShooting = _playerInstance.GetComponent<PlayerLazerShooting>();
             
         }
 
         public void SubscribeToPlayerDeath(Action func)
         {
-            PlayerCollision.PlayerDeath += func;
+            _playerCollision.PlayerDeath += func;
         } 
 
         public void UnSubscribeToPlayerDeath(Action func)
         {
-            PlayerCollision.PlayerDeath -= func;
+            _playerCollision.PlayerDeath -= func;
         }
     }
 }

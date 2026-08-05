@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.DeathUIView
   _textScore: {fileID: 6616810137019612238}
-  _restartGameButon: {fileID: 5051660526466381180}
+  _restartGameButton: {fileID: 5051660526466381180}
   _deathScreen: {fileID: 1238170770599396399}
 --- !u!1 &4352790324389235012
 GameObject:

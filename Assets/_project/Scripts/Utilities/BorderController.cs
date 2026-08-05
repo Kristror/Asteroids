@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using Zenject;
 
-namespace Utilites
+namespace Utilities
 {
-    public class BorderController
+    public class BorderController : ITickable
     {
+        private List<Transform> _movingObjectsList;
         private const float _borderOffSet = 0.5f;
 
         private Camera _camera;
@@ -15,11 +18,44 @@ namespace Utilites
 
         public BorderController(Camera camera)
         {
+            _movingObjectsList = new List<Transform>();
             _camera = camera;
             CalculateScreenBounds();
         }
 
-        public bool CheckIfObjectOnBorder(Vector2 objectPosition)
+        public void Tick()
+        {
+            foreach (Transform obj in _movingObjectsList) 
+            {
+                if (CheckIfObjectOnBorder(obj.position))
+                {
+                    obj.position = MoveObjectOnOtherSide(obj.position);
+                }
+            }
+        }
+
+        public void TrackObject(Transform transform)
+        {
+            _movingObjectsList.Add(transform);
+        }
+        
+        public void StopTrackingObject(Transform transform)
+        {
+            _movingObjectsList.Remove(transform);
+        }
+
+        private void CalculateScreenBounds()
+        {
+            Vector3 bottomLeft = _camera.ViewportToWorldPoint(Vector3.zero);
+            Vector3 topRight = _camera.ViewportToWorldPoint(new Vector3(1, 1, 0));
+
+            _leftBorder = bottomLeft.x - _borderOffSet;
+            _rightBorder = topRight.x + _borderOffSet;
+            _bottomBorder = bottomLeft.y - _borderOffSet;
+            _topBorder = topRight.y + _borderOffSet;
+        }
+
+        private bool CheckIfObjectOnBorder(Vector2 objectPosition)
         {
             if ((objectPosition.x < _leftBorder) || (objectPosition.x > _rightBorder))
             {              
@@ -34,7 +70,7 @@ namespace Utilites
             return false;
         }
 
-        public Vector2 MoveObjectOnOtherSide(Vector2 objectPosition)
+        private Vector2 MoveObjectOnOtherSide(Vector2 objectPosition)
         {
             Vector3 newObjectPosition = objectPosition;
 
@@ -61,17 +97,6 @@ namespace Utilites
             }
 
             return newObjectPosition;
-        }
-
-        private void CalculateScreenBounds()
-        {
-            Vector3 bottomLeft = _camera.ViewportToWorldPoint(Vector3.zero);
-            Vector3 topRight = _camera.ViewportToWorldPoint(new Vector3(1, 1, 0));
-
-            _leftBorder = bottomLeft.x - _borderOffSet;
-            _rightBorder = topRight.x + _borderOffSet;
-            _bottomBorder = bottomLeft.y - _borderOffSet;
-            _topBorder = topRight.y + _borderOffSet;
         }
     }
 }

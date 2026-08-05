@@ -1,7 +1,6 @@
-﻿using PlayerAnalytics;
-using System.Threading;
+﻿using System.Threading;
 using UnityEngine;
-using Utilites;
+using Utilities;
 using Zenject;
 
 namespace Enemies.Spawners
@@ -9,25 +8,25 @@ namespace Enemies.Spawners
     public abstract class AbstractEnemySpawner : MonoBehaviour
     {
         [SerializeField, Min(0)] protected int _timeToSpawn;
-
-        protected ScoreController _scoreController;
         protected EnemyFactory _factory;
         protected Camera _mainCamera;
+        protected CancellationTokenSource _cts;
 
-        protected CancellationTokenSource _enemiesSpawnToken;
 
         [Inject]
-        public void Construct(ScoreController scoreController, EnemyFactory factory, Camera camera)
+        public void Construct(EnemyFactory factory, Camera camera)
         {
-            _scoreController = scoreController;
             _factory = factory;
             _mainCamera = camera;
         }
 
         private void OnDestroy()
         {
-            _enemiesSpawnToken?.Cancel();
-            _enemiesSpawnToken?.Dispose();
+            if (_cts != null && !_cts.IsCancellationRequested)
+            {
+                _cts.Cancel();
+                _cts?.Dispose();
+            }
         }
 
         protected Enemy SpawnEnemy(EnemyType enemyType)

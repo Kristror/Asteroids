@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1051064745496",
+    "firebase_url": "https://asteroids-af1cc-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "asteroids-af1cc",
     "storage_bucket": "asteroids-af1cc.firebasestorage.app"
   },

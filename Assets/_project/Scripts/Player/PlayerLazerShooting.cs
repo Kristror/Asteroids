@@ -13,7 +13,7 @@ namespace Player
         [SerializeField, Min(0)] private int _timeToReload;
         [SerializeField, Min(0)] private float _shootingSpeed;
         [SerializeField, Min(0)] private int _lazerDuration;
-        [SerializeField] private GameObject _lazerObject;
+        [SerializeField] private Lazer _lazer;
 
         public int Ammo { get; private set; }
 
@@ -21,14 +21,15 @@ namespace Player
 
         private PlayerStatisticsController _playerStatisticsController;
         private AnalyticsController _analyticsController;
-        private Lazer _lazer;
         private PlayerInputController _playerInputController;
 
-        protected CancellationTokenSource _reloadAmmoToken;
+        protected CancellationTokenSource _cts;
 
         [Inject]
         public void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, AnalyticsController analyticsController)
         {
+            _cts = new CancellationTokenSource();
+
             _playerInputController = inputController;
             _playerStatisticsController = playerStatisticsController;
             _analyticsController = analyticsController;
@@ -40,7 +41,6 @@ namespace Player
         {
             Ammo = _maxAmmo;
 
-            _lazer = _lazerObject.GetComponent<Lazer>();
             _lazer.SetLazerDuration(_lazerDuration);
 
             UniTaskVoid reloadAmmo = ReloadAmmo();
@@ -48,20 +48,22 @@ namespace Player
 
         private void OnDestroy()
         {
-            _playerInputController.ShootLazer -= ShootLazer; 
-            _reloadAmmoToken?.Cancel();
-            _reloadAmmoToken?.Dispose();
+            _playerInputController.ShootLazer -= ShootLazer;
+
+            if (_cts != null && !_cts.IsCancellationRequested)
+            {
+                _cts.Cancel();
+                _cts?.Dispose();
+            }
         }
 
         private async UniTaskVoid ReloadAmmo()
         {
-            _reloadAmmoToken = new CancellationTokenSource();
-
             while (true)
             {
                 if (Ammo < _maxAmmo)
                 {
-                    await UniTask.Delay(_timeToReload, cancellationToken: _reloadAmmoToken.Token);
+                    await UniTask.Delay(_timeToReload, cancellationToken: _cts.Token);
 
                     Ammo++;
                 }

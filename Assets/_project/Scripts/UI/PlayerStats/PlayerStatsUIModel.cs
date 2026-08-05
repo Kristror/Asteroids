@@ -6,14 +6,19 @@ namespace UI
 {
     public class PlayerStatsUIModel 
     {
-        public string PlayerPosition;
-        public string PlayerRotation;
-        public string PlayerSpeed;
-        public string LazerAmmo;
-        public string LazerCooldown;
+        public string PlayerPosition => _playerPositionString;
+        public string PlayerRotation => _playerRotationString;
+        public string PlayerSpeed => _playerSpeedString;
+        public string LazerAmmo => _lazerAmmoString;
+        public string LazerCooldown => _lazerCooldownString;
+
+        private string _playerPositionString;
+        private string _playerRotationString;
+        private string _playerSpeedString;
+        private string _lazerAmmoString;
+        private string _lazerCooldownString;
 
         private PlayerProvider _playerProvider;
-        private PlayerLazerShooting _playerLazerShooting;
 
         private Vector3 _oldPositon = Vector3.zero;
         private float _oldRotation = 0;
@@ -28,43 +33,41 @@ namespace UI
 
         public void SetLazerShooting()
         {
-            _playerLazerShooting = _playerProvider.PlayerLazerShooting;
             UpdateData();
         }
 
         public void UpdateData() 
         {
-            float lazerCooldown = _playerLazerShooting.ShootingCooldown();
+            float lazerCooldown = _playerProvider.PlayerLazerCoolDown;
 
             if (_playerProvider.PlayerPosition != _oldPositon) 
             {
                 _oldPositon = _playerProvider.PlayerPosition;
-                PlayerPosition = _playerProvider.PlayerPosition.ToString();
+                _playerPositionString = _playerProvider.PlayerPosition.ToString();
             }
 
-            if (_playerProvider.PlayerRotation != _oldRotation) 
+            if (!Mathf.Approximately(_playerProvider.PlayerRotation, _oldRotation)) 
             {
                 _oldRotation = _playerProvider.PlayerRotation;
-                PlayerRotation = Math.Round(_playerProvider.PlayerRotation, 1).ToString();
+                _playerRotationString = Math.Round(_playerProvider.PlayerRotation, 1).ToString();
             }
 
-            if (_playerProvider.PlayerSpeed != _oldSpeed) 
+            if (!Mathf.Approximately(_playerProvider.PlayerSpeed, _oldSpeed) )
             {
                 _oldSpeed = _playerProvider.PlayerSpeed;
-                PlayerSpeed = Math.Round(_playerProvider.PlayerSpeed, 1).ToString();
+                _playerSpeedString = Math.Round(_playerProvider.PlayerSpeed, 1).ToString();
             }
 
-
-            if (_playerLazerShooting.Ammo != _oldLazerAmmo)
+            if (_playerProvider.PlayerLazerAmmo != _oldLazerAmmo)
             {
-                _oldLazerAmmo = _playerLazerShooting.Ammo;
-                LazerAmmo = _playerLazerShooting.Ammo.ToString();
+                _oldLazerAmmo = _playerProvider.PlayerLazerAmmo;
+                _lazerAmmoString = _playerProvider.PlayerLazerAmmo.ToString();
             }
 
-            if (lazerCooldown != _oldLazerCooldown)
+            if (!Mathf.Approximately(lazerCooldown, _oldLazerCooldown))
             {
                 _oldLazerCooldown = lazerCooldown;
-                LazerCooldown = Math.Round(_playerLazerShooting.ShootingCooldown(), 1).ToString();
+                _lazerCooldownString = Math.Round(lazerCooldown, 1).ToString();
             }
         }
     }

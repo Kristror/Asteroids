@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace AssetLoading
+namespace Utilities.AssetLoading
 {
-    public class LoacalAddressablesLoader : IAssetLoader
+    public class LocalAddressablesLoader : IAssetLoader
     {
         public async UniTask<GameObject> LoadObjectByName(string objectName)
         {
