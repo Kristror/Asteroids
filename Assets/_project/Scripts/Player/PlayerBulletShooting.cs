@@ -10,21 +10,25 @@ namespace Player
         [SerializeField, Min(0)] private float _shootingSpeed;
         [SerializeField] private Transform _bulletStartPosition;
 
-        private float _timeOflastShot = 0;
-        private BulletPool _bulletPool;
+        private float _timeOfLastShot = 0;
         private int _bulletPoolSize = 25;
+
+        private BulletPool _bulletPool;
         private PlayerInputController _playerInputController;
         private PlayerStatisticsController _playerStatisticsController;
 
         [Inject]
-        public void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, BulletPool bulletPool)
+        private void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, BulletPool bulletPool)
         {
             _playerInputController = inputController;
             _playerStatisticsController = playerStatisticsController;
 
             _bulletPool = bulletPool;
             _bulletPool.FillPool(_bulletPoolSize);
+        }
 
+        private void Awake()
+        {
             _playerInputController.ShootBullet += Shoot;
         }
 
@@ -35,7 +39,7 @@ namespace Player
 
         private void Shoot()
         {
-            bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
+            bool isEnoughTimePassed = _timeOfLastShot < Time.time - _shootingSpeed;
 
             if (isEnoughTimePassed)
             {
@@ -45,7 +49,7 @@ namespace Player
 
                 _playerStatisticsController.ShotBullet();
 
-                _timeOflastShot = Time.time;
+                _timeOfLastShot = Time.time;
             }
         }
     }

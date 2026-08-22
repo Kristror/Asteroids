@@ -1,5 +1,4 @@
-﻿using Player;
-using UnityEngine;
+﻿using UnityEngine;
 using Utilities;
 using Zenject;
 
@@ -10,22 +9,22 @@ namespace Enemies
     {
         [SerializeField, Min(0)] private float _asteroidMovementSpeed;
 
-        private Rigidbody2D _rigidBody;
+        private Rigidbody2D _rigidbody;
         private BorderController _borderController;
 
         [Inject]
-        public void Construct(BorderController borderController)
+        private void Construct(BorderController borderController)
         {
             _borderController = borderController;
         }
 
         private void Start()
         {
-            _rigidBody = GetComponent<Rigidbody2D>();
+            _rigidbody = GetComponent<Rigidbody2D>();
             _borderController.TrackObject(transform);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move();
         }
@@ -42,7 +41,7 @@ namespace Enemies
 
         private void Move()
         {
-            _rigidBody.AddForce((transform.up * _asteroidMovementSpeed), ForceMode2D.Force);
+            _rigidbody.AddForce((transform.up * _asteroidMovementSpeed), ForceMode2D.Force);
         }
 
         private void OnDestroy()

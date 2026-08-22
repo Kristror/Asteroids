@@ -4,9 +4,11 @@
     {
         private PlayerStatistics _playerStatistics;
 
-        public PlayerStatisticsController()
+        public PlayerStatisticsController(IAnalytics analytics)
         {
             _playerStatistics = new PlayerStatistics();
+
+            analytics.SetPlayerStatistics(_playerStatistics);
         }
 
         public PlayerStatistics GetPlayerStatistics()
@@ -19,9 +21,9 @@
             _playerStatistics.ShotsFired++;
         }
 
-        public void ShotLazer()
+        public void ShotLaser()
         {
-            _playerStatistics.LazerFired++;
+            _playerStatistics.LaserFired++;
         }
 
         public void AsteroidKilled()

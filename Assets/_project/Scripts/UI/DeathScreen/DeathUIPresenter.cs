@@ -9,30 +9,32 @@ namespace UI
         private DeathUIModel _deathUIModel;
         private DeathUIView _deathUIView;
 
-        private PlayerProvider _playerProvider;
+        private PlayerReviveController _playerReviveController;
 
-        public DeathUIPresenter(PlayerProvider playerProvider, DeathUIModel model)
-        {
-            _playerProvider = playerProvider;            
+        public DeathUIPresenter(DeathUIModel model, PlayerReviveController playerReviveController)
+        {          
             _deathUIModel = model;
+            _playerReviveController = playerReviveController;
         }
 
         public void Initialize()
         {
-            _playerProvider.SubscribeToPlayerDeath(PlayerDeath);
-        }
-
-        public void Dispose()
-        {
-            _deathUIView.OnClick.RemoveListener(StartRestartGame);
-            _playerProvider.UnSubscribeToPlayerDeath(PlayerDeath);
+            _playerReviveController.SubscribeToAcceptDeath(ShowDeathUI);
         }
 
         public void SetView(DeathUIView view)
         {
-            _deathUIView = view; 
+            _deathUIView = view;
             _deathUIView.SetActiveDeathScreen(false);
-            _deathUIView.OnClick.AddListener(StartRestartGame);
+            _deathUIView.RestartOnClick.AddListener(StartRestartGame);
+            _deathUIView.BackToMenuOnClick.AddListener(BackToMenu);
+        }
+
+        public void Dispose()
+        {
+            _deathUIView.RestartOnClick.RemoveListener(StartRestartGame);
+            _deathUIView.BackToMenuOnClick.RemoveListener(BackToMenu);
+            _playerReviveController.UnsubscribeFromAcceptDeath(ShowDeathUI);
         }
 
         public void SubscribeToRestartGame(Action func)
@@ -40,9 +42,15 @@ namespace UI
             _deathUIModel.RestartGame += func;
         }
         
-        public void UnSubscribeToRestartGame(Action func)
+        public void UnsubscribeFromRestartGame(Action func)
         {
             _deathUIModel.RestartGame -= func;
+        }
+
+        public void ShowDeathUI()
+        {
+            _deathUIView.SetActiveDeathScreen(true);
+            _deathUIView.ShowScore(_deathUIModel.PlayerScore);
         }
 
         private void StartRestartGame()
@@ -50,10 +58,9 @@ namespace UI
             _deathUIModel.StartRestartGame();
         }
 
-        private void PlayerDeath()
+        private void BackToMenu()
         {
-            _deathUIView.SetActiveDeathScreen(true);
-            _deathUIView.ShowScore(_deathUIModel.PlayerScore);
+            _deathUIModel.BackToMenu();
         }
     }
 }

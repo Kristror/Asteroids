@@ -1,30 +1,35 @@
 ﻿using System;
+using Zenject;
 using Utilities;
 
 namespace UI
 {
     public class DeathUIModel
     {
+        public string PlayerScore => SCORE_TEXT + _scoreController.PlayerScore;
+
         public event Action RestartGame;
 
-        public string PlayerScore => _scoreText + _scoreController.PlayerScore;
+        private const string SCORE_TEXT = "Score : ";
 
         private ScoreController _scoreController;
         private LoadingController _loadingController;
-
-        private const string _scoreText = "Score : ";
         
         public DeathUIModel(ScoreController scoreController, LoadingController loadingController)
         {
             _scoreController = scoreController;
             _loadingController = loadingController;
-
-            RestartGame += loadingController.LoadGame;
         }
 
         public void StartRestartGame()
         {
             RestartGame?.Invoke();
+            _loadingController.LoadGame();
+        }
+
+        public void BackToMenu()
+        {
+            _loadingController.LoadMainMenu();
         }
     }
 }

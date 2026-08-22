@@ -8,8 +8,8 @@ namespace UI
         [SerializeField] private TMP_Text _textPosition;
         [SerializeField] private TMP_Text _textRotation;
         [SerializeField] private TMP_Text _textSpeed;
-        [SerializeField] private TMP_Text _textLazerAmmo;
-        [SerializeField] private TMP_Text _textLazerReloadTime;
+        [SerializeField] private TMP_Text _textLaserAmmo;
+        [SerializeField] private TMP_Text _textLaserReloadTime;
 
         public void ShowPosition(string position)
         {
@@ -26,13 +26,13 @@ namespace UI
             _textSpeed.text = speed;
         }
 
-        public void ShowLazerAmmo(string lazerAmmo)
+        public void ShowLaserAmmo(string laserAmmo)
         {
-            _textLazerAmmo.text = lazerAmmo;
+            _textLaserAmmo.text = laserAmmo;
         }
-        public void ShowLazerReloadTime(string lazerReloadTime)
+        public void ShowLaserReloadTime(string laserReloadTime)
         {
-            _textLazerReloadTime.text = lazerReloadTime;
+            _textLaserReloadTime.text = laserReloadTime;
         }
     }
 }

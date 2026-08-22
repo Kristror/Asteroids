@@ -9,23 +9,23 @@ namespace Saving
     {
         private IPlayerSaveLoad _playerSave;
         private ScoreController _scoreController;
-        private PlayerProvider _playerProvider;
+        private PlayerReviveController _playerReviveController;
 
-        public PlayerSaveController(PlayerProvider playerProvider, ScoreController scoreController, IPlayerSaveLoad playerSave)
+        public PlayerSaveController(PlayerReviveController playerReviveController, ScoreController scoreController, IPlayerSaveLoad playerSave)
         {
-            _playerProvider = playerProvider;
+            _playerReviveController = playerReviveController;
             _scoreController = scoreController;
             _playerSave = playerSave;
         }
 
         public void Initialize()
         {
-            _playerProvider.SubscribeToPlayerDeath(CompareBestScore);
+            _playerReviveController.SubscribeToAcceptDeath(CompareBestScore);
         }
 
         public void Dispose()
         {
-            _playerProvider.UnSubscribeToPlayerDeath(CompareBestScore);
+            _playerReviveController.UnsubscribeFromAcceptDeath(CompareBestScore);
         }
 
         private void CompareBestScore()

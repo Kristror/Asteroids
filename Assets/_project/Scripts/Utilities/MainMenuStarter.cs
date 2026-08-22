@@ -5,7 +5,13 @@ namespace Utilities.AssetLoading
 {
     public class MainMenuStarter : MonoBehaviour
     {
-        [Inject] private LoadingController _loadingController; 
+        private LoadingController _loadingController;
+        
+        [Inject]
+        private void Construct(LoadingController loadingController)
+        {
+            _loadingController = loadingController;
+        }
 
         private void Start()
         {

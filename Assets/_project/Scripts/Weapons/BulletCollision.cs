@@ -7,6 +7,7 @@ namespace Weapons
     public class BulletCollision : MonoBehaviour
     {
         [SerializeField] private BulletMovement _bulletMovement;
+
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.TryGetComponent<EnemyCollision>(out _))

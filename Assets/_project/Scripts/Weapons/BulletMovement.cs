@@ -7,28 +7,30 @@ namespace Weapons
     [RequireComponent(typeof(Rigidbody2D))]
     public class BulletMovement : MonoBehaviour
     {
+        private const int TIME_TO_LIVE = 2000;
+
         [SerializeField, Min(0)] private float _bulletMovementSpeed;
 
-        private const int _timeToLive = 2000;
 
-        private Rigidbody2D _rigidBody;
+        private Rigidbody2D _rigidbody;
 
         private CancellationTokenSource _cts;
 
         private void Awake()
         {
-            _rigidBody = GetComponent<Rigidbody2D>();
-
-            _cts = new CancellationTokenSource();
+            _rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move();
         }
 
         public void StartMovementFromPoint(Transform startPosition)
         {
+            CleanCTS();
+            _cts = new CancellationTokenSource();
+
             transform.position = startPosition.position;
             transform.rotation = startPosition.rotation;
 
@@ -38,7 +40,7 @@ namespace Weapons
 
         private async UniTaskVoid BulletLiveTimer()
         {
-            await UniTask.Delay(_timeToLive, cancellationToken: _cts.Token);
+            await UniTask.Delay(TIME_TO_LIVE, cancellationToken: _cts.Token);
             SetActive(false);
         }
 
@@ -64,7 +66,7 @@ namespace Weapons
 
         private void Move()
         {
-            _rigidBody.AddForce(transform.up * _bulletMovementSpeed, ForceMode2D.Force);
+            _rigidbody.AddForce(transform.up * _bulletMovementSpeed, ForceMode2D.Force);
         }
 
         private void OnDestroy()

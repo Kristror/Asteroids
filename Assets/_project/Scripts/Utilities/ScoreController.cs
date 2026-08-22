@@ -2,8 +2,9 @@
 {
     public class ScoreController
     {
-        private const int _pointsForEnemy = 2;
         public int PlayerScore { get; private set; }
+
+        private const int POINTS_FOR_ENEMY = 2;
 
         public ScoreController() 
         {
@@ -17,7 +18,7 @@
 
         public void EnemyKilled()
         {
-            PlayerScore += _pointsForEnemy;
+            PlayerScore += POINTS_FOR_ENEMY;
         }
     }
 }

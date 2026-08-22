@@ -6,7 +6,13 @@ namespace Installers
 {
     public class MainMenuInstaller : MonoInstaller
     {
-        [Inject] private AssetsProvider _assetsProvider;
+        private AssetsProvider _assetsProvider;
+
+        [Inject]
+        public void Construct(AssetsProvider assetsProvider)
+        {
+            _assetsProvider = assetsProvider;
+        }
 
         public override void InstallBindings()
         {

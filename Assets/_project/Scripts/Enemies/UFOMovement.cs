@@ -15,7 +15,7 @@ namespace Enemies
         private BorderController _borderController;
 
         [Inject]
-        public void Construct(PlayerProvider playerProvider, BorderController borderController)
+        private void Construct(PlayerProvider playerProvider, BorderController borderController)
         {
             _playerProvider = playerProvider;
             _borderController = borderController;
@@ -27,7 +27,7 @@ namespace Enemies
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             MoveToPlayer();
         }

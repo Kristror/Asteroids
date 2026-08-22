@@ -7,12 +7,12 @@ namespace Utilities
     {
         public void LoadMainMenu()
         {
-            Addressables.LoadSceneAsync(SceneList.MainMenu, LoadSceneMode.Single);
+            Addressables.LoadSceneAsync(SceneList.MAIN_MENU, LoadSceneMode.Single);
         }
 
         public void LoadGame()
         {
-            Addressables.LoadSceneAsync(SceneList.Game, LoadSceneMode.Single);
+            Addressables.LoadSceneAsync(SceneList.GAME, LoadSceneMode.Single);
         }
     }
 }

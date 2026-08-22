@@ -4,12 +4,12 @@
     {
         void Initialize();
 
-        void Dispose();
+        void SetPlayerStatistics(PlayerStatistics playerStatistics);
 
         void GameStarted();
 
         void SendPlayerStatistics();
 
-        void LazerUsed();        
+        void LaserUsed();        
     }
 }

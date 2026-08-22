@@ -9,40 +9,40 @@ namespace UI
         public string PlayerPosition => _playerPositionString;
         public string PlayerRotation => _playerRotationString;
         public string PlayerSpeed => _playerSpeedString;
-        public string LazerAmmo => _lazerAmmoString;
-        public string LazerCooldown => _lazerCooldownString;
+        public string LaserAmmo => _laserAmmoString;
+        public string LaserCooldown => _laserCooldownString;
 
         private string _playerPositionString;
         private string _playerRotationString;
         private string _playerSpeedString;
-        private string _lazerAmmoString;
-        private string _lazerCooldownString;
+        private string _laserAmmoString;
+        private string _laserCooldownString;
 
         private PlayerProvider _playerProvider;
 
-        private Vector3 _oldPositon = Vector3.zero;
+        private Vector3 _oldPosition = Vector3.zero;
         private float _oldRotation = 0;
         private float _oldSpeed =0;
-        private int _oldLazerAmmo = 0;
-        private float _oldLazerCooldown = 0;
+        private int _oldLaserAmmo = 0;
+        private float _oldLaserCooldown = 0;
 
         public PlayerStatsUIModel(PlayerProvider playerProvider)
         {
             _playerProvider = playerProvider;
         }
 
-        public void SetLazerShooting()
+        public void SetLaserShooting()
         {
             UpdateData();
         }
 
         public void UpdateData() 
         {
-            float lazerCooldown = _playerProvider.PlayerLazerCoolDown;
+            float laserCooldown = _playerProvider.PlayerLaserCoolDown;
 
-            if (_playerProvider.PlayerPosition != _oldPositon) 
+            if (_playerProvider.PlayerPosition != _oldPosition) 
             {
-                _oldPositon = _playerProvider.PlayerPosition;
+                _oldPosition = _playerProvider.PlayerPosition;
                 _playerPositionString = _playerProvider.PlayerPosition.ToString();
             }
 
@@ -58,16 +58,16 @@ namespace UI
                 _playerSpeedString = Math.Round(_playerProvider.PlayerSpeed, 1).ToString();
             }
 
-            if (_playerProvider.PlayerLazerAmmo != _oldLazerAmmo)
+            if (_playerProvider.PlayerLaserAmmo != _oldLaserAmmo)
             {
-                _oldLazerAmmo = _playerProvider.PlayerLazerAmmo;
-                _lazerAmmoString = _playerProvider.PlayerLazerAmmo.ToString();
+                _oldLaserAmmo = _playerProvider.PlayerLaserAmmo;
+                _laserAmmoString = _playerProvider.PlayerLaserAmmo.ToString();
             }
 
-            if (!Mathf.Approximately(lazerCooldown, _oldLazerCooldown))
+            if (!Mathf.Approximately(laserCooldown, _oldLaserCooldown))
             {
-                _oldLazerCooldown = lazerCooldown;
-                _lazerCooldownString = Math.Round(lazerCooldown, 1).ToString();
+                _oldLaserCooldown = laserCooldown;
+                _laserCooldownString = Math.Round(laserCooldown, 1).ToString();
             }
         }
     }

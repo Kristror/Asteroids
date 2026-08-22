@@ -2,18 +2,19 @@
 {
     public class AssetsLocalPath
     {
-        public const string Player = "Player";
-        public const string Bullet = "Bullet";
+        public const string PLAYER = "Player";
+        public const string BULLET = "Bullet";
 
-        public const string Asteroid = "Asteroid";
-        public const string SmallAsteroid = "SmallAsteroid";
+        public const string ASTEROID = "Asteroid";
+        public const string SMALL_ASTEROID = "SmallAsteroid";
         public const string UFO = "UFO";
 
-        public const string AsteroidSpawner = "AsteroidSpawner";
-        public const string UFOSpawner = "UFOSpawner";
+        public const string ASTEROID_SPAWNER = "AsteroidSpawner";
+        public const string UFO_SPAWNER = "UFOSpawner";
 
-        public const string DeathUI = "DeathUI";
-        public const string PlayerStatsUI = "PlayerStatsUI";
-        public const string MainMenuUI = "MainMenuUI";
+        public const string DEATH_UI = "DeathUI";
+        public const string PLAYER_REVIVE_UI = "PlayerReviveUI";
+        public const string PLAYER_STATS_UI = "PlayerStatsUI";
+        public const string MAIN_MENU_UI = "MainMenuUI";
     }
 }

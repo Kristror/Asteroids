@@ -4,10 +4,10 @@ using Zenject;
 
 namespace Player
 {
-    public class PlayerInputController : ITickable
+    public class PlayerInputController : IFixedTickable
     {
         public event Action ShootBullet;
-        public event Action ShootLazer;
+        public event Action ShootLaser;
         public event Action Move;
         public event Action<int> Rotate;
 
@@ -20,7 +20,7 @@ namespace Player
             _mouse = mouse;
         }
 
-        public void Tick()
+        public void FixedTick()
         {
             CheckMouse();
             CheckKeyboard();
@@ -35,7 +35,7 @@ namespace Player
             
             if (_mouse.rightButton.wasPressedThisFrame)
             {
-                ShootLazer?.Invoke();
+                ShootLaser?.Invoke();
             }
         }
         private void CheckKeyboard()

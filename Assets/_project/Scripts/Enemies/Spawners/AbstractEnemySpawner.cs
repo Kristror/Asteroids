@@ -1,31 +1,31 @@
 ﻿using System.Threading;
 using UnityEngine;
-using Utilities;
 using Zenject;
 
 namespace Enemies.Spawners
 {
     public abstract class AbstractEnemySpawner : MonoBehaviour
     {
-        [SerializeField, Min(0)] protected int _timeToSpawn;
-        protected EnemyFactory _factory;
-        protected Camera _mainCamera;
-        protected CancellationTokenSource _cts;
+        [SerializeField, Min(0)] protected int TimeToSpawn;
+        protected Camera MainCamera;
+        protected CancellationTokenSource Cts;
+
+        private EnemyFactory _factory;
 
 
         [Inject]
-        public void Construct(EnemyFactory factory, Camera camera)
+        private void Construct(EnemyFactory factory, Camera camera)
         {
             _factory = factory;
-            _mainCamera = camera;
+            MainCamera = camera;
         }
 
         private void OnDestroy()
         {
-            if (_cts != null && !_cts.IsCancellationRequested)
+            if (Cts != null && !Cts.IsCancellationRequested)
             {
-                _cts.Cancel();
-                _cts?.Dispose();
+                Cts.Cancel();
+                Cts?.Dispose();
             }
         }
 
@@ -61,7 +61,7 @@ namespace Enemies.Spawners
                     break;
             }
 
-            return _mainCamera.ViewportToWorldPoint(viewportPos);
+            return MainCamera.ViewportToWorldPoint(viewportPos);
         }
     }
 }

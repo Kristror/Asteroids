@@ -11,16 +11,16 @@ namespace Enemies
     [RequireComponent(typeof(Collider2D))]
     public class EnemyCollision : MonoBehaviour
     {
-        private EnemyType _type;
         public Vector2 Position => transform.position;
 
-        private event Action<EnemyCollision> KilledByBullet;
-
+        private EnemyType _enemyType;
         private ScoreController _scoreController;
         private PlayerStatisticsController _playerStatisticsController;
 
+        private event Action<EnemyCollision> KilledByBullet;
+
         [Inject]
-        public void Construct(ScoreController scoreController, PlayerStatisticsController playerStatisticsController)
+        private void Construct(ScoreController scoreController, PlayerStatisticsController playerStatisticsController)
         {
             _scoreController = scoreController;
             _playerStatisticsController = playerStatisticsController;
@@ -31,9 +31,14 @@ namespace Enemies
             KilledByBullet += func;
         }
 
-        public void UnSubscribeToCollision(Action<EnemyCollision> func)
+        public void UnsubscribeFromCollision(Action<EnemyCollision> func)
         {
             KilledByBullet -= func;
+        }
+
+        public void SetType(EnemyType type)
+        {
+            _enemyType = type;
         }
 
 
@@ -44,7 +49,7 @@ namespace Enemies
                 KilledByBullet?.Invoke(this);
                 Death();
             }
-            if (collision.TryGetComponent<Lazer>(out _))
+            if (collision.TryGetComponent<ISecondaryWeapon>(out _))
             {
                 Death();
             }
@@ -55,22 +60,17 @@ namespace Enemies
             _scoreController.EnemyKilled();
             UpdateStatistics();
 
-            GameObject.Destroy(gameObject);
-        }
-
-        public void SetType(EnemyType type)
-        {
-            _type = type;
+            Destroy(gameObject);
         }
 
         private void UpdateStatistics()
         {
-            if ((_type == EnemyType.Asteroid) || (_type == EnemyType.SmallAsteroid))
+            if ((_enemyType == EnemyType.Asteroid) || (_enemyType == EnemyType.SmallAsteroid))
             {
                 _playerStatisticsController.AsteroidKilled();
             }
 
-            if (_type == EnemyType.UFO)
+            if (_enemyType == EnemyType.UFO)
             {
                 _playerStatisticsController.UfoKilled();
             }

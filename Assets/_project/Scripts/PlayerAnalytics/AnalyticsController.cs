@@ -7,25 +7,24 @@ namespace PlayerAnalytics
     public class AnalyticsController : IInitializable, IDisposable
     {
         private IAnalytics _analytic;
-        private PlayerProvider _playerProvider;
+        private PlayerReviveController _playerReviveController;
 
-        public AnalyticsController(IAnalytics analytic, PlayerProvider playerProvider) 
+        public AnalyticsController(IAnalytics analytic, PlayerReviveController playerReviveController) 
         {
             _analytic = analytic;
-            _playerProvider = playerProvider;
+            _playerReviveController = playerReviveController;
         }
 
         public void Initialize()
         {
             _analytic.Initialize();
             _analytic.GameStarted();
-            _playerProvider.SubscribeToPlayerDeath(PlayerDeath);
+            _playerReviveController.SubscribeToAcceptDeath(PlayerDeath);
         }
 
         public void Dispose()
         {
-            _analytic.Dispose();
-            _playerProvider.UnSubscribeToPlayerDeath(PlayerDeath);
+            _playerReviveController.UnsubscribeFromAcceptDeath(PlayerDeath);
         }
 
         private void PlayerDeath()
@@ -33,9 +32,9 @@ namespace PlayerAnalytics
             _analytic.SendPlayerStatistics();
         }
 
-        public void LazerUsed()
+        public void LaserUsed()
         {
-            _analytic.LazerUsed();
+            _analytic.LaserUsed();
         }
     }
 }

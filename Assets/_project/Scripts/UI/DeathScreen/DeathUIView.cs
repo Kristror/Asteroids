@@ -6,15 +6,17 @@ namespace UI
 {
     public class DeathUIView : MonoBehaviour
     {
-        public Button.ButtonClickedEvent OnClick => _restartGameButton.onClick;
+        public Button.ButtonClickedEvent RestartOnClick => _restartGameButton.onClick;
+        public Button.ButtonClickedEvent BackToMenuOnClick => _backToMenuButton.onClick;
 
-        [SerializeField] private TMP_Text _textScore;
+        [SerializeField] private TMP_Text _scoreText;
         [SerializeField] private Button _restartGameButton;
+        [SerializeField] private Button _backToMenuButton;
         [SerializeField] private GameObject _deathScreen;
 
         public void ShowScore(string score)
         {
-            _textScore.text = score;
+            _scoreText.text = score;
         }
 
         public void SetActiveDeathScreen(bool active)

@@ -4,10 +4,11 @@ using Zenject;
 
 namespace Utilities
 {
-    public class BorderController : ITickable
+    public class BorderController : IFixedTickable
     {
+        private const float BORDER_OFFSET = 0.5f;
+
         private List<Transform> _movingObjectsList;
-        private const float _borderOffSet = 0.5f;
 
         private Camera _camera;
 
@@ -23,7 +24,7 @@ namespace Utilities
             CalculateScreenBounds();
         }
 
-        public void Tick()
+        public void FixedTick()
         {
             foreach (Transform obj in _movingObjectsList) 
             {
@@ -49,10 +50,10 @@ namespace Utilities
             Vector3 bottomLeft = _camera.ViewportToWorldPoint(Vector3.zero);
             Vector3 topRight = _camera.ViewportToWorldPoint(new Vector3(1, 1, 0));
 
-            _leftBorder = bottomLeft.x - _borderOffSet;
-            _rightBorder = topRight.x + _borderOffSet;
-            _bottomBorder = bottomLeft.y - _borderOffSet;
-            _topBorder = topRight.y + _borderOffSet;
+            _leftBorder = bottomLeft.x - BORDER_OFFSET;
+            _rightBorder = topRight.x + BORDER_OFFSET;
+            _bottomBorder = bottomLeft.y - BORDER_OFFSET;
+            _topBorder = topRight.y + BORDER_OFFSET;
         }
 
         private bool CheckIfObjectOnBorder(Vector2 objectPosition)

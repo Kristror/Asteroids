@@ -1,22 +1,21 @@
 ﻿using Firebase;
 using Firebase.Analytics;
+using System;
 using UnityEngine;
 
 namespace PlayerAnalytics
 {
-    public class AnalyticsWithFirebase : IAnalytics
+    public class AnalyticsWithFirebase : IAnalytics, IDisposable
     {
+        private const string GAME_STARTED = "game_started";
+        private const string PLAYER_STATISTICS = "player_statistics";
+        private const string LASER_USED = "laser_used";
+
         private PlayerStatistics _playerStatistics;
-
-        private const string _GameStartLog = "game_started";
-        private const string _PlayerStatistics = "player_statistics";
-        private const string _LaserUsedLog = "laser_used";
-
         private bool _isConnected;
 
-        public AnalyticsWithFirebase(PlayerStatisticsController playerStatisticsController)
+        public AnalyticsWithFirebase()
         {
-            _playerStatistics = playerStatisticsController.GetPlayerStatistics();
             _isConnected = false;
         }
 
@@ -32,8 +31,7 @@ namespace PlayerAnalytics
                 }
                 else
                 {
-                    Debug.LogError(System.String.Format(
-                      "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                    Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
                 }
             });
         }
@@ -43,19 +41,24 @@ namespace PlayerAnalytics
             FirebaseApp.DefaultInstance.Dispose();
         }
 
+        public void SetPlayerStatistics(PlayerStatistics playerStatistics)
+        {
+            _playerStatistics = playerStatistics;
+        }
+
         public void GameStarted()
         {
             if (_isConnected)
             {
-                FirebaseAnalytics.LogEvent(_GameStartLog);
+                FirebaseAnalytics.LogEvent(GAME_STARTED);
             }
         }
 
-        public void LazerUsed()
+        public void LaserUsed()
         {
             if (_isConnected)
             {
-                FirebaseAnalytics.LogEvent(_LaserUsedLog);
+                FirebaseAnalytics.LogEvent(LASER_USED);
             }
         }
 
@@ -64,12 +67,12 @@ namespace PlayerAnalytics
             if (_isConnected)
             {
                 Parameter[] playerStats = {
-                    new Parameter(PlayerStatistics.ShotsFiredName, _playerStatistics.ShotsFired),
-                    new Parameter(PlayerStatistics.LazerFiredName, _playerStatistics.LazerFired),
-                    new Parameter(PlayerStatistics.AsteroidsKilledName, _playerStatistics.AsteroidsKilled),
-                    new Parameter(PlayerStatistics.UfoKilledName, _playerStatistics.UfoKilled)
+                    new Parameter(PlayerStatistics.SHOTS_FIRED_NAME, _playerStatistics.ShotsFired),
+                    new Parameter(PlayerStatistics.LASER_FIRED_NAME, _playerStatistics.LaserFired),
+                    new Parameter(PlayerStatistics.ASTEROIDS_KILLED_NAME, _playerStatistics.AsteroidsKilled),
+                    new Parameter(PlayerStatistics.UFO_KILLED_NAME, _playerStatistics.UfoKilled)
                 };
-                FirebaseAnalytics.LogEvent(_PlayerStatistics, playerStats);
+                FirebaseAnalytics.LogEvent(PLAYER_STATISTICS, playerStats);
             }
         }
     }

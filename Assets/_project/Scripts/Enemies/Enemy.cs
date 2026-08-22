@@ -22,6 +22,12 @@ namespace Enemies
 
         private EnemyCollision _enemyCollision;
 
+        public void Initialize(EnemyType type, Vector2 position)
+        {
+            transform.position = position;
+            _enemyCollision.SetType(type);
+        }
+
         private void Awake()
         {
             _enemyCollision = GetComponent<EnemyCollision>();            
@@ -30,12 +36,6 @@ namespace Enemies
         public EnemyCollision GetEnemyCollision()
         {
             return _enemyCollision;
-        }
-
-        public void Initialize(EnemyType type, Vector2 position)
-        {
-            transform.position = position;
-            _enemyCollision.SetType(type);
         }
     }
 }

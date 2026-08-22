@@ -118,8 +118,8 @@ MonoBehaviour:
   _textPosition: {fileID: 5311251160363195225}
   _textRotation: {fileID: 4992039571834634916}
   _textSpeed: {fileID: 823838970426130546}
-  _textLazerAmmo: {fileID: 3871655408614774063}
-  _textLazerReloadTime: {fileID: 4706148127309245846}
+  _textLaserAmmo: {fileID: 3871655408614774063}
+  _textLaserReloadTime: {fileID: 4706148127309245846}
 --- !u!1 &3843523988444857215
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 7216570331483290040}
   - component: {fileID: 4706148127309245846}
   m_Layer: 5
-  m_Name: Text LazerAmmoReloadTime
+  m_Name: Text LaserAmmoReloadTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -583,7 +583,7 @@ GameObject:
   - component: {fileID: 1810588616446749684}
   - component: {fileID: 3871655408614774063}
   m_Layer: 5
-  m_Name: Text LazerAmmo
+  m_Name: Text LaserAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

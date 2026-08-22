@@ -1,8 +1,9 @@
-﻿using Zenject;
+﻿using System;
+using Zenject;
 
 namespace UI
 {
-    public class MainMenuUIPresenterInitializer : IInitializable
+    public class MainMenuUIPresenterInitializer : IInitializable, IDisposable
     {
         private MainMenuUIPresenter _mainMenuUIPresenter;
         private MainMenuUIViewFactory _mainMenuUIViewFactory;
@@ -17,6 +18,11 @@ namespace UI
         {
             MainMenuUIView mainMenuUIView = _mainMenuUIViewFactory.Create();
             _mainMenuUIPresenter.SetView(mainMenuUIView);
+        }
+
+        public void Dispose()
+        {
+            _mainMenuUIPresenter.Dispose();
         }
     }
 }

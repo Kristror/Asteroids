@@ -6,27 +6,26 @@ namespace Enemies.Spawners
 {
     public class AsteroidSpawner : AbstractEnemySpawner
     {
-        [SerializeField, Min(1)] private int _amountOfpieces;
+        [SerializeField, Min(1)] private int _amountOfPieces;
 
-        private const float _smallAsteroidSpawnOffSet = 0.2f;
+        private const float SMALL_ASTEROID_SPAWN_OFFSET = 0.2f;
 
-        private void Awake()
+        private void Start()
         {            
             UniTaskVoid spawnEnemies = SpawnAsteroid();            
         }
 
         private async UniTaskVoid SpawnAsteroid()
         {
-            _cts = new CancellationTokenSource();
+            Cts = new CancellationTokenSource();
 
             while (true)
             {
-                await UniTask.Delay(_timeToSpawn, cancellationToken: _cts.Token);
+                await UniTask.Delay(TimeToSpawn, cancellationToken: Cts.Token);
 
                 Enemy asteroid = SpawnEnemy(EnemyType.Asteroid);
 
                 EnemyCollision enemyCollision = asteroid.GetEnemyCollision();
-                //закидываем астеройд в бордер контроллер
 
                 enemyCollision.SubscribeToCollision(SpawnSmallAsteroids);
 
@@ -45,25 +44,26 @@ namespace Enemies.Spawners
             asteroid.Rotation = Quaternion.FromToRotation(Vector3.up, direction);
         }
 
-        public void SpawnSmallAsteroids(EnemyCollision enemyCollision)
+        private void SpawnSmallAsteroids(EnemyCollision enemyCollision)
         {
             Vector2 collisionPosition = enemyCollision.Position;
 
-            for (int i = 0; i < _amountOfpieces; i++)
+            for (int i = 0; i < _amountOfPieces; i++)
             {
-                float x = collisionPosition.x + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet);
-                float y = collisionPosition.y + Random.Range(-_smallAsteroidSpawnOffSet, _smallAsteroidSpawnOffSet);
+                float x = collisionPosition.x + Random.Range(-SMALL_ASTEROID_SPAWN_OFFSET, SMALL_ASTEROID_SPAWN_OFFSET);
+                float y = collisionPosition.y + Random.Range(-SMALL_ASTEROID_SPAWN_OFFSET, SMALL_ASTEROID_SPAWN_OFFSET);
 
                 Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, new Vector2(x, y));             
             }
-            enemyCollision.UnSubscribeToCollision(SpawnSmallAsteroids);
+
+            enemyCollision.UnsubscribeFromCollision(SpawnSmallAsteroids);
         }
 
         private Vector2 GetScreenSizeInUnits()
         {            
-            float screenHeightInUnits = _mainCamera.orthographicSize * 2;
+            float screenHeightInUnits = MainCamera.orthographicSize * 2;
 
-            float screenWidthInUnits = screenHeightInUnits * _mainCamera.aspect;
+            float screenWidthInUnits = screenHeightInUnits * MainCamera.aspect;
 
             return new Vector2(screenWidthInUnits, screenHeightInUnits);
         }

@@ -10,12 +10,19 @@ using Utilities;
 using Utilities.AssetLoading;
 using Weapons;
 using Zenject;
+using Ads;
 
 namespace Installers
 {
     public class GameInstaller : MonoInstaller
     {
-        [Inject] private AssetsProvider _assetsProvider;
+        private AssetsProvider _assetsProvider;
+
+        [Inject]
+        public void Construct(AssetsProvider assetsProvider)
+        {
+            _assetsProvider = assetsProvider;
+        }
 
         public override void InstallBindings()
         {
@@ -25,6 +32,7 @@ namespace Installers
             BindAnalytics();
             BindEnemies();
             BindUI();
+            BindAds();
         }
 
         private void BindPlayer()
@@ -33,6 +41,7 @@ namespace Installers
             Container.BindFactory<PlayerShip, PlayerShipFactory>().FromComponentInNewPrefab(_assetsProvider.PlayerObject);
             Container.BindInterfacesAndSelfTo<PlayerProvider>().AsSingle();
             Container.BindExecutionOrder<PlayerProvider>(-1);
+            Container.BindInterfacesAndSelfTo<PlayerReviveController>().AsSingle();
 
             Container.BindFactory<BulletMovement, BulletFactory>().FromComponentInNewPrefab(_assetsProvider.BulletObject);
             Container.Bind<BulletPool>().AsSingle();
@@ -58,8 +67,6 @@ namespace Installers
 
         private void BindAnalytics()
         {
-            Container.Bind<IAnalytics>().To<AnalyticsWithFirebase>().AsSingle();
-
             Container.BindInterfacesAndSelfTo<AnalyticsController>().AsSingle();
             Container.Bind<PlayerStatisticsController>().AsSingle();
         }
@@ -82,15 +89,24 @@ namespace Installers
         {
             Container.BindFactory<PlayerStatsUIView, PlayerStatsUIViewFactory>().FromComponentInNewPrefab(_assetsProvider.PlayerStatsUIObject);
             Container.BindFactory<DeathUIView, DeathUIViewFactory>().FromComponentInNewPrefab(_assetsProvider.DeathUIObject);
+            Container.BindFactory<PlayerReviveView, PlayerReviveViewFactory>().FromComponentInNewPrefab(_assetsProvider.PlayerReviveUIObject);
 
-            Container.Bind<DeathUIModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DeathUIModel>().AsSingle();
             Container.Bind<PlayerStatsUIModel>().AsSingle();
+            Container.Bind<PlayerReviveModel>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<DeathUIPresenter>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerStatsUIPresenter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerRevivePresenter>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<GameUIPresenterInitializer>().AsSingle();
             Container.BindExecutionOrder<GameUIPresenterInitializer>(-1);
+        }
+
+        private void BindAds()
+        {
+            Container.Bind<IShowAds>().To<UnityLevelPlayAds>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AdsController>().AsSingle();
         }
     }
 }

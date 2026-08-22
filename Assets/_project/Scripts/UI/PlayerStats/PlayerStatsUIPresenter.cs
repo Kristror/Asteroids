@@ -2,7 +2,7 @@
 
 namespace UI
 {
-    public class PlayerStatsUIPresenter : IInitializable,ITickable
+    public class PlayerStatsUIPresenter : IInitializable, IFixedTickable
     {
         private PlayerStatsUIModel _playerStatsUIModel;
         private PlayerStatsUIView _playerStatsUIView;
@@ -13,7 +13,7 @@ namespace UI
         }
         public void Initialize()
         {
-            _playerStatsUIModel.SetLazerShooting();
+            _playerStatsUIModel.SetLaserShooting();
         }
 
         public void SetView(PlayerStatsUIView playerStatsUIView)
@@ -21,7 +21,7 @@ namespace UI
             _playerStatsUIView = playerStatsUIView;
         }        
 
-        public void Tick()
+        public void FixedTick()
         {
             _playerStatsUIModel.UpdateData();
 
@@ -29,8 +29,8 @@ namespace UI
             UpdatePlayerRotation();
             UpdatePlayerSpeed();
 
-            UpdateLazerAmmo();
-            UpdateLazerReloadTime();
+            UpdateLaserAmmo();
+            UpdateLaserReloadTime();
         }
 
         private void UpdatePlayerPosition()
@@ -48,14 +48,14 @@ namespace UI
             _playerStatsUIView.ShowSpeed(_playerStatsUIModel.PlayerSpeed);
         }
 
-        private void UpdateLazerAmmo()
+        private void UpdateLaserAmmo()
         {
-            _playerStatsUIView.ShowLazerAmmo(_playerStatsUIModel.LazerAmmo);
+            _playerStatsUIView.ShowLaserAmmo(_playerStatsUIModel.LaserAmmo);
         }
 
-        private void UpdateLazerReloadTime()
+        private void UpdateLaserReloadTime()
         {
-            _playerStatsUIView.ShowLazerReloadTime(_playerStatsUIModel.LazerCooldown);
+            _playerStatsUIView.ShowLaserReloadTime(_playerStatsUIModel.LaserCooldown);
         }        
     }
 }

@@ -1,16 +1,21 @@
 ﻿using Utilities.AssetLoading;
-using Zenject;
 
 namespace Utilities
 {
     public class LoadingController
     {
-        [Inject] private AssetsProvider _assetsProvider;
-        [Inject] private SceneLoader _sceneLoader;
+        private AssetsProvider _assetsProvider;
+        private SceneLoader _sceneLoader;
+
+        public LoadingController (AssetsProvider assetsProvider, SceneLoader sceneLoader)
+        {
+            _assetsProvider = assetsProvider;
+            _sceneLoader = sceneLoader;
+        }
 
         public async void LoadMainMenu()
         {
-            if (!_assetsProvider.isMainMenuAssetsLoaded)
+            if (!_assetsProvider.IsMainMenuAssetsLoaded)
             {
                 await _assetsProvider.LoadMainMenuAssets();
             }
@@ -20,7 +25,7 @@ namespace Utilities
 
         public async void LoadGame()
         {
-            if (!_assetsProvider.isGameAssetsLoaded)
+            if (!_assetsProvider.IsGameAssetsLoaded)
             {
                 await _assetsProvider.LoadGameAssets();
             }

@@ -15,6 +15,7 @@ namespace Enemies
             RotateAtRandomAngle();
             MultiplySpeed();
         }
+
         private void MultiplySpeed()
         {
             _asteroidMovement.MultiplySpeed(_asteroidSpeedMult);

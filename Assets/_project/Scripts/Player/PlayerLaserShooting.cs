@@ -7,15 +7,17 @@ using Zenject;
 
 namespace Player
 {
-    public class PlayerLazerShooting : MonoBehaviour
+    public class PlayerLaserShooting : MonoBehaviour
     {
+        public int Ammo { get; private set; }
+
+        protected CancellationTokenSource Cts;
+
         [SerializeField, Min(1)] private int _maxAmmo;
         [SerializeField, Min(0)] private int _timeToReload;
         [SerializeField, Min(0)] private float _shootingSpeed;
-        [SerializeField, Min(0)] private int _lazerDuration;
-        [SerializeField] private Lazer _lazer;
-
-        public int Ammo { get; private set; }
+        [SerializeField, Min(0)] private int _laserDuration;
+        [SerializeField] private Laser _laser;
 
         private float _timeOflastShot = 0;
 
@@ -23,53 +25,38 @@ namespace Player
         private AnalyticsController _analyticsController;
         private PlayerInputController _playerInputController;
 
-        protected CancellationTokenSource _cts;
-
         [Inject]
-        public void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, AnalyticsController analyticsController)
+        private void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, AnalyticsController analyticsController)
         {
-            _cts = new CancellationTokenSource();
-
             _playerInputController = inputController;
             _playerStatisticsController = playerStatisticsController;
             _analyticsController = analyticsController;
+        }
 
-            _playerInputController.ShootLazer += ShootLazer;
+        private void Awake()
+        {
+            _playerInputController.ShootLaser += ShootLaser;
         }
 
         private void Start()
         {
+            CleanCTS();
+            Cts = new CancellationTokenSource();
+
             Ammo = _maxAmmo;
 
-            _lazer.SetLazerDuration(_lazerDuration);
+            _laser.SetLaserDuration(_laserDuration);
 
             UniTaskVoid reloadAmmo = ReloadAmmo();
         }       
 
         private void OnDestroy()
         {
-            _playerInputController.ShootLazer -= ShootLazer;
+            _playerInputController.ShootLaser -= ShootLaser;
 
-            if (_cts != null && !_cts.IsCancellationRequested)
-            {
-                _cts.Cancel();
-                _cts?.Dispose();
-            }
+            CleanCTS();
         }
 
-        private async UniTaskVoid ReloadAmmo()
-        {
-            while (true)
-            {
-                if (Ammo < _maxAmmo)
-                {
-                    await UniTask.Delay(_timeToReload, cancellationToken: _cts.Token);
-
-                    Ammo++;
-                }
-                await UniTask.DelayFrame(1);
-            }
-        }
 
         public float ShootingCooldown()
         {
@@ -83,16 +70,39 @@ namespace Player
             return 0;
         }
 
-        private void ShootLazer()
+        private void CleanCTS()
+        {
+            if (Cts != null && !Cts.IsCancellationRequested)
+            {
+                Cts.Cancel();
+                Cts?.Dispose();
+            }
+        }
+
+        private async UniTaskVoid ReloadAmmo()
+        {
+            while (true)
+            {
+                if (Ammo < _maxAmmo)
+                {
+                    await UniTask.Delay(_timeToReload, cancellationToken: Cts.Token);
+
+                    Ammo++;
+                }
+                await UniTask.DelayFrame(1);
+            }
+        }
+
+        private void ShootLaser()
         {
             bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
 
             if (isEnoughTimePassed && (Ammo > 0))
             {
-                _lazer.Shoot();
+                _laser.Shoot();
 
-                _playerStatisticsController.ShotLazer();
-                _analyticsController.LazerUsed();
+                _playerStatisticsController.ShotLaser();
+                _analyticsController.LaserUsed();
 
                 Ammo--;
                 _timeOflastShot = Time.time;
