@@ -3,7 +3,7 @@ using Zenject;
 
 namespace UI
 {
-    public class GameUIPresenterInitializer : IInitializable, IDisposable
+    public class GameUIPresenterInitializer : IInitializable
     {
         private PlayerStatsUIPresenter _playerStatsUIPresenter;
         private DeathUIPresenter _deathUIPresenter;
@@ -35,10 +35,6 @@ namespace UI
             _playerStatsUIPresenter.SetView(playerStatsUIView);
             _deathUIPresenter.SetView(deathUIView);
             _playerRevivePresenter.SetView(playerReviveView);
-        }
-        public void Dispose()
-        {
-            _deathUIPresenter.Dispose();
         }
 
     }

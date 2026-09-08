@@ -2,10 +2,11 @@
 using Firebase.Analytics;
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace PlayerAnalytics
 {
-    public class AnalyticsWithFirebase : IAnalytics, IDisposable
+    public class AnalyticsWithFirebase : IAnalytics, IInitializable, IDisposable
     {
         private const string GAME_STARTED = "game_started";
         private const string PLAYER_STATISTICS = "player_statistics";
@@ -21,24 +22,36 @@ namespace PlayerAnalytics
 
         public void Initialize()
         {
-            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+            StartFirebase();
+        }
+
+        private void StartFirebase()
+        {
+            if(FirebaseApp.DefaultInstance != null)
             {
-                var dependencyStatus = task.Result;
-                if (dependencyStatus == DependencyStatus.Available)
+                FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+            }
+            else 
+            {
+                FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
                 {
-                    FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
-                    _isConnected = true;
-                }
-                else
-                {
-                    Debug.LogError(System.String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                }
-            });
+                    var dependencyStatus = task.Result;
+                    if (dependencyStatus == DependencyStatus.Available)
+                    {
+                        FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+                        _isConnected = true;
+                    }
+                    else
+                    {
+                        Debug.LogError(String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                    }
+                });
+            }            
         }
 
         public void Dispose()
         {
-            FirebaseApp.DefaultInstance.Dispose();
+            FirebaseApp.DefaultInstance?.Dispose();
         }
 
         public void SetPlayerStatistics(PlayerStatistics playerStatistics)

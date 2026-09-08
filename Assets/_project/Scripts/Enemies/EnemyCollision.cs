@@ -17,23 +17,13 @@ namespace Enemies
         private ScoreController _scoreController;
         private PlayerStatisticsController _playerStatisticsController;
 
-        private event Action<EnemyCollision> KilledByBullet;
+        public event Action<EnemyCollision> KilledByBullet;
 
         [Inject]
         private void Construct(ScoreController scoreController, PlayerStatisticsController playerStatisticsController)
         {
             _scoreController = scoreController;
             _playerStatisticsController = playerStatisticsController;
-        }
-
-        public void SubscribeToCollision(Action<EnemyCollision> func)
-        {
-            KilledByBullet += func;
-        }
-
-        public void UnsubscribeFromCollision(Action<EnemyCollision> func)
-        {
-            KilledByBullet -= func;
         }
 
         public void SetType(EnemyType type)

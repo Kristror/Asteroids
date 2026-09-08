@@ -5,18 +5,18 @@ namespace Player
 {
     public class PlayerReviveController : IInitializable, IDisposable
     {
-        public bool IsFirstRevive { get; private set; }
+
+        public event Action AcceptDeathAction;
+        public event Action ReviveAction;
+        public event Action PlayerFirstDeath;
+
+        private bool _isFirstRevive;
 
         private PlayerProvider _playerProvider;
-
-        private event Action _acceptDeath;
-        private event Action _reviveAction;
-        private event Action _playerFirstDeath;
-
         
         public PlayerReviveController(PlayerProvider playerProvider) 
         {
-            IsFirstRevive = true;
+            _isFirstRevive = true;
 
             _playerProvider = playerProvider;
         }
@@ -31,57 +31,27 @@ namespace Player
             _playerProvider.UnsubscribeFromPlayerDeath(ShowPlayerReviveUI);
         }
 
+        public void Revive()
+        {
+            _isFirstRevive = false;
+            ReviveAction?.Invoke();
+        }
+
+        public void AcceptDeath()
+        {
+            AcceptDeathAction?.Invoke();
+        }
+
         private void ShowPlayerReviveUI()
         {
-            if (IsFirstRevive)
+            if (_isFirstRevive)
             {
-                _playerFirstDeath.Invoke();
+                PlayerFirstDeath.Invoke();
             }
             else
             {
                 AcceptDeath();
             }
-        }
-
-        public void SubscribeToFirstDeath(Action func)
-        {
-            _playerFirstDeath += func;
-        }
-
-        public void UnsubscribeFromFirstDeath(Action func)
-        {
-            _playerFirstDeath -= func;
-        }
-
-        public void SubscribeToAcceptDeath(Action func)
-        {
-            _acceptDeath += func;
-        }
-
-        public void UnsubscribeFromAcceptDeath(Action func)
-        {
-            _acceptDeath -= func;
-        }
-
-        public void SubscribeToReviveAction(Action func)
-        {
-            _reviveAction += func;
-        }
-
-        public void UnsubscribeFromReviveAction(Action func)
-        {
-            _reviveAction -= func;
-        }
-
-        public void Revive()
-        {
-            IsFirstRevive = false;
-            _reviveAction?.Invoke();
-        }
-
-        public void AcceptDeath()
-        {
-            _acceptDeath?.Invoke();
         }
     }
 }

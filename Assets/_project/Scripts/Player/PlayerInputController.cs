@@ -4,11 +4,11 @@ using Zenject;
 
 namespace Player
 {
-    public class PlayerInputController : IFixedTickable
+    public class PlayerInputController : ITickable
     {
         public event Action ShootBullet;
         public event Action ShootLaser;
-        public event Action Move;
+        public event Action<bool> Move;
         public event Action<int> Rotate;
 
         private Keyboard _keyboard;
@@ -20,7 +20,7 @@ namespace Player
             _mouse = mouse;
         }
 
-        public void FixedTick()
+        public void Tick()
         {
             CheckMouse();
             CheckKeyboard();
@@ -40,21 +40,20 @@ namespace Player
         }
         private void CheckKeyboard()
         {
-
-            if (_keyboard.wKey.isPressed || _keyboard.upArrowKey.isPressed)
-            {
-                Move?.Invoke();
-            }
+            bool move = _keyboard.wKey.isPressed || _keyboard.upArrowKey.isPressed;
+            int rotate = 0;
 
             if (_keyboard.aKey.isPressed || _keyboard.leftArrowKey.isPressed)
             {
-                Rotate?.Invoke(1);
+                rotate = 1;
+            }
+            else if(_keyboard.dKey.isPressed || _keyboard.rightArrowKey.isPressed)
+            {
+                rotate = -1;
             }
 
-            if (_keyboard.dKey.isPressed || _keyboard.rightArrowKey.isPressed)
-            {
-                Rotate?.Invoke(-1);
-            }
+            Move?.Invoke(move);
+            Rotate?.Invoke(rotate);
         }
     }
 }

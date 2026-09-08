@@ -17,14 +17,14 @@ namespace PlayerAnalytics
 
         public void Initialize()
         {
-            _analytic.Initialize();
             _analytic.GameStarted();
-            _playerReviveController.SubscribeToAcceptDeath(PlayerDeath);
+            _playerReviveController.AcceptDeathAction += PlayerDeath;
         }
 
         public void Dispose()
         {
-            _playerReviveController.UnsubscribeFromAcceptDeath(PlayerDeath);
+            _playerReviveController.AcceptDeathAction -= PlayerDeath;
+
         }
 
         private void PlayerDeath()

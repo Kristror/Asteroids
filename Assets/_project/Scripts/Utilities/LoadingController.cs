@@ -1,4 +1,5 @@
-﻿using Utilities.AssetLoading;
+﻿using Cysharp.Threading.Tasks;
+using Utilities.AssetLoading;
 
 namespace Utilities
 {
@@ -13,7 +14,18 @@ namespace Utilities
             _sceneLoader = sceneLoader;
         }
 
-        public async void LoadMainMenu()
+        public void LoadMainMenu()
+        {
+            UniTaskVoid loadMenu = LoadAndOpenMainMenu();
+        }
+
+        public void LoadGame()
+        {
+
+            UniTaskVoid loadGame = LoadAndOpenGame();
+        }
+
+        private async UniTaskVoid LoadAndOpenMainMenu()
         {
             if (!_assetsProvider.IsMainMenuAssetsLoaded)
             {
@@ -23,7 +35,7 @@ namespace Utilities
             _sceneLoader.LoadMainMenu();
         }
 
-        public async void LoadGame()
+        private async UniTaskVoid LoadAndOpenGame()
         {
             if (!_assetsProvider.IsGameAssetsLoaded)
             {

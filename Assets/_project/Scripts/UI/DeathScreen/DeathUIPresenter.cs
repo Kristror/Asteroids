@@ -4,7 +4,7 @@ using Zenject;
 
 namespace UI
 {
-    public class DeathUIPresenter : IInitializable,IDisposable
+    public class DeathUIPresenter : IInitializable, IDisposable
     {
         private DeathUIModel _deathUIModel;
         private DeathUIView _deathUIView;
@@ -19,7 +19,7 @@ namespace UI
 
         public void Initialize()
         {
-            _playerReviveController.SubscribeToAcceptDeath(ShowDeathUI);
+            _playerReviveController.AcceptDeathAction += ShowDeathUI;
         }
 
         public void SetView(DeathUIView view)
@@ -32,9 +32,9 @@ namespace UI
 
         public void Dispose()
         {
+            _playerReviveController.AcceptDeathAction -= ShowDeathUI;
             _deathUIView.RestartOnClick.RemoveListener(StartRestartGame);
             _deathUIView.BackToMenuOnClick.RemoveListener(BackToMenu);
-            _playerReviveController.UnsubscribeFromAcceptDeath(ShowDeathUI);
         }
 
         public void SubscribeToRestartGame(Action func)

@@ -14,9 +14,10 @@ namespace Weapons
             _pool = new List<BulletMovement>();
             _bulletFactory = bulletFactory;
         }
-        public void FillPool(int poolLenght)
+
+        public void FillPool(int poolLength)
         {
-            _poolLength = poolLenght;
+            _poolLength = poolLength;
             _index = 0;
 
             for (int i = 0; i < _poolLength; i++)

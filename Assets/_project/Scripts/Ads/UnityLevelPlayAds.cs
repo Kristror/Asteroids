@@ -1,10 +1,11 @@
 ﻿using System;
 using Unity.Services.LevelPlay;
 using UnityEngine;
+using Zenject;
 
 namespace Ads
 {
-    public class UnityLevelPlayAds : IShowAds
+    public class UnityLevelPlayAds : IShowAds, IInitializable, IDisposable
     {
         private const string APP_KEY = "27a9198ed";
         private const string REWARDED_AD_ID = "0z0yekhx5zrw8kts";
@@ -15,12 +16,7 @@ namespace Ads
 
         private event Action _rewarded;
 
-        public UnityLevelPlayAds()
-        {
-            Initialize();
-        }
-
-        private void Initialize()
+        public void Initialize()
         {
             LevelPlay.OnInitSuccess += InitializationCompleted;
             LevelPlay.OnInitFailed += InitializationFailed;
@@ -73,18 +69,23 @@ namespace Ads
             _rewarded?.Invoke();
         }
 
-        public void SubscirbeToReward(Action func)
+        public void SubscribeToReward(Action func)
         {
             _rewarded += func;
         }
 
-        public void UnsubscribeFromReward(Action func)
+        public void UnsubscribeToReward(Action func)
         {
             _rewarded -= func;
         }
 
         public void Dispose()
         {
+            LevelPlay.OnInitSuccess -= InitializationCompleted;
+            LevelPlay.OnInitFailed -= InitializationFailed;
+
+            _rewardedAd.OnAdRewarded -= RewardForAd;
+
             _rewardedAd?.Dispose();
             _interstitialAd?.Dispose();
         }

@@ -1,23 +1,32 @@
+using Configs;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
+using Zenject;
 
 namespace Weapons
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class BulletMovement : MonoBehaviour
     {
-        private const int TIME_TO_LIVE = 2000;
-
-        [SerializeField, Min(0)] private float _bulletMovementSpeed;
-
+        private int _timeToLive;
+        private float _bulletMovementSpeed;
 
         private Rigidbody2D _rigidbody;
-
+        private ConfigsController _configController;
         private CancellationTokenSource _cts;
+
+        [Inject]
+        public void Construct(ConfigsController configsController)
+        {
+            _configController = configsController;
+        }
 
         private void Awake()
         {
+            _timeToLive = _configController.GetBulletTimeToLive();
+            _bulletMovementSpeed = _configController.GetBulletMovementSpeed();
+
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
@@ -40,7 +49,7 @@ namespace Weapons
 
         private async UniTaskVoid BulletLiveTimer()
         {
-            await UniTask.Delay(TIME_TO_LIVE, cancellationToken: _cts.Token);
+            await UniTask.Delay(_timeToLive, cancellationToken: _cts.Token);
             SetActive(false);
         }
 

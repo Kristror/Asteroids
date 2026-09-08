@@ -25,14 +25,14 @@ namespace UI
 
         public void Initialize()
         {
-            _playerReviveController.SubscribeToFirstDeath(ShowReviveScreen);
+            _playerReviveController.PlayerFirstDeath += ShowReviveScreen;
             _playerReviveView.ReviveOnClick.AddListener(Revive);
             _playerReviveView.AcceptDeathOnClick.AddListener(AcceptDeath);
         }
 
         public void Dispose()
         {
-            _playerReviveController.UnsubscribeFromFirstDeath(ShowReviveScreen);
+            _playerReviveController.PlayerFirstDeath -= ShowReviveScreen;
             _playerReviveView.ReviveOnClick.RemoveListener(Revive);
             _playerReviveView.AcceptDeathOnClick.RemoveListener(AcceptDeath);
         }

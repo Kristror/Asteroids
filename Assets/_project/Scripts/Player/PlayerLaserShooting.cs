@@ -1,3 +1,4 @@
+using Configs;
 using Cysharp.Threading.Tasks;
 using PlayerAnalytics;
 using System.Threading;
@@ -13,34 +14,53 @@ namespace Player
 
         protected CancellationTokenSource Cts;
 
-        [SerializeField, Min(1)] private int _maxAmmo;
-        [SerializeField, Min(0)] private int _timeToReload;
-        [SerializeField, Min(0)] private float _shootingSpeed;
-        [SerializeField, Min(0)] private int _laserDuration;
         [SerializeField] private Laser _laser;
+
+        private int _maxAmmo;
+        private int _timeToReload;
+        private float _shootingSpeed;
+        private int _laserDuration;
 
         private float _timeOflastShot = 0;
 
         private PlayerStatisticsController _playerStatisticsController;
         private AnalyticsController _analyticsController;
         private PlayerInputController _playerInputController;
+        private ConfigsController _configController;
 
         [Inject]
-        private void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, AnalyticsController analyticsController)
+        private void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController,ConfigsController configsController, AnalyticsController analyticsController)
         {
             _playerInputController = inputController;
             _playerStatisticsController = playerStatisticsController;
             _analyticsController = analyticsController;
+            _configController = configsController;
         }
 
         private void Awake()
         {
+            _maxAmmo = _configController.GetLaserMaxAmmo();
+            _timeToReload = _configController.GetLaserTimeToReload();
+            _shootingSpeed = _configController.GetLaserShootingSpeed();
+            _laserDuration = _configController.GetLaserDuration();
+
             _playerInputController.ShootLaser += ShootLaser;
+        }
+
+        public float ShootingCooldown()
+        {
+            float cooldown = (_shootingSpeed - (Time.time - _timeOflastShot));
+
+            if (cooldown > 0)
+            {
+                return cooldown;
+            }
+
+            return 0;
         }
 
         private void Start()
         {
-            CleanCTS();
             Cts = new CancellationTokenSource();
 
             Ammo = _maxAmmo;
@@ -57,31 +77,9 @@ namespace Player
             CleanCTS();
         }
 
-
-        public float ShootingCooldown()
-        {
-            float cooldown = (_shootingSpeed - (Time.time - _timeOflastShot));
-
-            if (cooldown > 0)
-            {
-                return cooldown;
-            }
-
-            return 0;
-        }
-
-        private void CleanCTS()
-        {
-            if (Cts != null && !Cts.IsCancellationRequested)
-            {
-                Cts.Cancel();
-                Cts?.Dispose();
-            }
-        }
-
         private async UniTaskVoid ReloadAmmo()
         {
-            while (true)
+            while (!Cts.IsCancellationRequested)
             {
                 if (Ammo < _maxAmmo)
                 {
@@ -108,5 +106,15 @@ namespace Player
                 _timeOflastShot = Time.time;
             }
         }
+
+        private void CleanCTS()
+        {
+            if (Cts != null && !Cts.IsCancellationRequested)
+            {
+                Cts.Cancel();
+                Cts?.Dispose();
+            }
+        }
+
     }
 }

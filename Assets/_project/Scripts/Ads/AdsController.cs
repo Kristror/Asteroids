@@ -17,11 +17,11 @@ namespace Ads
 
         public void Initialize()
         {
-            _playerReviveController.SubscribeToReviveAction(ShowRevardedAd);
-            _playerReviveController.SubscribeToAcceptDeath(ShowSimpleAd);
+            _playerReviveController.ReviveAction += ShowRewardedAd;
+            _playerReviveController.AcceptDeathAction += ShowSimpleAd;
         }
 
-        public void ShowRevardedAd()
+        public void ShowRewardedAd()
         {
             _showAds.RewardedAd();
         }
@@ -31,21 +31,20 @@ namespace Ads
             _showAds.SimpleAd();
         }
 
-        public void SubscirbeToReward(Action func) 
+        public void SubscribeToReward(Action func) 
         {
-            _showAds.SubscirbeToReward(func);
+            _showAds.SubscribeToReward(func);
         }
 
-        public void UnsubscribeFromReward(Action func) 
+        public void UnsubscribeToReward(Action func) 
         {
-            _showAds.UnsubscribeFromReward(func);
+            _showAds.UnsubscribeToReward(func);
         }
 
         public void Dispose()
         {
-            _showAds.Dispose();
-            _playerReviveController.UnsubscribeFromReviveAction(ShowRevardedAd);
-            _playerReviveController.UnsubscribeFromAcceptDeath(ShowSimpleAd);
+            _playerReviveController.ReviveAction -= ShowRewardedAd;
+            _playerReviveController.AcceptDeathAction -= ShowSimpleAd;
         }
     }
 }

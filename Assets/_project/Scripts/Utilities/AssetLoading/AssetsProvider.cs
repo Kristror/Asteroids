@@ -7,26 +7,28 @@ namespace Utilities.AssetLoading
 {
     public class AssetsProvider : IDisposable
     {
-        public GameObject PlayerObject;
-        public GameObject BulletObject;
-        public GameObject AsteroidObject;
-        public GameObject SmallAsteroidObject;
-        public GameObject UFOObject;
-        public GameObject AsteroidSpawnerObject;
-        public GameObject UFOSpawnerObject;
-        public GameObject DeathUIObject;
-        public GameObject PlayerReviveUIObject;
-        public GameObject PlayerStatsUIObject;
-        public GameObject MainMenuUIObject;
+        public GameObject PlayerObject { get; private set; }
+        public GameObject BulletObject { get; private set; }
+        public GameObject AsteroidObject { get; private set; }
+        public GameObject SmallAsteroidObject { get; private set; }
+        public GameObject UFOObject { get; private set; }
+        public GameObject AsteroidSpawnerObject { get; private set; }
+        public GameObject UFOSpawnerObject { get; private set; }
+        public GameObject DeathUIObject { get; private set; }
+        public GameObject PlayerReviveUIObject { get; private set; }
+        public GameObject PlayerStatsUIObject { get; private set; }
+        public GameObject MainMenuUIObject { get; private set; }
 
-        public bool IsMainMenuAssetsLoaded = false;
-        public bool IsGameAssetsLoaded = false;
+        public bool IsMainMenuAssetsLoaded { get; private set; }
+        public bool IsGameAssetsLoaded { get; private set; }
 
         private IAssetLoader _assetLoader;
         private CancellationTokenSource _cts;
 
         public AssetsProvider(IAssetLoader assetLoader)
         {
+            IsMainMenuAssetsLoaded = false;
+            IsGameAssetsLoaded = false;
             _assetLoader = assetLoader;
         }
         

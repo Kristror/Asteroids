@@ -7,6 +7,7 @@ namespace Enemies.Spawners
     {
         private void Start()
         {
+            TimeToSpawn = _configController.GetUfoTimeToSpawn();
             UniTaskVoid spawnEnemies = SpawnUFO();
         }
 
@@ -14,7 +15,7 @@ namespace Enemies.Spawners
         {
             Cts = new CancellationTokenSource();
 
-            while (true)
+            while (!Cts.IsCancellationRequested)
             {
                 await UniTask.Delay(TimeToSpawn, cancellationToken: Cts.Token);
 

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using Configs;
+using System.Threading;
 using UnityEngine;
 using Zenject;
 
@@ -6,17 +7,19 @@ namespace Enemies.Spawners
 {
     public abstract class AbstractEnemySpawner : MonoBehaviour
     {
-        [SerializeField, Min(0)] protected int TimeToSpawn;
+        protected int TimeToSpawn;
         protected Camera MainCamera;
         protected CancellationTokenSource Cts;
+        protected ConfigsController _configController;
 
         private EnemyFactory _factory;
 
 
         [Inject]
-        private void Construct(EnemyFactory factory, Camera camera)
+        private void Construct(EnemyFactory factory, ConfigsController configsController, Camera camera)
         {
             _factory = factory;
+            _configController = configsController;
             MainCamera = camera;
         }
 

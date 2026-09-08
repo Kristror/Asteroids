@@ -26,14 +26,14 @@ namespace Utilities
         {
             _playerProvider.SubscribeToPlayerDeath(StopTime);
             _deathUIPresenter.SubscribeToRestartGame(ResumeTime);
-            _adsController.SubscirbeToReward(ResumeTime);
+            _adsController.SubscribeToReward(ResumeTime);
         }
 
         public void Dispose()
         {
             _playerProvider.UnsubscribeFromPlayerDeath(StopTime);
             _deathUIPresenter.UnsubscribeFromRestartGame(ResumeTime);
-            _adsController.UnsubscribeFromReward(ResumeTime);
+            _adsController.UnsubscribeToReward(ResumeTime);
         }
 
         private void StopTime()

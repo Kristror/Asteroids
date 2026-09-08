@@ -8,10 +8,8 @@ namespace Ads
 
         public void SimpleAd();
 
-        public void SubscirbeToReward(Action func);
+        public void SubscribeToReward(Action func);
 
-        public void UnsubscribeFromReward(Action func);
-
-        public void Dispose();
+        public void UnsubscribeToReward(Action func);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Configs;
+using Cysharp.Threading.Tasks;
 using Player;
 using System.Threading;
 using UnityEngine;
@@ -8,27 +9,32 @@ namespace Weapons
 {
     public class AreaAttack : MonoBehaviour, ISecondaryWeapon
     {
-        [SerializeField] private int _activeTime = 1000;
-        private float _size = 6;
+        private int _activeTime;
+        private float _size;
 
         private PlayerReviveController _playerReviveController;
+        private ConfigsController _configController;
         private CancellationTokenSource _cts;
 
         [Inject]
-        public void Construct(PlayerReviveController playerReviveController)
+        public void Construct(PlayerReviveController playerReviveController, ConfigsController configsController)
         {
             _playerReviveController = playerReviveController;
+            _configController = configsController;
         }
 
         public void Start()
         {
-            _playerReviveController.SubscribeToReviveAction(Attack);
+            _activeTime = _configController.GetAreaActiveTime();
+            _size = _configController.GetAreaSize();
+
+            _playerReviveController.ReviveAction += Attack;
             gameObject.SetActive(false);
         }
 
-        public void Dispose()
+        public void OnDestroy()
         {
-            _playerReviveController.UnsubscribeFromReviveAction(Attack);
+            _playerReviveController.ReviveAction -= Attack;
             _cts?.Cancel();
             _cts?.Dispose();
         }
@@ -40,6 +46,7 @@ namespace Weapons
             _cts = new CancellationTokenSource();
             UniTaskVoid deactivateAttack = Deactivate();
         }
+
         private async UniTaskVoid Deactivate()
         {
             await UniTask.Delay(_activeTime, cancellationToken: _cts.Token);

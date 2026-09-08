@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Configs;
+using UnityEngine;
 using Utilities;
 using Zenject;
 
@@ -7,19 +8,23 @@ namespace Enemies
     [RequireComponent(typeof(Rigidbody2D))]
     public class AsteroidMovement : MonoBehaviour
     {
-        [SerializeField, Min(0)] private float _asteroidMovementSpeed;
+        private float _asteroidMovementSpeed;
 
         private Rigidbody2D _rigidbody;
+        private ConfigsController _configController;
         private BorderController _borderController;
 
         [Inject]
-        private void Construct(BorderController borderController)
+        private void Construct(ConfigsController configsController,BorderController borderController)
         {
+            _configController = configsController;
             _borderController = borderController;
         }
 
         private void Start()
         {
+            _asteroidMovementSpeed = _configController.GetAsteroidMovementSpeed();
+
             _rigidbody = GetComponent<Rigidbody2D>();
             _borderController.TrackObject(transform);
         }

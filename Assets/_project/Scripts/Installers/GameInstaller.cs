@@ -1,16 +1,16 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using Ads;
 using Enemies;
 using Enemies.Spawners;
 using Player;
 using PlayerAnalytics;
 using Saving;
 using UI;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using Utilities;
 using Utilities.AssetLoading;
 using Weapons;
 using Zenject;
-using Ads;
 
 namespace Installers
 {
@@ -54,7 +54,7 @@ namespace Installers
             Container.Bind<Mouse>().FromInstance(Mouse.current).AsSingle();
 
             Container.BindInterfacesAndSelfTo<BorderController>().AsSingle();
-            Container.Bind<ScoreController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ScoreController>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<TimeController>().AsSingle();
         }
@@ -105,7 +105,7 @@ namespace Installers
 
         private void BindAds()
         {
-            Container.Bind<IShowAds>().To<UnityLevelPlayAds>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UnityLevelPlayAds>().AsSingle();
             Container.BindInterfacesAndSelfTo<AdsController>().AsSingle();
         }
     }

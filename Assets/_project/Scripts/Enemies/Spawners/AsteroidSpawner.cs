@@ -6,12 +6,15 @@ namespace Enemies.Spawners
 {
     public class AsteroidSpawner : AbstractEnemySpawner
     {
-        [SerializeField, Min(1)] private int _amountOfPieces;
+        private int _amountOfPieces;
 
         private const float SMALL_ASTEROID_SPAWN_OFFSET = 0.2f;
 
         private void Start()
-        {            
+        {
+            TimeToSpawn = _configController.GetAsteroidTimeToSpawn();
+            _amountOfPieces = _configController.GetAmountOfPieces();
+
             UniTaskVoid spawnEnemies = SpawnAsteroid();            
         }
 
@@ -19,7 +22,7 @@ namespace Enemies.Spawners
         {
             Cts = new CancellationTokenSource();
 
-            while (true)
+            while (!Cts.IsCancellationRequested)
             {
                 await UniTask.Delay(TimeToSpawn, cancellationToken: Cts.Token);
 
@@ -27,7 +30,7 @@ namespace Enemies.Spawners
 
                 EnemyCollision enemyCollision = asteroid.GetEnemyCollision();
 
-                enemyCollision.SubscribeToCollision(SpawnSmallAsteroids);
+                enemyCollision.KilledByBullet += SpawnSmallAsteroids;
 
                 RandomRotate(asteroid);
             }
@@ -56,7 +59,7 @@ namespace Enemies.Spawners
                 Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, new Vector2(x, y));             
             }
 
-            enemyCollision.UnsubscribeFromCollision(SpawnSmallAsteroids);
+            enemyCollision.KilledByBullet += SpawnSmallAsteroids;
         }
 
         private Vector2 GetScreenSizeInUnits()

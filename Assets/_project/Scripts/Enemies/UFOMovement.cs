@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using Configs;
+using Player;
 using UnityEngine;
 using Utilities;
 using Zenject;
@@ -8,21 +9,25 @@ namespace Enemies
     [RequireComponent(typeof(Rigidbody2D))]
     public class UFOMovement : MonoBehaviour
     {
-        [SerializeField, Min(0)] private float _ufoMovementSpeed;
+        private float _ufoMovementSpeed;
 
         private Rigidbody2D _rigidbody;
         private PlayerProvider _playerProvider;
+        private ConfigsController _configController;
         private BorderController _borderController;
 
         [Inject]
-        private void Construct(PlayerProvider playerProvider, BorderController borderController)
+        private void Construct(PlayerProvider playerProvider,ConfigsController configsController, BorderController borderController)
         {
             _playerProvider = playerProvider;
+            _configController = configsController;
             _borderController = borderController;
         }
 
         private void Start()
         {
+            _ufoMovementSpeed = _configController.GetUfoMovementSpeed();
+
             _borderController.TrackObject(transform);
             _rigidbody = GetComponent<Rigidbody2D>();
         }

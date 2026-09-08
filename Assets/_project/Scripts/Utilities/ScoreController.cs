@@ -1,14 +1,25 @@
-﻿namespace Utilities
+﻿using Configs;
+using Zenject;
+
+namespace Utilities
 {
-    public class ScoreController
+    public class ScoreController: IInitializable
     {
         public int PlayerScore { get; private set; }
 
-        private const int POINTS_FOR_ENEMY = 2;
+        private int _pointsForEnemy;
 
-        public ScoreController() 
+        private ConfigsController _configController;
+
+        public ScoreController(ConfigsController configsController) 
         {
+            _configController = configsController;
             ResetScore();
+        }
+
+        public void Initialize()
+        {
+            _pointsForEnemy = _configController.GetPointsForEnemy();
         }
 
         private void ResetScore()
@@ -18,7 +29,7 @@
 
         public void EnemyKilled()
         {
-            PlayerScore += POINTS_FOR_ENEMY;
+            PlayerScore += _pointsForEnemy;
         }
     }
 }

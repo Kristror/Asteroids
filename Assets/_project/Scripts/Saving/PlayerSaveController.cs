@@ -20,12 +20,12 @@ namespace Saving
 
         public void Initialize()
         {
-            _playerReviveController.SubscribeToAcceptDeath(CompareBestScore);
+            _playerReviveController.AcceptDeathAction += CompareBestScore;
         }
 
         public void Dispose()
         {
-            _playerReviveController.UnsubscribeFromAcceptDeath(CompareBestScore);
+            _playerReviveController.AcceptDeathAction -= CompareBestScore;
         }
 
         private void CompareBestScore()

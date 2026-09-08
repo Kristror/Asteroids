@@ -1,16 +1,23 @@
 ﻿using Player;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace UI
 {
-    public class PlayerStatsUIModel 
+    public class PlayerStatsUIModel: IInitializable
     {
-        public string PlayerPosition => _playerPositionString;
-        public string PlayerRotation => _playerRotationString;
-        public string PlayerSpeed => _playerSpeedString;
-        public string LaserAmmo => _laserAmmoString;
-        public string LaserCooldown => _laserCooldownString;
+        public string PlayerPosition => PLAYER_POSITION_TEXT + _playerPositionString;
+        public string PlayerRotation => PLAYER_ROTATION_TEXT + _playerRotationString;
+        public string PlayerSpeed => PLAYER_SPEED_TEXT + _playerSpeedString;
+        public string LaserAmmo => LASER_AMMO_TEXT + _laserAmmoString;
+        public string LaserCooldown => LASER_COOLDOWN_TEXT + _laserCooldownString;
+
+        private const string PLAYER_POSITION_TEXT = "Position: ";
+        private const string PLAYER_ROTATION_TEXT = "Rotation: ";
+        private const string PLAYER_SPEED_TEXT = "Speed: ";
+        private const string LASER_AMMO_TEXT = "Laser ammo: ";
+        private const string LASER_COOLDOWN_TEXT = "Laser cooldown: ";
 
         private string _playerPositionString;
         private string _playerRotationString;
@@ -31,9 +38,25 @@ namespace UI
             _playerProvider = playerProvider;
         }
 
+        public void Initialize()
+        {
+            FillData();
+        }
+
         public void SetLaserShooting()
         {
             UpdateData();
+        }
+
+        private void FillData()
+        {
+            float laserCooldown = _playerProvider.PlayerLaserCoolDown;
+            _playerPositionString = _playerProvider.PlayerPosition.ToString();
+            _playerRotationString = Math.Round(_playerProvider.PlayerRotation, 1).ToString();
+            _playerSpeedString = Math.Round(_playerProvider.PlayerSpeed, 1).ToString();
+
+            _laserAmmoString = _playerProvider.PlayerLaserAmmo.ToString();
+            _laserCooldownString = Math.Round(laserCooldown, 1).ToString();
         }
 
         public void UpdateData() 
