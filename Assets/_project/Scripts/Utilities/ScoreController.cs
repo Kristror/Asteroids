@@ -1,4 +1,6 @@
 ﻿using Configs;
+using Enemies;
+using Weapons;
 using Zenject;
 
 namespace Utilities
@@ -27,9 +29,14 @@ namespace Utilities
             PlayerScore = 0;
         }
 
-        public void EnemyKilled()
+        public void EnemyKilled(EnemyCollision enemyCollision)
         {
-            PlayerScore += _pointsForEnemy;
+            if (enemyCollision.KilledBy == WeaponType.MainWeapon)
+            {
+                PlayerScore += _pointsForEnemy;
+            }
+
+            enemyCollision.Killed -=EnemyKilled;
         }
     }
 }

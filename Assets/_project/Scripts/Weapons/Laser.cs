@@ -4,8 +4,10 @@ using System.Threading;
 
 namespace Weapons
 {
-    public class Laser : MonoBehaviour, ISecondaryWeapon
+    public class Laser : MonoBehaviour, IWeapon
     {
+        public WeaponType Type => WeaponType.SecondaryWeapon;
+
         private int _laserDuration;
         private CancellationTokenSource _cts;
 

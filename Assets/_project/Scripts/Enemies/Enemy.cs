@@ -25,7 +25,7 @@ namespace Enemies
         public void Initialize(EnemyType type, Vector2 position)
         {
             transform.position = position;
-            _enemyCollision.SetType(type);
+            _enemyCollision.EnemyType = type;
         }
 
         private void Awake()

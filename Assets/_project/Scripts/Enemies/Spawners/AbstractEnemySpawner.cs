@@ -1,6 +1,8 @@
 ﻿using Configs;
+using PlayerAnalytics;
 using System.Threading;
 using UnityEngine;
+using Utilities;
 using Zenject;
 
 namespace Enemies.Spawners
@@ -10,16 +12,21 @@ namespace Enemies.Spawners
         protected int TimeToSpawn;
         protected Camera MainCamera;
         protected CancellationTokenSource Cts;
-        protected ConfigsController _configController;
+        protected ConfigsController СonfigController;
+        protected ScoreController ScoreController;
+        protected PlayerStatisticsController PlayerStatisticsController;
 
         private EnemyFactory _factory;
 
 
         [Inject]
-        private void Construct(EnemyFactory factory, ConfigsController configsController, Camera camera)
+        private void Construct(EnemyFactory factory, ConfigsController configsController,
+            ScoreController scoreController, PlayerStatisticsController playerStatisticsController , Camera camera)
         {
             _factory = factory;
-            _configController = configsController;
+            СonfigController = configsController;
+            ScoreController = scoreController;
+            PlayerStatisticsController = playerStatisticsController;
             MainCamera = camera;
         }
 

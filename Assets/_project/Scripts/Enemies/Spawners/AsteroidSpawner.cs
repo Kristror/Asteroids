@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
+using Weapons;
 
 namespace Enemies.Spawners
 {
@@ -12,8 +13,8 @@ namespace Enemies.Spawners
 
         private void Start()
         {
-            TimeToSpawn = _configController.GetAsteroidTimeToSpawn();
-            _amountOfPieces = _configController.GetAmountOfPieces();
+            TimeToSpawn = СonfigController.GetAsteroidTimeToSpawn();
+            _amountOfPieces = СonfigController.GetAmountOfPieces();
 
             UniTaskVoid spawnEnemies = SpawnAsteroid();            
         }
@@ -30,7 +31,9 @@ namespace Enemies.Spawners
 
                 EnemyCollision enemyCollision = asteroid.GetEnemyCollision();
 
-                enemyCollision.KilledByBullet += SpawnSmallAsteroids;
+                enemyCollision.Killed += SpawnSmallAsteroids;
+                enemyCollision.Killed += ScoreController.EnemyKilled;
+                enemyCollision.Killed += PlayerStatisticsController.EnemyKilled;
 
                 RandomRotate(asteroid);
             }
@@ -59,7 +62,7 @@ namespace Enemies.Spawners
                 Enemy smallAsteroid = SpawnEnemy(EnemyType.SmallAsteroid, new Vector2(x, y));             
             }
 
-            enemyCollision.KilledByBullet += SpawnSmallAsteroids;
+            enemyCollision.Killed-= SpawnSmallAsteroids;
         }
 
         private Vector2 GetScreenSizeInUnits()

@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using Utilities;
 using Zenject;
 
 namespace Configs
@@ -14,13 +15,30 @@ namespace Configs
         private GameConfigs _gameConfigs;
         private FirebaseRemoteConfig _remoteConfig;
         private CancellationTokenSource _cts;
+        private FirebaseAppProvider _firebaseAppProvider;
 
         public event Action ConfigsLoaded;
+
+        public FirebaseRemoteConfigsProvider(FirebaseAppProvider firebaseAppProvider)
+        {
+            _firebaseAppProvider = firebaseAppProvider;
+        }
 
         public void Initialize()
         {
             _cts = new CancellationTokenSource();
-            StartConfigsLoading();
+            _firebaseAppProvider.FirebaseReady += StartConfigsLoading;
+        }
+
+        public void Dispose()
+        {
+            _firebaseAppProvider.FirebaseReady -= StartConfigsLoading;
+
+            if (_cts != null && !_cts.IsCancellationRequested)
+            {
+                _cts.Cancel();
+                _cts?.Dispose();
+            }
         }
 
         private void StartConfigsLoading()
@@ -29,12 +47,6 @@ namespace Configs
             {
                 UniTask loadConfigs = FetchConfigsAsync();
             }
-            else
-            {
-                UniTask startFirebase = FirebaseApp.CheckAndFixDependenciesAsync().AsUniTask();
-                UniTask loadConfigs = startFirebase.ContinueWith(FetchConfigsAsync);
-            }
-
         }
 
         public GameConfigs GetGameConfigs()
@@ -52,6 +64,7 @@ namespace Configs
         private void FetchComplete()
         {
             _remoteConfig = FirebaseRemoteConfig.DefaultInstance;
+
             var info = _remoteConfig.Info;
 
             if (info.LastFetchStatus != LastFetchStatus.Success)
@@ -68,17 +81,6 @@ namespace Configs
             string dataString = _remoteConfig.GetValue(FirebaseRemoteConfigsList.GAME_SETTINGS).StringValue;
             _gameConfigs = JsonUtility.FromJson<GameConfigs>(dataString);
             ConfigsLoaded?.Invoke();
-        }
-
-        public void Dispose()
-        {
-            FirebaseApp.DefaultInstance?.Dispose();
-
-            if (_cts != null && !_cts.IsCancellationRequested)
-            {
-                _cts.Cancel();
-                _cts?.Dispose();
-            }
         }
     }
 }

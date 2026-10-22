@@ -14,5 +14,10 @@ namespace Utilities
         {
             Addressables.LoadSceneAsync(SceneList.GAME, LoadSceneMode.Single);
         }
+
+        public void LoadStore()
+        {
+            Addressables.LoadSceneAsync(SceneList.STORE, LoadSceneMode.Single);
+        }
     }
 }

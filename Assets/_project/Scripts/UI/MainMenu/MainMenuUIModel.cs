@@ -16,5 +16,10 @@ namespace UI
         {
            _loadingController.LoadGame();
         }
+
+        public void OpenStore()
+        {
+            _loadingController.LoadStore();
+        }
     }
 }

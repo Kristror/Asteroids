@@ -18,8 +18,11 @@ namespace Utilities.AssetLoading
         public GameObject PlayerReviveUIObject { get; private set; }
         public GameObject PlayerStatsUIObject { get; private set; }
         public GameObject MainMenuUIObject { get; private set; }
+        public GameObject StoreUIObject { get; private set; }
+        public GameObject BuyButtonObject { get; private set; }
 
         public bool IsMainMenuAssetsLoaded { get; private set; }
+        public bool IsStoreAssetsLoaded { get; private set; }
         public bool IsGameAssetsLoaded { get; private set; }
 
         private IAssetLoader _assetLoader;
@@ -51,9 +54,25 @@ namespace Utilities.AssetLoading
             IsGameAssetsLoaded = true;
         }
 
+        public async UniTask LoadStoreAssets()
+        {
+            _cts = new CancellationTokenSource();
+            await UniTask.WhenAll(LoadStoreUI(), LoadBuyButton()).AttachExternalCancellation(_cts.Token);
+            IsStoreAssetsLoaded = true;
+        }
+
         private async UniTask LoadMainMenuUI()
         {
             MainMenuUIObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.MAIN_MENU_UI);
+        }
+
+        private async UniTask LoadStoreUI()
+        {
+            StoreUIObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.STORE_UI);
+        }
+        private async UniTask LoadBuyButton()
+        {
+            BuyButtonObject = await _assetLoader.LoadObjectByName(AssetsLocalPath.BUY_BUTTON);
         }
 
         private async UniTask LoadPlayer()

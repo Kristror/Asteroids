@@ -8,6 +8,6 @@
 
         void SendPlayerStatistics();
 
-        void LaserUsed();        
+        void LaserFired();        
     }
 }

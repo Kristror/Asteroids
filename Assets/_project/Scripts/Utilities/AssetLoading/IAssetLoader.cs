@@ -6,6 +6,5 @@ namespace Utilities.AssetLoading
     public interface IAssetLoader 
     {
         public UniTask<GameObject> LoadObjectByName(string objectName);
-
     }
 }

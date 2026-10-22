@@ -1,6 +1,6 @@
 using Configs;
 using Cysharp.Threading.Tasks;
-using PlayerAnalytics;
+using System;
 using System.Threading;
 using UnityEngine;
 using Weapons;
@@ -12,28 +12,26 @@ namespace Player
     {
         public int Ammo { get; private set; }
 
-        protected CancellationTokenSource Cts;
-
         [SerializeField] private Laser _laser;
+
+        public event Action LaserFired;
 
         private int _maxAmmo;
         private int _timeToReload;
         private float _shootingSpeed;
         private int _laserDuration;
+        private float _timeOfLastShot = 0;
+        private bool _isReloading = false;
 
-        private float _timeOflastShot = 0;
-
-        private PlayerStatisticsController _playerStatisticsController;
-        private AnalyticsController _analyticsController;
         private PlayerInputController _playerInputController;
         private ConfigsController _configController;
+        private CancellationTokenSource _cts;
+
 
         [Inject]
-        private void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController,ConfigsController configsController, AnalyticsController analyticsController)
+        private void Construct(PlayerInputController inputController,ConfigsController configsController)
         {
             _playerInputController = inputController;
-            _playerStatisticsController = playerStatisticsController;
-            _analyticsController = analyticsController;
             _configController = configsController;
         }
 
@@ -49,7 +47,7 @@ namespace Player
 
         public float ShootingCooldown()
         {
-            float cooldown = (_shootingSpeed - (Time.time - _timeOflastShot));
+            float cooldown = (_shootingSpeed - (Time.time - _timeOfLastShot));
 
             if (cooldown > 0)
             {
@@ -61,13 +59,9 @@ namespace Player
 
         private void Start()
         {
-            Cts = new CancellationTokenSource();
-
             Ammo = _maxAmmo;
 
             _laser.SetLaserDuration(_laserDuration);
-
-            UniTaskVoid reloadAmmo = ReloadAmmo();
         }       
 
         private void OnDestroy()
@@ -79,40 +73,50 @@ namespace Player
 
         private async UniTaskVoid ReloadAmmo()
         {
-            while (!Cts.IsCancellationRequested)
+            _isReloading = true;
+
+            while (!_cts.IsCancellationRequested && _isReloading)
             {
                 if (Ammo < _maxAmmo)
                 {
-                    await UniTask.Delay(_timeToReload, cancellationToken: Cts.Token);
+                    await UniTask.Delay(_timeToReload, cancellationToken: _cts.Token);
 
                     Ammo++;
                 }
-                await UniTask.DelayFrame(1);
+                else
+                {
+                    _isReloading = false;
+                }
             }
         }
 
         private void ShootLaser()
         {
-            bool isEnoughTimePassed = _timeOflastShot < Time.time - _shootingSpeed;
+            bool isEnoughTimePassed = _timeOfLastShot < Time.time - _shootingSpeed;
 
             if (isEnoughTimePassed && (Ammo > 0))
             {
                 _laser.Shoot();
-
-                _playerStatisticsController.ShotLaser();
-                _analyticsController.LaserUsed();
+                LaserFired?.Invoke();
 
                 Ammo--;
-                _timeOflastShot = Time.time;
+                _timeOfLastShot = Time.time;
+
+                if (!_isReloading)
+                {
+                    _cts = new CancellationTokenSource();
+
+                    UniTaskVoid reload = ReloadAmmo();
+                }
             }
         }
 
         private void CleanCTS()
         {
-            if (Cts != null && !Cts.IsCancellationRequested)
+            if (_cts != null && !_cts.IsCancellationRequested)
             {
-                Cts.Cancel();
-                Cts?.Dispose();
+                _cts.Cancel();
+                _cts?.Dispose();
             }
         }
 

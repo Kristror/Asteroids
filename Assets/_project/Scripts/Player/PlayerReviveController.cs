@@ -46,7 +46,7 @@ namespace Player
         {
             if (_isFirstRevive)
             {
-                PlayerFirstDeath.Invoke();
+                PlayerFirstDeath?.Invoke();
             }
             else
             {

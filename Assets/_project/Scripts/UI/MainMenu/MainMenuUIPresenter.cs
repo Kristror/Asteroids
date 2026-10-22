@@ -15,7 +15,8 @@ namespace UI
         public void SetView(MainMenuUIView view)
         {
             _mainMenuUIView = view;
-            _mainMenuUIView.OnClick.AddListener(BeginGame);
+            _mainMenuUIView.StartButtonOnClick.AddListener(BeginGame);
+            _mainMenuUIView.StoreButtonOnClick.AddListener(OpenStore);
         }
 
         private void BeginGame()
@@ -23,9 +24,15 @@ namespace UI
             _mainMenuUIModel.BeginGame();
         }
 
+        private void OpenStore()
+        {
+            _mainMenuUIModel.OpenStore();
+        }
+
         public void Dispose()
         {
-            _mainMenuUIView.OnClick.RemoveListener(BeginGame);
+            _mainMenuUIView.StartButtonOnClick.RemoveListener(BeginGame);
+            _mainMenuUIView.StoreButtonOnClick.RemoveListener(OpenStore);
         }
     }
 }

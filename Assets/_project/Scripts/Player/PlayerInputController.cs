@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine.InputSystem;
+using Utilities;
 using Zenject;
 
 namespace Player
@@ -13,17 +14,22 @@ namespace Player
 
         private Keyboard _keyboard;
         private Mouse _mouse;
+        private PauseController _pauseController;
 
-        public PlayerInputController(Keyboard keyboard, Mouse mouse)
+        public PlayerInputController(Keyboard keyboard, Mouse mouse, PauseController pauseController)
         {
             _keyboard = keyboard;
             _mouse = mouse;
+            _pauseController = pauseController;
         }
 
         public void Tick()
         {
-            CheckMouse();
-            CheckKeyboard();
+            if (!_pauseController.IsPaused)
+            {
+                CheckMouse();
+                CheckKeyboard();
+            }
         }
 
         private void CheckMouse()
@@ -38,6 +44,7 @@ namespace Player
                 ShootLaser?.Invoke();
             }
         }
+
         private void CheckKeyboard()
         {
             bool move = _keyboard.wKey.isPressed || _keyboard.upArrowKey.isPressed;

@@ -7,7 +7,7 @@ namespace Enemies.Spawners
     {
         private void Start()
         {
-            TimeToSpawn = _configController.GetUfoTimeToSpawn();
+            TimeToSpawn = СonfigController.GetUfoTimeToSpawn();
             UniTaskVoid spawnEnemies = SpawnUFO();
         }
 
@@ -20,6 +20,10 @@ namespace Enemies.Spawners
                 await UniTask.Delay(TimeToSpawn, cancellationToken: Cts.Token);
 
                 Enemy ufo = SpawnEnemy(EnemyType.UFO);
+                EnemyCollision enemyCollision = ufo.GetEnemyCollision();
+
+                enemyCollision.Killed += ScoreController.EnemyKilled;
+                enemyCollision.Killed += PlayerStatisticsController.EnemyKilled;
             }
         }
     }

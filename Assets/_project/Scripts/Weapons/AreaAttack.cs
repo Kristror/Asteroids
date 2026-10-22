@@ -7,8 +7,10 @@ using Zenject;
 
 namespace Weapons
 {
-    public class AreaAttack : MonoBehaviour, ISecondaryWeapon
+    public class AreaAttack : MonoBehaviour, IWeapon
     {
+        public WeaponType Type => WeaponType.SecondaryWeapon;
+
         private int _activeTime;
         private float _size;
 

@@ -4,5 +4,6 @@
     {
         public const string MAIN_MENU = "MainMenuScene";
         public const string GAME = "AsteroidsScene";
+        public const string STORE = "StoreScene";
     }
 }

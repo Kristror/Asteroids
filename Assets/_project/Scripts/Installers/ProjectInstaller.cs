@@ -1,5 +1,7 @@
+using Ads;
 using Configs;
 using PlayerAnalytics;
+using Store;
 using Utilities;
 using Utilities.AssetLoading;
 using Zenject;
@@ -11,8 +13,11 @@ namespace Installers
         public override void InstallBindings()
         {
             BindLoaders();
-            BindConfigs();
+            BindUtilities();
             BindAnalytics();
+            BindConfigs();
+            BindShop();
+            BindAds();
         }
 
         private void BindLoaders()
@@ -25,17 +30,31 @@ namespace Installers
             Container.Bind<LoadingController>().AsSingle();
         }
 
+        private void BindUtilities()
+        {
+            Container.BindInterfacesAndSelfTo<FirebaseAppProvider>().AsSingle();
+            Container.BindExecutionOrder<FirebaseAppProvider>(2);
+        }
+
         private void BindAnalytics()
         {
-            Container.BindInterfacesAndSelfTo<AnalyticsWithFirebase>().AsSingle();
-            Container.BindExecutionOrder<AnalyticsWithFirebase>(-1);
+            Container.BindInterfacesAndSelfTo<FirebaseAnalyticsService>().AsSingle();
         }
 
         private void BindConfigs()
         {
             Container.BindInterfacesAndSelfTo<FirebaseRemoteConfigsProvider>().AsSingle();
-            Container.BindExecutionOrder<FirebaseRemoteConfigsProvider>(-1);
             Container.BindInterfacesAndSelfTo<ConfigsController>().AsSingle();
+        }
+
+        private void BindShop()
+        {
+            Container.BindInterfacesAndSelfTo<UnityInAppPurchase>().AsSingle();
+        }
+
+        private void BindAds()
+        {
+            Container.BindInterfacesAndSelfTo<UnityLevelPlayAds>().AsSingle();
         }
     }
 }

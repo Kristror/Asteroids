@@ -18,6 +18,11 @@ namespace Utilities
         {
             UniTaskVoid loadMenu = LoadAndOpenMainMenu();
         }
+        
+        public void LoadStore()
+        {
+            UniTaskVoid loadstore = LoadAndOpenStore();
+        }
 
         public void LoadGame()
         {
@@ -33,6 +38,16 @@ namespace Utilities
             }
 
             _sceneLoader.LoadMainMenu();
+        }
+
+        private async UniTaskVoid LoadAndOpenStore()
+        {
+            if (!_assetsProvider.IsStoreAssetsLoaded)
+            {
+                await _assetsProvider.LoadStoreAssets();
+            }
+
+            _sceneLoader.LoadStore();
         }
 
         private async UniTaskVoid LoadAndOpenGame()

@@ -7,8 +7,10 @@ using Zenject;
 namespace Weapons
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class BulletMovement : MonoBehaviour
+    public class BulletMovement : MonoBehaviour, IWeapon
     {
+        public WeaponType Type => WeaponType.MainWeapon;
+
         private int _timeToLive;
         private float _bulletMovementSpeed;
 

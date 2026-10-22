@@ -30,9 +30,9 @@ namespace Installers
             BindUtilities();
             BindSaving();
             BindAnalytics();
+            BindAds();
             BindEnemies();
             BindUI();
-            BindAds();
         }
 
         private void BindPlayer()
@@ -56,7 +56,7 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<BorderController>().AsSingle();
             Container.BindInterfacesAndSelfTo<ScoreController>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<TimeController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PauseController>().AsSingle();
         }
 
         private void BindSaving()
@@ -68,7 +68,12 @@ namespace Installers
         private void BindAnalytics()
         {
             Container.BindInterfacesAndSelfTo<AnalyticsController>().AsSingle();
-            Container.Bind<PlayerStatisticsController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerStatisticsController>().AsSingle();
+        }
+
+        private void BindAds()
+        {
+            Container.BindInterfacesAndSelfTo<AdsController>().AsSingle();
         }
 
         private void BindEnemies()
@@ -101,12 +106,6 @@ namespace Installers
 
             Container.BindInterfacesAndSelfTo<GameUIPresenterInitializer>().AsSingle();
             Container.BindExecutionOrder<GameUIPresenterInitializer>(-1);
-        }
-
-        private void BindAds()
-        {
-            Container.BindInterfacesAndSelfTo<UnityLevelPlayAds>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AdsController>().AsSingle();
         }
     }
 }

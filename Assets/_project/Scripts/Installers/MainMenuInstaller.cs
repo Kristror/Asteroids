@@ -21,9 +21,10 @@ namespace Installers
 
         private void BindUI()
         {
-            Container.Bind<MainMenuUIModel>().AsSingle();
             Container.BindFactory<MainMenuUIView, MainMenuUIViewFactory>().FromComponentInNewPrefab(_assetsProvider.MainMenuUIObject);
-            Container.Bind<MainMenuUIPresenter>().AsSingle();
+
+            Container.Bind<MainMenuUIModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MainMenuUIPresenter>().AsSingle();
             Container.BindInterfacesAndSelfTo<MainMenuUIPresenterInitializer>().AsSingle();
             Container.BindExecutionOrder<MainMenuUIPresenterInitializer>(-1);
         }

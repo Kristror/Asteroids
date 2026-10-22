@@ -36,9 +36,9 @@ namespace Ads
             _showAds.SubscribeToReward(func);
         }
 
-        public void UnsubscribeToReward(Action func) 
+        public void UnsubscribeFromReward(Action func) 
         {
-            _showAds.UnsubscribeToReward(func);
+            _showAds.UnsubscribeFromReward(func);
         }
 
         public void Dispose()

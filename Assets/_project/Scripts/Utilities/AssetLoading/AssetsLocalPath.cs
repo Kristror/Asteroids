@@ -16,5 +16,7 @@
         public const string PLAYER_REVIVE_UI = "PlayerReviveUI";
         public const string PLAYER_STATS_UI = "PlayerStatsUI";
         public const string MAIN_MENU_UI = "MainMenuUI";
+        public const string STORE_UI = "StoreUI";
+        public const string BUY_BUTTON = "BuyButton";
     }
 }

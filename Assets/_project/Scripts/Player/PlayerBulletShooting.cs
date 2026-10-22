@@ -1,5 +1,5 @@
 using Configs;
-using PlayerAnalytics;
+using System;
 using UnityEngine;
 using Weapons;
 using Zenject;
@@ -8,6 +8,8 @@ namespace Player
 {
     public class PlayerBulletShooting : MonoBehaviour
     {
+        public event Action BulletFired;
+
         [SerializeField] private Transform _bulletStartPosition;
         private float _shootingSpeed;
         private int _bulletPoolSize;
@@ -16,15 +18,13 @@ namespace Player
 
         private BulletPool _bulletPool;
         private PlayerInputController _playerInputController;
-        private PlayerStatisticsController _playerStatisticsController;
         private ConfigsController _configController;
 
         [Inject]
-        private void Construct(PlayerInputController inputController, PlayerStatisticsController playerStatisticsController, BulletPool bulletPool, ConfigsController configsController)
+        private void Construct(PlayerInputController inputController, BulletPool bulletPool, ConfigsController configsController)
         {
             _playerInputController = inputController;
             _configController = configsController;
-            _playerStatisticsController = playerStatisticsController;
 
             _bulletPool = bulletPool;
         }
@@ -55,9 +55,9 @@ namespace Player
             {
                 BulletMovement bullet = _bulletPool.Next();
 
-                bullet.StartMovementFromPoint(_bulletStartPosition);                
+                bullet.StartMovementFromPoint(_bulletStartPosition);
 
-                _playerStatisticsController.ShotBullet();
+                BulletFired?.Invoke();
 
                 _timeOfLastShot = Time.time;
             }

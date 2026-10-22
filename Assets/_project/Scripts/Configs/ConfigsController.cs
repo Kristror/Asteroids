@@ -98,7 +98,7 @@ namespace Configs
 
         public float GetAsteroidMovementSpeed()
         {
-            return _gameConfigs.PlayerMovementSpeed;
+            return _gameConfigs.AsteroidMovementSpeed;
         }
 
         public float GetAsteroidSpeedMult()
@@ -118,7 +118,7 @@ namespace Configs
 
         public int GetAsteroidTimeToSpawn()
         {
-            return _gameConfigs.UfoTimeToSpawn;
+            return _gameConfigs.AsteroidTimeToSpawn;
         }
     }
 }

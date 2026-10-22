@@ -13,15 +13,23 @@ namespace Ads
 
         private LevelPlayInterstitialAd _interstitialAd;
         private LevelPlayRewardedAd _rewardedAd;
+        private bool _isAdsDisabled;
 
         private event Action _rewarded;
 
         public void Initialize()
         {
+            _isAdsDisabled = false;
+
             LevelPlay.OnInitSuccess += InitializationCompleted;
             LevelPlay.OnInitFailed += InitializationFailed;
 
             LevelPlay.Init(APP_KEY);
+        }
+
+        public void DisableAds()
+        {
+            _isAdsDisabled = true;
         }
 
         private void InitializationCompleted(LevelPlayConfiguration configuration)
@@ -50,6 +58,11 @@ namespace Ads
 
         public void RewardedAd()
         {
+            if (_isAdsDisabled)
+            {
+                _rewarded.Invoke();
+                return;
+            }
             if(_rewardedAd.IsAdReady())
             {
                 _rewardedAd.ShowAd();
@@ -58,6 +71,10 @@ namespace Ads
 
         public void SimpleAd()
         {
+            if (_isAdsDisabled)
+            {
+                return;
+            }
             if (_interstitialAd.IsAdReady())
             {
                 _interstitialAd.ShowAd();
@@ -74,7 +91,7 @@ namespace Ads
             _rewarded += func;
         }
 
-        public void UnsubscribeToReward(Action func)
+        public void UnsubscribeFromReward(Action func)
         {
             _rewarded -= func;
         }
